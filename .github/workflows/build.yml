@@ -40,6 +40,6 @@ jobs:
         with:
           bun-version: latest
       - name: bun install
-        run: bun install
+        run: bun install --development
       - name: bun build
         run: bun run build
