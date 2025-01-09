@@ -1,0 +1,74 @@
+"use client";
+
+import { getCookie } from "mtxuilib/lib/clientlib";
+import { TooltipProvider } from "mtxuilib";
+import { Suspense, useEffect, useMemo, useState } from "react";
+import { MtmaiapiProvider } from "../../store/MtmaiapiProvider";
+import { MtmaiProviderV2 } from "../../store/StoreProvider";
+import { AiThreadView } from "./AiThreadView";
+import { cookie_key_access_token } from "./ThreadProvider";
+
+export interface IMtmaiBootstrapConfig {
+	mtmai_backends?: string[];
+	mtmai_access_token?: string;
+}
+declare global {
+	interface Window {
+		mtmaiBootstrapConfig?: IMtmaiBootstrapConfig;
+	}
+}
+
+interface MtmCopliotBootstrapProps {
+	mtmai_backends?: string[];
+	mtmai_access_token?: string;
+	agents?: string[];
+}
+export function MtmCopliotBootstrap(props: MtmCopliotBootstrapProps) {
+	// const accessToken = useMtmaiV2((x) => x.accessToken);
+
+	const [bootstrapConfig, setBootstrapConfig] = useState<IMtmaiBootstrapConfig>(
+		{
+			mtmai_backends: props.mtmai_backends,
+			mtmai_access_token: props.mtmai_access_token,
+		},
+	);
+	useEffect(() => {
+		if (typeof window !== "undefined") {
+			const newConfig = bootstrapConfig;
+			newConfig.mtmai_access_token = getCookie(cookie_key_access_token) || "";
+			// console.log("newConfig setBootstrapConfig", newConfig);
+			setBootstrapConfig(newConfig);
+		}
+	}, [bootstrapConfig]);
+
+	const agents = useMemo(() => props.agents || ["HomeAgent"], [props.agents]);
+
+	return (
+		<Suspense>
+			<MtmaiProviderV2
+				backends={bootstrapConfig.mtmai_backends || []}
+				accessToken={bootstrapConfig.mtmai_access_token || ""}
+			>
+				<MtmaiapiProvider
+					serverUrl={bootstrapConfig.mtmai_backends?.[0] || ""}
+					accessToken={bootstrapConfig.mtmai_access_token || ""}
+				>
+					<TooltipProvider delayDuration={0}>
+						{agents?.map((agent) => {
+							return (
+								<AiThreadView
+									key={agent}
+									autoConnect={true}
+									chatProfile={agent}
+									accessToken={props.mtmai_access_token}
+								/>
+							);
+						})}
+						{/* <CopliotFAB /> */}
+						{/* <CopliotPanel /> */}
+					</TooltipProvider>
+				</MtmaiapiProvider>
+			</MtmaiProviderV2>
+		</Suspense>
+	);
+}

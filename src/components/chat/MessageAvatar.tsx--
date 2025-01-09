@@ -1,0 +1,49 @@
+import { Icons } from "mtxuilib/icons/icons";
+import { IconOpenAI } from "mtxuilib/icons/icons-ai";
+import { Avatar, AvatarFallback, AvatarImage } from "mtxuilib";
+import { Tooltip, TooltipContent, TooltipTrigger } from "mtxuilib";
+
+interface Props {
+	author?: string;
+	hide?: boolean;
+}
+
+export const MessageAvatar = ({ author, hide }: Props) => {
+	// const apiClient = useContext(ChainlitContext);
+	// const { chatProfile } = useChatSession();
+	// const { config } = useConfig();
+
+	// const selectedChatProfile = useMemo(() => {
+	// 	return config?.chatProfiles.find((profile) => profile.name === chatProfile);
+	// }, [config, chatProfile]);
+
+	// const avatarUrl = useMemo(() => {
+	// 	const isAssistant = !author || author === config?.ui.name;
+	// 	if (isAssistant && selectedChatProfile?.icon) {
+	// 		return selectedChatProfile.icon;
+	// 	}
+	// 	return apiClient?.buildEndpoint(`/avatars/${author || "default"}`);
+	// }, [apiClient, selectedChatProfile, config, author]);
+
+	return (
+		<Tooltip>
+			<TooltipTrigger>
+				<Avatar>
+					<AvatarImage
+						className="cursor-pointer hover:shadow-inner hover:shadow-gray-300"
+						src={"/api/v1/users/avatar"}
+						alt={`@${author}`}
+					/>
+					<AvatarFallback>
+						{author === "user" ? (
+							<Icons.user className="size-5" />
+						) : (
+							<IconOpenAI className="size-5" />
+						)}
+					</AvatarFallback>
+				</Avatar>
+			</TooltipTrigger>
+			<TooltipContent>{author}</TooltipContent>
+		</Tooltip>
+	);
+};

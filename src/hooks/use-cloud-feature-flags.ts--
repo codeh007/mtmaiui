@@ -1,0 +1,30 @@
+import { useQuery } from "@tanstack/react-query";
+import type { AxiosError } from "axios";
+import { cloudApi } from "mtmaiapi/api/api.js";
+// import cloudApi from "mtmaiapi/api";
+import { useApiError } from "mtmaiui";
+
+export default function useCloudFeatureFlags(tenantId: string) {
+  const { handleApiError } = useApiError({});
+
+  const flagsQuery = useQuery({
+    queryKey: ["feature-flags:list"],
+    retry: false,
+    queryFn: async () => {
+      try {
+        const flags = await cloudApi.featureFlagsList(tenantId);
+        return flags;
+      } catch (e) {
+        console.error("Failed to get cloud feature flags", e);
+        return null;
+      }
+    },
+    staleTime: 1000 * 60,
+  });
+
+  if (flagsQuery.isError) {
+    handleApiError(flagsQuery.error as AxiosError);
+  }
+
+  return flagsQuery.data;
+}

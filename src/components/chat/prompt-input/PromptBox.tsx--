@@ -1,0 +1,144 @@
+"use client";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+// import { type TaskGeneration, client } from "mtmaiapi";
+import {
+  createWorkflowMutation,
+  generateTaskMutation,
+} from "mtmaiapi/@tanstack/react-query.gen";
+import { useMtRouter } from "mtxuilib";
+import { Icons } from "mtxuilib/icons/icons";
+import { Textarea } from "mtxuilib";
+import { toast } from "mtxuilib";
+import { useState } from "react";
+import { stringify as convertToYAML } from "yaml";
+import { useBasePath } from "../../../hooks/useBasePath";
+import { ChatStarts } from "../starts/ChatStarts";
+import type { TaskGeneration } from "mtmaiapi";
+import React from "react";
+
+function createTemplateTaskFromTaskGenerationParameters(
+  values: TaskGeneration,
+) {
+  return {
+    title: values.suggested_title ?? "Untitled Task",
+    description: "",
+    is_saved_task: true,
+    webhook_callback_url: null,
+    proxy_location: "RESIDENTIAL",
+    workflow_definition: {
+      parameters: [
+        {
+          parameter_type: "workflow",
+          workflow_parameter_type: "json",
+          key: "navigation_payload",
+          default_value: JSON.stringify(values.navigation_payload),
+        },
+      ],
+      blocks: [
+        {
+          block_type: "task",
+          label: values.suggested_title ?? "Untitled Task",
+          url: values.url,
+          navigation_goal: values.navigation_goal,
+          data_extraction_goal: values.data_extraction_goal,
+          data_schema: values.extracted_information_schema,
+        },
+      ],
+    },
+  };
+}
+
+export function PromptBox() {
+  const router = useMtRouter();
+  const [prompt, setPrompt] = useState<string>("");
+  const queryClient = useQueryClient();
+
+  const basePath = useBasePath();
+  const getTaskFromPromptMutation = useMutation({
+    ...generateTaskMutation(),
+    onError: (error) => {
+      toast({
+        variant: "destructive",
+        title: "使用 prompt 创建任务失败",
+        description: (error as Error).message,
+      });
+    },
+  });
+
+  const saveTaskMutation = useMutation({
+    ...createWorkflowMutation(),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["savedTasks"],
+      });
+    },
+    onError: (error) => {
+      toast({
+        variant: "destructive",
+        title: "保存任务失败",
+        description: (error as Error).message,
+      });
+    },
+  });
+
+  return (
+    <>
+      <div
+        className="rounded-sm py-[4.25rem]"
+        style={
+          {
+            // todo: 背景图片
+            // background: `url(${img}) 50% / cover no-repeat`,
+          }
+        }
+      >
+        <div className="flex flex-col items-center gap-7">
+          <span className="text-2xl">您想要完成什么任务？</span>
+          <div className="flex w-[35rem] max-w-xl items-center rounded-xl bg-slate-elevation3 py-2 pr-4">
+            <Textarea
+              className="min-h-0 resize-none rounded-xl border-transparent px-4 hover:border-transparent focus-visible:ring-0"
+              value={prompt}
+              onChange={(e) => setPrompt(e.target.value)}
+              placeholder="输入 prompt..."
+              rows={1}
+            />
+            <div className="h-full">
+              {getTaskFromPromptMutation.isPending ||
+              saveTaskMutation.isPending ? (
+                <Icons.ReloadIcon2 className="h-6 w-6 animate-spin" />
+              ) : (
+                <Icons.PaperPlane
+                  className="h-6 w-6 cursor-pointer"
+                  onClick={async () => {
+                    const taskGenerationResponse =
+                      await getTaskFromPromptMutation.mutateAsync({
+                        body: {
+                          prompt,
+                        },
+                      });
+
+                    const templateTask =
+                      createTemplateTaskFromTaskGenerationParameters(
+                        taskGenerationResponse,
+                      );
+                    const response = await saveTaskMutation.mutateAsync({
+                      body: {
+                        yaml: convertToYAML(templateTask),
+                      },
+                    });
+                    console.log("response", {
+                      taskGenerationResponse,
+                      response,
+                    });
+                    router.push(`${basePath}/create/from-prompt`);
+                  }}
+                />
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+      <ChatStarts />
+    </>
+  );
+}

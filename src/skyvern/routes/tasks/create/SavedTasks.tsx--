@@ -1,0 +1,161 @@
+"use client";
+import { PlusIcon, ReloadIcon } from "@radix-ui/react-icons";
+// import { createWorkflowMutation } from "mtmaiapi/@tanstack/react-query.gen";
+import { useMtRouter } from "mtxuilib";
+import { cn } from "mtxuilib/lib/utils";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "mtxuilib";
+import { useState } from "react";
+import { stringify as convertToYAML } from "yaml";
+import { useBasePath } from "../../../../hooks/useBasePath";
+
+function createEmptyTaskTemplate() {
+  return {
+    title: "New Template",
+    description: "",
+    is_saved_task: true,
+    webhook_callback_url: null,
+    proxy_location: "RESIDENTIAL",
+    workflow_definition: {
+      parameters: [
+        {
+          parameter_type: "workflow",
+          workflow_parameter_type: "json",
+          key: "navigation_payload",
+          default_value: "null",
+        },
+      ],
+      blocks: [
+        {
+          block_type: "task",
+          label: "New Template",
+          url: "https://example.com",
+          navigation_goal: "",
+          data_extraction_goal: null,
+          data_schema: null,
+        },
+      ],
+    },
+  };
+}
+
+export function SavedTasks() {
+  const router = useMtRouter();
+
+  const [hovering, setHovering] = useState(false);
+
+  // const query = useSuspenseQuery({
+  //   ...getWorkflowsOptions({
+  //     query: {
+  //       only_saved_tasks: true,
+  //     },
+  //   }),
+  // });
+
+  const basePath = useBasePath();
+  // const mutation = useMutation({
+  //   // mutationFn: async () => {
+  //   //   const request = createEmptyTaskTemplate();
+  //   //   // const client = await getClient(credentialGetter);
+  //   //   const yaml = convertToYAML(request);
+  //   //   return client
+  //   //     .post<string, { data: { workflow_permanent_id: string } }>(
+  //   //       "/workflows",
+  //   //       yaml,
+  //   //       {
+  //   //         headers: {
+  //   //           "Content-Type": "text/plain",
+  //   //         },
+  //   //       },
+  //   //     )
+  //   //     .then((response) => response.data);
+  //   // },
+  //   ...createWorkflowMutation(),
+  //   onError: (error) => {
+  //     toast({
+  //       variant: "destructive",
+  //       title: "出错",
+  //       description: (error as Error).message,
+  //     });
+  //   },
+  //   onSuccess: (response) => {
+  //     toast({
+  //       title: "成功",
+  //       description: "任务模板创建成功",
+  //     });
+  //     queryClient.invalidateQueries({
+  //       queryKey: ["savedTasks"],
+  //     });
+  //     router.push(`${basePath}/create/${response.workflow_permanent_id}`);
+  //   },
+  // });
+
+  return (
+    <div className="grid grid-cols-4 gap-4">
+      <Card
+        className="border-0"
+        onMouseEnter={() => setHovering(true)}
+        onMouseLeave={() => setHovering(false)}
+        onMouseOver={() => setHovering(true)}
+        onMouseOut={() => setHovering(false)}
+      >
+        <CardHeader
+          className={cn("rounded-t-md bg-slate-elevation1", {
+            "bg-slate-300": hovering,
+          })}
+        >
+          <CardTitle className="font-normal">New Task</CardTitle>
+          <CardDescription>{"https://.."}</CardDescription>
+        </CardHeader>
+        <CardContent
+          className={cn(
+            "flex h-36 cursor-pointer items-center justify-center rounded-b-md bg-slate-elevation3 p-4 text-sm text-slate-300",
+            {
+              "bg-slate-200": hovering,
+            },
+          )}
+          onClick={() => {
+            if (mutation.isPending) {
+              return;
+            }
+
+            const yaml = convertToYAML(createEmptyTaskTemplate());
+            mutation.mutate({
+              body: {
+                yaml: yaml,
+              },
+            });
+          }}
+        >
+          {!mutation.isPending && <PlusIcon className="h-12 w-12" />}
+          {mutation.isPending && (
+            <ReloadIcon className="h-12 w-12 animate-spin" />
+          )}
+        </CardContent>
+      </Card>
+      {/* {query.isLoading && (
+        <>
+          <Skeleton className="h-56" />
+          <Skeleton className="h-56" />
+          <Skeleton className="h-56" />
+        </>
+      )}
+      {query.data?.map((workflow) => {
+        return (
+          <SavedTaskCard
+            key={workflow.workflow_permanent_id}
+            workflowId={workflow.workflow_permanent_id}
+            title={workflow.title}
+            description={workflow.description || ""}
+            url={workflow.workflow_definition.blocks[0]?.url || ""}
+          />
+        );
+      })} */}
+    </div>
+  );
+}

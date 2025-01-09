@@ -1,0 +1,80 @@
+"use client";
+import { ZForm, useZodForm } from "mtxuilib/form/ZodForm";
+import { Button } from "mtxuilib";
+import {
+	FormControl,
+	FormDescription,
+	FormField,
+	FormItem,
+	FormLabel,
+	FormMessage,
+} from "mtxuilib";
+import { Input } from "mtxuilib";
+import { z } from "zod";
+
+const profileFormSchema = z.object({
+	username: z
+		.string()
+		.min(2, {
+			message: "Username must be at least 2 characters.",
+		})
+		.max(30, {
+			message: "Username must not be longer than 30 characters.",
+		}),
+	email: z
+		.string({
+			required_error: "Please select an email to display.",
+		})
+		.email(),
+	bio: z.string().max(160).min(4),
+	urls: z
+		.array(
+			z.object({
+				value: z.string().url({ message: "Please enter a valid URL." }),
+			}),
+		)
+		.optional(),
+});
+
+type ProfileFormValues = z.infer<typeof profileFormSchema>;
+
+export interface TaskFormProps {
+	onSubmit: (data) => void;
+	onCancel?: () => void;
+}
+export function SimpleTaskForm(props: TaskFormProps) {
+	const { onSubmit, onCancel } = props;
+	const form = useZodForm({
+		schema: z.any(),
+		defaultValues: {},
+	});
+
+	return (
+		<ZForm form={form} className="space-y-2" handleSubmit={onSubmit}>
+			<FormField
+				control={form.control}
+				name="title"
+				render={({ field }) => (
+					<FormItem>
+						<FormLabel>主题</FormLabel>
+						<FormControl>
+							<Input placeholder="主题" {...field} />
+						</FormControl>
+						<FormDescription>AI 将用这个主题自动创作一篇文章。</FormDescription>
+						<FormMessage />
+					</FormItem>
+				)}
+			/>
+			<div className="flex justify-end px-4">
+				<Button
+					onClick={() => {
+						onCancel?.();
+					}}
+				>
+					取消
+				</Button>
+				<Button type="submit">确定</Button>
+			</div>
+		</ZForm>
+	);
+}

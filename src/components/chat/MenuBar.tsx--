@@ -1,0 +1,66 @@
+"use client";
+
+// import type { AssisantMenus } from "mtmaiapi";
+import { IconX } from "mtxuilib/icons/icons";
+import {
+  Menubar,
+  MenubarContent,
+  MenubarItem,
+  MenubarMenu,
+  MenubarTrigger,
+} from "mtxuilib";
+
+
+/**
+ * 主窗口的菜单栏
+ * @returns
+ */
+export function MenuBar() {
+  const assisantConfig = useWorkbrenchStore((x) => x.assisantConfig);
+  return (
+    <>
+      <Menubar>
+        {assisantConfig?.menus?.map((x) => {
+          return (
+            <MenubarMenu key={x.id}>
+              <MenubarTrigger>{x.label}</MenubarTrigger>
+              <MenubarContent>
+                {x.children?.map((y) => (
+                  <MenuBarOpenViewItem
+                    key={y.id}
+                    // label={y.label}
+                    // viewName={y.viewName || ""}
+                    // icon={y.icon || ""}
+                    // target={y.target || "workbench"}
+                    {...y}
+                  />
+                ))}
+              </MenubarContent>
+            </MenubarMenu>
+          );
+        })}
+      </Menubar>
+    </>
+  );
+}
+
+interface OpenViewButtonProps extends AssisantMenus {}
+
+export function MenuBarOpenViewItem(props: OpenViewButtonProps) {
+  const openListView = useWorkbrenchStore((x) => x.openView);
+  if (!props.viewName) throw new Error("required viewName");
+  return (
+    <MenubarItem
+      onClick={() => {
+        openListView(
+          props.viewName as string,
+          props.viewProps || {},
+          "workbench",
+        );
+      }}
+    >
+      {props.icon ? <IconX name={props.icon} className="size-4" /> : null}
+      {props.label}
+    </MenubarItem>
+  );
+}

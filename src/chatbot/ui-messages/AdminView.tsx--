@@ -1,0 +1,86 @@
+"use client";
+
+import { useQuery } from "@tanstack/react-query";
+import { MtButton } from "mtxuilib";
+// import { agentStateOptions } from "mtmaiapi/@tanstack/react-query.gen";
+import { CardContent, CardFooter } from "mtxuilib";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "mtxuilib";
+import { useAgentName, useThreadId } from "../hooks";
+import { Image } from "./Image";
+
+const AgentStateView = () => {
+  const threadId = useThreadId();
+  const agent = useAgentName();
+  const stateQuery = useQuery({
+    ...agentStateOptions({
+      body: {
+        // biome-ignore lint/style/noNonNullAssertion: <explanation>
+        thread_id: threadId!,
+        agent_id: agent,
+      },
+    }),
+  });
+  return (
+    <div>
+      <MtButton
+        onClick={() => {
+          console.log("stateQuery", stateQuery.data);
+        }}
+      >
+        点击查看状态(console)
+      </MtButton>
+    </div>
+  );
+};
+const tabItems = [
+  {
+    key: "内部状态",
+    title: "内部状态",
+    description: "",
+    Comp: () => <AgentStateView />,
+  },
+  {
+    key: "流程图",
+    title: "流程图",
+    description: "",
+    Comp: () => (
+      <div>
+        <Image src="/api/v1/agent/image/mtmaibot" alt="流程图" />
+      </div>
+    ),
+  },
+];
+export const AdminView = () => {
+  return (
+    <div className="flex justify-center ">
+      <Tabs defaultValue={tabItems[0].key} className="w-full">
+        <TabsList className="grid w-full grid-cols-4 mb-2">
+          {tabItems.map((item, i) => {
+            return (
+              <TabsTrigger value={item.key} key={item.key}>
+                {item.title}
+              </TabsTrigger>
+            );
+          })}
+        </TabsList>
+        {tabItems.map((item, i) => {
+          const Comp = item.Comp;
+          return (
+            <TabsContent value={item.key} key={item.key} className="p-0 m-0">
+              {/* <Card> */}
+              {/* <CardHeader>
+									<CardTitle>{item.title}</CardTitle>
+									<CardDescription>{item.description}</CardDescription>
+								</CardHeader> */}
+              <CardContent className="space-y-2">
+                <Comp />
+              </CardContent>
+              <CardFooter>{/* <Button>Save changes</Button> */}</CardFooter>
+              {/* </Card> */}
+            </TabsContent>
+          );
+        })}
+      </Tabs>
+    </div>
+  );
+};

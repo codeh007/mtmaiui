@@ -1,0 +1,177 @@
+"use client";
+
+import { createContext, useContext, useMemo } from "react";
+import { type StateCreator, createStore, useStore } from "zustand";
+import { devtools, subscribeWithSelector } from "zustand/middleware";
+import { immer } from "zustand/middleware/immer";
+import { useShallow } from "zustand/react/shallow";
+
+// import type { TaskResponse, TaskStatusResponse, ThreadForm } from "mtmaiapi";
+import type React from "react";
+export interface IAskForm {
+  callback: (data) => void;
+  askForm: ThreadForm;
+}
+export interface TaskActionsProps {
+  taskId: string;
+  accessToken?: string;
+}
+
+export interface WorkbrenchState extends TaskActionsProps {
+  task?: TaskResponse;
+  setTask: (task: TaskResponse) => void;
+  taskIsLoading: boolean;
+  setTaskIsLoading: (taskIsLoading: boolean) => void;
+  run: () => () => void;
+  latestTaskStatus: TaskStatusResponse;
+  setLatestTaskStatus: (taskStatus) => void;
+  cleanTaskStatus: () => void;
+}
+
+export const createTaskActionSlice: StateCreator<
+  WorkbrenchState,
+  [],
+  [],
+  WorkbrenchState
+> = (set, get, init) => {
+  return {
+    isDev: false,
+    taskId: "",
+    taskIsLoading: false,
+    setTask: (task) => {
+      set({ task });
+    },
+    setTaskIsLoading: (taskIsLoading) => {
+      set({ taskIsLoading });
+    },
+    run: async () => {
+      // Check if there's an existing cleanup function and call it first
+      const currentCleanup = get().cleanTaskStatus;
+      if (currentCleanup) {
+        currentCleanup();
+      }
+
+      //根据 业务逻辑，拉取实时屏幕（最终构件）
+      // 用 http 轮询的方式拉取最新状态
+      // const pollStatus = async () => {
+      //   const result = await tasksStatusV2({
+      //     body: {
+      //       task_id: get().taskId,
+      //     },
+      //   });
+      //   set({ latestTaskStatus: result.data });
+      // };
+
+      // Start polling every 3 seconds
+      // await pollStatus();
+      // const intervalId = setInterval(pollStatus, 3000);
+
+      // Clean up interval when component unmounts
+      // const cleanup = () => clearInterval(intervalId);
+      // set({ cleanTaskStatus: cleanup });
+      // return cleanup;
+    },
+    ...init,
+  };
+};
+
+type taskActionStore = ReturnType<typeof createTaskActionStore>;
+export type MainStoreState = WorkbrenchState & MessageParserSliceState;
+
+const createTaskActionStore = (initProps?: Partial<MainStoreState>) => {
+  return createStore<MainStoreState>()(
+    subscribeWithSelector(
+      // persist(
+      devtools(
+        immer((...a) => ({
+          ...createTaskActionSlice(...a),
+          ...createMessageParserSlice(...a),
+          ...initProps,
+        })),
+        {
+          name: "workbench-store",
+        },
+      ),
+    ),
+  );
+};
+export const mtmaiStoreContext = createContext<taskActionStore | null>(null);
+
+type AppProviderProps = React.PropsWithChildren<TaskActionsProps>;
+export const TaskActionProvider = (props: AppProviderProps) => {
+  const { children, ...etc } = props;
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  const mystore = useMemo(() => createTaskActionStore(etc), [etc]);
+  return (
+    <mtmaiStoreContext.Provider value={mystore}>
+      {children}
+    </mtmaiStoreContext.Provider>
+  );
+};
+
+const DEFAULT_USE_SHALLOW = false;
+export function useTaskActionStore(): MainStoreState;
+export function useTaskActionStore<T>(
+  selector: (state: MainStoreState) => T,
+): T;
+export function useTaskActionStore<T>(selector?: (state: MainStoreState) => T) {
+  const store = useContext(mtmaiStoreContext);
+  if (!store) throw new Error("useTaskActionStore must in WorkbrenchProvider");
+  if (selector) {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    return useStore(
+      store,
+      DEFAULT_USE_SHALLOW ? useShallow(selector) : selector,
+    );
+  }
+
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  return useStore(store);
+}
+
+// export const handleEventMessage = (
+// 	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+// 	eventData: any,
+// 	set: (
+// 		partial:
+// 			| Partial<WorkbrenchState>
+// 			| ((state: WorkbrenchState) => Partial<WorkbrenchState>),
+// 	) => void,
+// 	get: () => WorkbrenchState,
+// ) => {
+// 	// console.log("handleEventMessage", eventData);
+
+// 	const chunk = eventData[0].data.chunk;
+// 	const data = eventData[0].data;
+// 	const metadata = eventData[0].metadata;
+// 	const conent = data.chunk.content;
+// 	const content = chunk.content;
+// 	const node_name = metadata?.langgraph_node;
+
+// 	const existingMessageIndex = get().messages.findIndex(
+// 		(msg) => msg.id === chunk.id,
+// 	);
+// 	if (existingMessageIndex !== -1) {
+// 		// console.log("新langchain 消息", node_name, existingMessageIndex);
+// 		const preMessage = get().messages[existingMessageIndex];
+// 		get().setMessages([
+// 			...get().messages.slice(0, existingMessageIndex),
+
+// 			new AIMessage({
+// 				// ...get().messages[existingMessageIndex],
+// 				content: preMessage.content + conent,
+// 				id: chunk.id,
+// 				name: "assistant",
+// 			}),
+// 			...get().messages.slice(existingMessageIndex + 1),
+// 		]);
+// 	} else {
+// 		// console.log("新langchain 消息2", existingMessageIndex);
+// 		const newMessage = new AIMessage({
+// 			id: chunk.id,
+// 			content: content,
+// 			name: "assistant",
+// 		});
+// 		get().setMessages([...get().messages, newMessage]);
+// 	}
+// };

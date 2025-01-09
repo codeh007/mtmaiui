@@ -1,0 +1,154 @@
+"use client";
+
+import { EllipsisVerticalIcon } from "lucide-react";
+import type { CommonFormField } from "mtmaiapi/types.gen";
+import { DebugValue } from "mtxuilib/components/devtools/DebugValue";
+import { EditFormToolbar } from "mtxuilib/form/EditFormToolbar";
+import { ZForm, useZodForm } from "mtxuilib/form/ZodForm";
+import { Button } from "mtxuilib";
+import { Dialog, DialogContent, DialogTitle } from "mtxuilib";
+import { Drawer, DrawerContent } from "mtxuilib";
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuTrigger,
+} from "mtxuilib";
+import {
+	FormControl,
+	FormDescription,
+	FormField,
+	FormItem,
+	FormLabel,
+	FormMessage,
+} from "mtxuilib";
+import { Input } from "mtxuilib";
+import { Fragment, useState } from "react";
+import { useFormContext } from "react-hook-form";
+import { z } from "zod";
+export interface AgentTaskFormProps {
+	fields: CommonFormField[];
+}
+export default function CommonFormFieldsView(props: AgentTaskFormProps) {
+	const { fields } = props;
+
+	const form = useFormContext();
+	return (
+		<>
+			{fields?.map((formField) => (
+				<Fragment key={formField.name}>
+					<FormField
+						key={formField.name}
+						control={form.control}
+						name={formField.name}
+						render={({ field }) => (
+							<FormItem>
+								{formField.label && <FormLabel>{formField.label}</FormLabel>}
+								<FormControl>
+									<Input
+										placeholder={formField.placeholder || formField.label || ""}
+										{...field}
+									/>
+								</FormControl>
+								{formField.description && (
+									<FormDescription>{formField.description}</FormDescription>
+								)}
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
+					<div className="mt-6" />
+				</Fragment>
+			))}
+		</>
+	);
+}
+
+export interface GenPostFormOpenerProps {
+	taskName: string;
+	triggerVariant?: "DropdownMenu" | "Button";
+	viewVariant?: "Dialog" | "Drawer";
+	triggerIcon?: React.ReactNode;
+}
+
+export const AgentTaskFormOpener = (props: GenPostFormOpenerProps) => {
+	const [isOpen, setIsOpen] = useState(false);
+	const triggerVariant = props.triggerVariant || "Button";
+	const viewVariant = props.viewVariant || "Dialog";
+	const agentTaskForm = useAgentTaskForm(props.taskName);
+
+	const title = agentTaskForm.data?.form?.title || "";
+	const form = useZodForm({
+		schema: z.any(),
+		defaultValues: {
+			title: "title1",
+		},
+	});
+	const fields = agentTaskForm.data?.form?.fields || [];
+
+	const runAgentTask = useAgentRunTask();
+	const handleSubmit = async (data) => {
+		console.log(data);
+		const res = await runAgentTask.mutateAsync({
+			body: {
+				task_name: props.taskName,
+				// form: data,
+			},
+		});
+		console.log(res);
+	};
+
+	return (
+		<>
+			{triggerVariant === "Button" && (
+				<Button onClick={() => setIsOpen(true)}>
+					{props.triggerIcon}
+					{agentTaskForm.data?.form?.title}
+				</Button>
+			)}
+			{triggerVariant === "DropdownMenu" && (
+				<DropdownMenu>
+					<DropdownMenuTrigger>
+						<Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+							<span className="sr-only">Open menu</span>
+							<EllipsisVerticalIcon className="h-4 w-4" />
+						</Button>
+					</DropdownMenuTrigger>
+					<DropdownMenuContent>
+						<DropdownMenuItem>
+							<Button onClick={() => setIsOpen(true)}>{title}</Button>
+						</DropdownMenuItem>
+					</DropdownMenuContent>
+				</DropdownMenu>
+			)}
+
+			{viewVariant === "Dialog" && (
+				<Dialog open={isOpen} onOpenChange={setIsOpen}>
+					<DialogContent>
+						<DialogTitle> {title}</DialogTitle>
+						{agentTaskForm.isLoading && <div>加载中...</div>}
+						<ZForm form={form} handleSubmit={handleSubmit}>
+							<CommonFormFieldsView fields={fields || []} />
+							<DebugValue data={{ formErrors: form.formState.errors }} />
+						</ZForm>
+						<EditFormToolbar
+							form={form} // 参考ZodForm.tsx中的源码，利用 form.id属性，可以做到将提交按钮放到<form />元素之外
+							onCancel={() => {
+								setIsOpen(false);
+							}}
+							className="bg-primary-500 border p-2 font-bold text-white"
+						/>
+					</DialogContent>
+				</Dialog>
+			)}
+			{viewVariant === "Drawer" && (
+				<Drawer open={isOpen} onOpenChange={setIsOpen}>
+					{/* 待完善 */}
+					<DrawerContent>
+						<CommonFormFieldsView fields={fields || []} />
+					</DrawerContent>
+				</Drawer>
+			)}
+		</>
+	);
+};

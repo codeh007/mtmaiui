@@ -1,0 +1,79 @@
+"use client";
+
+import { useQuery } from "@tanstack/react-query";
+import { debounce } from "lodash";
+// import { searchSearchOptions } from "mtmaiapi/@tanstack/react-query.gen";
+import {
+	Command,
+	CommandEmpty,
+	CommandGroup,
+	CommandInput,
+	CommandItem,
+	CommandList,
+} from "mtxuilib";
+import { useCallback, useState } from "react";
+import { useMtPathName } from "../../hooks/hooks";
+
+/**
+ * 通用数据管理视图
+ *
+ */
+export const DataListView = () => {
+	const pathName = useMtPathName();
+	const [search, setSearch] = useState("");
+	const [queryParams, setQueryParams] = useState({
+		q: "",
+		dataType: "",
+	});
+
+	const debouncedSetQueryParams = useCallback(
+		debounce((value) => {
+			setQueryParams((prev) => ({
+				...prev,
+				q: value,
+			}));
+		}, 500),
+		[],
+	);
+	const handleInputChange = (v) => {
+		setSearch(v);
+		debouncedSetQueryParams(v);
+	};
+
+	const queryOptions = searchSearchOptions({
+		body: queryParams,
+	});
+
+	const listQuery = useQuery({
+		...queryOptions,
+	});
+	if (pathName !== "/datas") {
+		return null;
+	}
+	return (
+		<div className="p-1">
+			<Command>
+				<CommandInput
+					placeholder="输入搜索关键字..."
+					value={search}
+					onValueChange={handleInputChange}
+				/>
+				<CommandList>
+					<CommandEmpty>没有找到数据</CommandEmpty>
+					<CommandGroup heading="Suggestions">
+						{listQuery.data?.data.map((item, i) => (
+							// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+							<CommandItem key={i}>{(item.title as string) || "-"}</CommandItem>
+						))}
+					</CommandGroup>
+					{/* <CommandSeparator />
+					<CommandGroup heading="Settings">
+						<CommandItem>Profile</CommandItem>
+						<CommandItem>Billing</CommandItem>
+						<CommandItem>Settings</CommandItem>
+					</CommandGroup> */}
+				</CommandList>
+			</Command>
+		</div>
+	);
+};

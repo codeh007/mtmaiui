@@ -1,0 +1,11 @@
+{
+  "composite": true,
+  "extends": "../../../tsconfig.base.json",
+  "files": [
+    "src/main.tsx"
+  ],
+  "include": [
+    "src"
+    // "__tests__/**/*.test.*"
+  ]
+}

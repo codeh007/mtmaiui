@@ -1,0 +1,12 @@
+import { PromptBox } from "../../../../components/chat/prompt-input/PromptBox";
+import { SavedTasks } from "./SavedTasks";
+
+export function TaskTemplates() {
+  return (
+    <div className="space-y-8">
+      <PromptBox />
+      <h2 className="text-3xl">我的任务</h2>
+      <SavedTasks />
+    </div>
+  );
+}
