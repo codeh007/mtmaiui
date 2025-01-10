@@ -87,7 +87,8 @@
     "redaxios": "^0.5.1",
     "superjson": "^2.2.2",
     "unenv": "^1.10.0",
-    "zod": "^3.23.8"
+    "zod": "^3.23.8",
+    "tailwindcss-animate": "^1.0.7",
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",
