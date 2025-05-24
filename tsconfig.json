@@ -1,50 +1,55 @@
 {
-  "compilerOptions": {
-    "module": "ESNext",
-    "useDefineForClassFields": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "isolatedModules": true,
-    "moduleDetection": "force",
-    "noEmit": true,
-    // "jsx": "react-jsx",
-    "jsx": "preserve", //react-jsx
-    "allowImportingTsExtensions": true,
-    "lib": ["DOM", "DOM.iterable", "ES2022", "esnext", "WebWorker"],
-    "types": [
-      "node",
-      "vite/client",
-      "jest",
-      "bun-types",
-      "jquery",
-      "@cloudflare/workers-types",
-      "src/types/worker-configuration.d.ts"
-    ],
-    "moduleResolution": "bundler",
-    // "rootDir": ".",
-    "baseUrl": ".",
-    "paths": {
-      "@mtmaiui/*": ["./src/*"]
-      // mtmaiapi: path.resolve(__dirname, "../../packages/mtmaiapi/src"),
-      // mtxuilib: path.resolve(__dirname, "../../packages/mtxuilib/src"),
-    },
-    /* Linting */
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
-    "target": "ES2022",
-    "allowJs": true,
-    "incremental": true,
-    "noImplicitAny": false,
-    "resolveJsonModule": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ]
-    // "noUncheckedSideEffectImports": true
-  },
-  "include": [".next/types/**/*.ts", "src", ".next.dev/types/**/*.ts", "src/type/index.ts"],
-  "exclude": ["node_modules", "dist"]
+	"compilerOptions": {
+		"module": "ESNext",
+		"useDefineForClassFields": true,
+		"esModuleInterop": true,
+		"skipLibCheck": true,
+		"isolatedModules": true,
+		"moduleDetection": "force",
+		"noEmit": true,
+		// "jsx": "react-jsx",
+		"jsx": "preserve", //react-jsx
+		"allowImportingTsExtensions": true,
+		"lib": ["DOM", "DOM.iterable", "ES2022", "esnext", "WebWorker"],
+		"types": [
+			"node",
+			"vite/client",
+			"jest",
+			"bun-types",
+			"jquery",
+			"@cloudflare/workers-types",
+			"src/types/worker-configuration.d.ts"
+		],
+		"moduleResolution": "bundler",
+		// "rootDir": ".",
+		"baseUrl": ".",
+		"paths": {
+			"@mtmaiui/*": ["./src/*"]
+			// mtmaiapi: path.resolve(__dirname, "../../packages/mtmaiapi/src"),
+			// mtxuilib: path.resolve(__dirname, "../../packages/mtxuilib/src"),
+		},
+		/* Linting */
+		"strict": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"noFallthroughCasesInSwitch": true,
+		"target": "ES2022",
+		"allowJs": true,
+		"incremental": true,
+		"noImplicitAny": false,
+		"resolveJsonModule": true,
+		"plugins": [
+			{
+				"name": "next"
+			}
+		]
+		// "noUncheckedSideEffectImports": true
+	},
+	"include": [
+		".next/types/**/*.ts",
+		"src",
+		".next.dev/types/**/*.ts",
+		"src/type/index.ts"
+	],
+	"exclude": ["node_modules", "dist"]
 }
