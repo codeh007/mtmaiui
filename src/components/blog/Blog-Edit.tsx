@@ -3,18 +3,17 @@
 import { useMutation, useSuspenseQuery } from "@tanstack/react-query";
 import { blogGetOptions, blogUpdateMutation } from "mtmaiapi";
 
-import { EditFormToolbar } from "mtxuilib/form/EditFormToolbar";
-import { z } from "zod";
-import { useTenant } from "../../hooks/useAuth";
-import { useZodForm, ZForm } from "mtxuilib/form/ZodForm";
+import { ZForm, useZodForm } from "mtxuilib/mt/form/ZodForm";
 import {
+  FormControl,
   FormField,
   FormItem,
   FormLabel,
-  FormControl,
   FormMessage,
 } from "mtxuilib/ui/form";
 import { Input } from "mtxuilib/ui/input";
+import { z } from "zod";
+import { useTenant } from "../../hooks/useAuth";
 
 interface BlogEditViewProps {
   blogId: string;
@@ -95,7 +94,7 @@ export const BlogEditView = (props: BlogEditViewProps) => {
         {form.formState.isSubmitting && <Spinner />}
         Update Blog
       </Button> */}
-      <EditFormToolbar form={form} />
+      <ZFormToolbar form={form} />
     </>
   );
 };

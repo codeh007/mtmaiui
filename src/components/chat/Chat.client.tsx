@@ -1,22 +1,26 @@
 "use client";
 import type { Message } from "ai";
 import { useAnimate } from "framer-motion";
-import { Suspense, memo, useEffect, useRef } from "react";
-import { ToastContainer, cssTransition } from "react-toastify";
+import { useSnapScroll } from "mtxuilib/hooks/useSnapScroll";
+import { cn } from "mtxuilib/lib/utils";
+import {
+  type RefCallback,
+  forwardRef,
+  memo,
+  useEffect,
+  useMemo,
+  useRef,
+} from "react";
+import { useWorkbenchStore } from "../../stores/workbrench.store";
 
-import { fileModificationsToHTML } from "../../lib/utils/diff";
+import { classNames } from "mtxuilib/lib/utils";
+import { ModelContextMessageView } from "./ModelContextMessageView";
+import { BoltPromptBox } from "./prompt-input/BoltPromptBox";
 
-import { Icons } from "mtxuilib/icons/icons";
-import { usePromptEnhancer } from "../../hooks/usePromptEnhancer";
-import { useChatHistory } from "../../lib/persistence/useChatHistory";
-import { useWorkbrenchStore } from "../../stores/workbrench.store";
-import { BaseChat } from "./BaseChat";
-import { Header } from "./header/header";
-
-const toastAnimation = cssTransition({
-  enter: "animated fadeInRight",
-  exit: "animated fadeOutRight",
-});
+// const toastAnimation = cssTransition({
+//   enter: "animated fadeInRight",
+//   exit: "animated fadeOutRight",
+// });
 
 interface ChatProps {
   initialMessages?: Message[];
@@ -24,245 +28,209 @@ interface ChatProps {
 }
 
 export function ChatClient(props: ChatProps) {
-  const { ready, initialMessages, storeMessageHistory } = useChatHistory();
-  // const openChat = useWorkbrenchStore((x) => x.uiState.openChat);
-
+  const openChat = useWorkbenchStore((x) => x.openChat);
+  const setOpenChat = useWorkbenchStore((x) => x.setOpenChat);
+  const openWorkbench = useWorkbenchStore((x) => x.openWorkbench);
+  useEffect(() => {
+    setOpenChat(true);
+  }, [setOpenChat]);
   return (
     <>
-      <Header />
-      {ready && (
-        <ChatImpl
-          // chatProfile={chatProfile}
-          initialMessages={initialMessages}
-          storeMessageHistory={storeMessageHistory}
-        />
-      )}
-      <ToastContainer
-        closeButton={({ closeToast }) => {
-          return (
-            <button
-              type="button"
-              className="Toastify__close-button"
-              onClick={closeToast}
-            >
-              <Icons.X className="size-4" />
-            </button>
-          );
-        }}
-        icon={({ type }) => {
-          /**
-           * @todo Handle more types if we need them. This may require extra color palettes.
-           */
-          switch (type) {
-            case "success": {
-              return (
-                <div className="i-ph:check-bold text-bolt-elements-icon-success text-2xl">
-                  <Icons.check className="size-4" />
-                </div>
-              );
-            }
-            case "error": {
-              return (
-                <div className="i-ph:warning-circle-bold text-bolt-elements-icon-error text-2xl">
-                  <Icons.warning className="size-4" />
-                </div>
-              );
-            }
+      <div
+        className={cn(
+          "transition-all duration-300 ease-in-out min-w-min w-full",
+          {
+            "h-screen": true, //保持滚动条在容器内
+            "w-0": !openChat,
+          },
+        )}
+      >
+        <div
+          className={cn(
+            "transition-all duration-300 ease-in-out h-full  border-gray-300/50 overflow-scroll mx-auto",
+            {
+              "opacity-100 visible": openChat,
+              "opacity-0 invisible": !openChat,
+              "border-r-[1px]": openWorkbench,
+              // "overflow-hidden": true,
+            },
+          )}
+          style={
+            {
+              width: openChat ? "100%" : "0",
+              overflow: "hidden",
+              "--chat-max-width": "52rem", // 根据实际情况设置 chat 视图的最大宽度
+            } as React.CSSProperties
           }
-
-          return undefined;
-        }}
-        position="bottom-right"
-        pauseOnFocusLoss
-        transition={toastAnimation}
-      />
+        >
+          <ChatImpl />
+        </div>
+      </div>
     </>
   );
 }
 
-export const ChatImpl = memo(
-  ({ initialMessages = [], storeMessageHistory }: ChatProps) => {
-    useShortcuts();
+export const ChatImpl = memo((props: ChatProps) => {
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const showChat = useWorkbenchStore((x) => x.openChat);
+  const [animationScope, animate] = useAnimate();
+  const input = useWorkbenchStore((x) => x.input);
+  const setInput = useWorkbenchStore((x) => x.setInput);
+  const started = useWorkbenchStore((x) => x.chatStarted);
+  const TEXTAREA_MAX_HEIGHT = started ? 400 : 200;
+  const handleHumanInput = useWorkbenchStore((x) => x.handleHumanInput);
+  const scrollTextArea = () => {
+    const textarea = textareaRef.current;
 
-    const textareaRef = useRef<HTMLTextAreaElement>(null);
+    if (textarea) {
+      textarea.scrollTop = textarea.scrollHeight;
+    }
+  };
 
-    // const [chatStarted, setChatStarted] = useState(initialMessages?.length > 0);
+  const abort = () => {
+    stop();
+    // chatStore.setKey("aborted", true);
+    // setAborted(true);
+    // workbenchStore.abortAllActions();
+  };
 
-    const showChat = useWorkbrenchStore((x) => x.uiState.openChat);
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => {
+    const textarea = textareaRef.current;
 
-    const [animationScope, animate] = useAnimate();
+    if (textarea) {
+      textarea.style.height = "auto";
 
-    const input = useWorkbrenchStore((x) => x.input);
-    const setInput = useWorkbrenchStore((x) => x.setInput);
+      const scrollHeight = textarea.scrollHeight;
 
-    // const isLoading = useWorkbrenchStore((x) => x.aisdkIsLoading);
-    const { enhancingPrompt, promptEnhanced, enhancePrompt, resetEnhancer } =
-      usePromptEnhancer();
-    // const { parsedMessages, parseMessages } = useMessageParser();
-    const started = useWorkbrenchStore((x) => x.started);
-    const TEXTAREA_MAX_HEIGHT = started ? 400 : 200;
-    // const setStarted = useWorkbrenchStore((x) => x.setStarted);
-    // const messages = useWorkbrenchStore((x) => x.messages);
-    // const started = useMemo(() => {
-    // 	return messages?.length > 0;
-    // }, [messages]);
-    // useEffect(() => {
-    // 	setStarted(initialMessages?.length > 0 || false);
-    // }, []);
+      textarea.style.height = `${Math.min(scrollHeight, TEXTAREA_MAX_HEIGHT)}px`;
+      textarea.style.overflowY =
+        scrollHeight > TEXTAREA_MAX_HEIGHT ? "auto" : "hidden";
+    }
+  }, [input, textareaRef]);
 
-    // const append = useWorkbrenchStore((x) => x.aisdkAppend);
-    // const setAborted = useWorkbrenchStore((x) => x.setAborted);
-    // const handleSubmit = useWorkbrenchStore((x) => x.handleSubmit);
-    const handleHumanInput = useWorkbrenchStore((x) => x.handleHumanInput);
-    const scrollTextArea = () => {
-      const textarea = textareaRef.current;
+  const runAnimation = async () => {
+    if (started) {
+      return;
+    }
+  };
 
-      if (textarea) {
-        textarea.scrollTop = textarea.scrollHeight;
-      }
-    };
+  const sendMessage = async (messageInput?: string) => {
+    const _input = messageInput || input;
+    if (!_input) {
+      return;
+    }
+    handleHumanInput({
+      role: "user",
+      parts: [{ text: _input }],
+    });
+    runAnimation();
+    setInput("");
+    // resetEnhancer();
+    textareaRef.current?.blur();
+  };
 
-    const abort = () => {
-      stop();
-      // chatStore.setKey("aborted", true);
-      // setAborted(true);
-      workbenchStore.abortAllActions();
-    };
+  const [messageRef, scrollRef] = useSnapScroll();
+  return (
+    <BaseChat
+      ref={animationScope}
+      // textareaRef={textareaRef}
+      input={input}
+      showChat={!!showChat}
+      isStreaming={false}
+      // enhancingPrompt={enhancingPrompt}
+      // promptEnhanced={promptEnhanced}
+      sendMessage={sendMessage}
+      messageRef={messageRef}
+      scrollRef={scrollRef}
+      handleStop={abort}
+    />
+  );
+});
 
-    // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-    useEffect(() => {
-      const textarea = textareaRef.current;
+interface BaseChatProps {
+  textareaRef?: React.RefObject<HTMLTextAreaElement> | undefined;
+  messageRef?: RefCallback<HTMLDivElement> | undefined;
+  scrollRef?: RefCallback<HTMLDivElement> | undefined;
+  showChat?: boolean;
+  chatStarted?: boolean;
+  isStreaming?: boolean;
+  messages?: Message[];
+  input?: string;
+  handleStop?: () => void;
+  sendMessage?: (messageInput?: string) => void;
+  enhancePrompt?: () => void;
+  workbrenchChildren?: React.ReactNode;
+}
 
-      if (textarea) {
-        textarea.style.height = "auto";
+export const BaseChat = forwardRef<HTMLDivElement, BaseChatProps>(
+  (
+    {
+      textareaRef,
+      messageRef,
+      scrollRef,
+      showChat = true,
+      isStreaming = false,
+      input = "",
+      sendMessage,
+    },
+    ref,
+  ) => {
+    const messages = useWorkbenchStore((x) => x.messages);
+    const chatStarted = useMemo(() => {
+      return messages?.length > 0;
+    }, [messages]);
 
-        const scrollHeight = textarea.scrollHeight;
-
-        textarea.style.height = `${Math.min(scrollHeight, TEXTAREA_MAX_HEIGHT)}px`;
-        textarea.style.overflowY =
-          scrollHeight > TEXTAREA_MAX_HEIGHT ? "auto" : "hidden";
-      }
-    }, [input, textareaRef]);
-
-    const runAnimation = async () => {
-      if (started) {
-        return;
-      }
-
-      // await Promise.all([
-      //   animate(
-      //     "#examples",
-      //     { opacity: 0, display: "none" },
-      //     { duration: 0.1 },
-      //   ),
-      //   animate(
-      //     "#intro",
-      //     { opacity: 0, flex: 1 },
-      //     { duration: 0.2, ease: cubicEasingFn },
-      //   ),
-      // ]);
-    };
-
-    const sendMessage = async (
-      // _event: React.UIEvent,
-      messageInput?: string,
-    ) => {
-      // console.log("sendMessage", messageInput, input);
-      const _input = messageInput || input;
-
-      // handleHumanInput(_input);
-
-      if (_input.length === 0) {
-        return;
-      }
-
-      /**
-       * @note (delm) Usually saving files shouldn't take long but it may take longer if there
-       * many unsaved files. In that case we need to block user input and show an indicator
-       * of some kind so the user is aware that something is happening. But I consider the
-       * happy case to be no unsaved files and I would expect users to save their changes
-       * before they send another message.
-       */
-      // await workbenchStore.saveAllFiles();
-
-      const fileModifications = workbenchStore.getFileModifcations();
-
-      // chatStore.setKey("aborted", false);
-      // setAborted(false);
-
-      runAnimation();
-
-      if (fileModifications !== undefined) {
-        const diff = fileModificationsToHTML(fileModifications);
-
-        /**
-         * If we have file modifications we append a new user message manually since we have to prefix
-         * the user input with the file modifications and we don't want the new user input to appear
-         * in the prompt. Using `append` is almost the same as `handleSubmit` except that we have to
-         * manually reset the input and we'd have to manually pass in file attachments. However, those
-         * aren't relevant here.
-         */
-        // append({ role: "user", content: `${diff}\n\n${_input}` });
-
-        /**
-         * After sending a new message we reset all modifications since the model
-         * should now be aware of all the changes.
-         */
-        workbenchStore.resetAllFileModifications();
-      } else {
-        // append({ role: "user", content: _input });
-      }
-
-      setInput("");
-
-      resetEnhancer();
-
-      textareaRef.current?.blur();
-    };
-
-    const [messageRef, scrollRef] = useSnapScroll();
-
-    const handleAisdkInputChange = useWorkbrenchStore(
-      (x) => x.handleAisdkInputChange,
-    );
-
-    // const messages = useWorkbrenchStore((x) => x.aisdkMessages);
-
+    const setInput = useWorkbenchStore((x) => x.setInput);
+    const TEXTAREA_MAX_HEIGHT = chatStarted ? 400 : 200;
+    // const userAgentState = useWorkbenchStore((x) => x.userAgentState);
     return (
-      <Suspense fallback={<div>Loading chatbot...</div>}>
-        {/* 聊天窗口 */}
-        <BaseChat
-          ref={animationScope}
-          // textareaRef={textareaRef}
-          input={input}
-          showChat={!!showChat}
-          // chatStarted={chatStarted}
-          isStreaming={false}
-          enhancingPrompt={enhancingPrompt}
-          promptEnhanced={promptEnhanced}
-          sendMessage={sendMessage}
-          messageRef={messageRef}
-          scrollRef={scrollRef}
-          handleInputChange={handleAisdkInputChange}
-          handleStop={abort}
-          // messages={messages.map((message, i) => {
-          // 	if (message.role === "user") {
-          // 		return message;
-          // 	}
+      <>
+        <div
+          ref={ref}
+          className={classNames(
+            "relative flex h-full w-full bg-bolt-elements-background-depth-1 ",
+          )}
+          data-chat-visible={showChat}
+        >
+          <div ref={scrollRef} className="flex overflow-scroll w-full h-full">
+            <div
+              className={classNames(
+                "flex flex-col flex-grow min-w-[var(--chat-min-width)] h-full",
+              )}
+            >
+              <div
+                className={classNames("pt-2 px-1", {
+                  "h-full flex flex-col": chatStarted,
+                })}
+              >
+                {/* <DebugValue data={{ messages, userAgentState }} />                 */}
+                <ModelContextMessageView
+                  ref={messageRef}
+                  messages={messages}
+                  elements={[]}
+                  actions={[]}
+                  indent={0}
+                  isStreaming={isStreaming}
+                  className="flex flex-col w-full flex-1 max-w-chat pb-3 mx-auto z-1 mb-6"
+                />
 
-          // 	return {
-          // 		...message,
-          // 		// content: parsedMessages[i] || "",
-          // 	};
-          // })}
-          enhancePrompt={() => {
-            enhancePrompt(input, (input) => {
-              setInput(input);
-              scrollTextArea();
-            });
-          }}
-        />
-      </Suspense>
+                <BoltPromptBox
+                  // enhancingPrompt={enhancingPrompt}
+                  // promptEnhanced={promptEnhanced}
+                  input={input}
+                  sendMessage={sendMessage}
+                  isStreaming={isStreaming}
+                  chatStarted={chatStarted}
+                  handleInputChange={(message) => setInput(message)}
+                  // handleStop={handleStop}
+                  textareaRef={textareaRef}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </>
     );
   },
 );

@@ -12,53 +12,176 @@ import { createFileRoute } from '@tanstack/react-router'
 
 // Import Routes
 
-import { Route as rootRoute } from './routes/__root'
-import { Route as LayoutsrootImport } from './routes/layouts/__root'
-import { Route as PostsImport } from './routes/posts'
-import { Route as AnchorImport } from './routes/anchor'
-import { Route as LayoutImport } from './routes/_layout'
-import { Route as IndexImport } from './routes/index'
-import { Route as WorkflowsIndexImport } from './routes/workflows/index'
-import { Route as PostsIndexImport } from './routes/posts/index'
-import { Route as DashIndexImport } from './routes/dash/index'
-import { Route as WorkflowsWorkflowIdImport } from './routes/workflows/$workflowId'
-import { Route as PostsPostIdImport } from './routes/posts/$postId'
-import { Route as LayoutsLayout2LayoutBImport } from './routes/layouts/_layout-2/layout-b'
-import { Route as LayoutsLayout2LayoutAImport } from './routes/layouts/_layout-2/layout-a'
+import { Route as rootRoute } from './routes/~__root'
+import { Route as IndexImport } from './routes/~index'
+import { Route as EnvsCreateImport } from './routes/~envs/~create'
+import { Route as SiteSiteIdIndexImport } from './routes/~site/~$siteId/~index'
 
 // Create Virtual Routes
 
-const LayoutsImport = createFileRoute('/layouts')()
+const SiteRouteLazyImport = createFileRoute('/site')()
+const SandboxRouteLazyImport = createFileRoute('/sandbox')()
+const ResourceRouteLazyImport = createFileRoute('/resource')()
+const ChatRouteLazyImport = createFileRoute('/chat')()
+const AutomateRouteLazyImport = createFileRoute('/automate')()
+const AuthRouteLazyImport = createFileRoute('/auth')()
+const WorkflowRunsWorkflowRunIdRouteLazyImport = createFileRoute(
+  '/workflow-runs/$workflowRunId',
+)()
+const SiteSiteIdRouteLazyImport = createFileRoute('/site/$siteId')()
+const SandboxSandboxIdLazyImport = createFileRoute('/sandbox/$sandboxId')()
+const ResourceNewRouteLazyImport = createFileRoute('/resource/new')()
+const ResourceResIdRouteLazyImport = createFileRoute('/resource/$resId')()
+const ProxyNewRouteLazyImport = createFileRoute('/proxy/new')()
+const ProxyProxyIdRouteLazyImport = createFileRoute('/proxy/$proxyId')()
+const AuthRegisterLazyImport = createFileRoute('/auth/register')()
+const AuthLoginRouteLazyImport = createFileRoute('/auth/login')()
+const AdkSessionRouteLazyImport = createFileRoute('/adk/session')()
+const SiteIndexLazyImport = createFileRoute('/site/')()
+const SandboxIndexLazyImport = createFileRoute('/sandbox/')()
+const ResourceIndexLazyImport = createFileRoute('/resource/')()
+const MttaskIndexLazyImport = createFileRoute('/mttask/')()
+const ChatIndexLazyImport = createFileRoute('/chat/')()
+const AutomateIndexLazyImport = createFileRoute('/automate/')()
+const WorkflowRunsWorkflowRunIdVisualizationRouteLazyImport = createFileRoute(
+  '/workflow-runs/$workflowRunId/visualization',
+)()
+const WorkflowRunsWorkflowRunIdSummaryLazyImport = createFileRoute(
+  '/workflow-runs/$workflowRunId/summary',
+)()
+const WorkflowRunsWorkflowRunIdInputLazyImport = createFileRoute(
+  '/workflow-runs/$workflowRunId/input',
+)()
+const WorkflowRunsWorkflowRunIdChatRouteLazyImport = createFileRoute(
+  '/workflow-runs/$workflowRunId/chat',
+)()
+const WorkflowRunsWorkflowRunIdAdditionalMetadataLazyImport = createFileRoute(
+  '/workflow-runs/$workflowRunId/additional-metadata',
+)()
+const TenantSettingsTenantSettingIdRouteLazyImport = createFileRoute(
+  '/tenant/settings/$tenantSettingId',
+)()
+const ResourceResIdPlatformaccountRouteLazyImport = createFileRoute(
+  '/resource/$resId/platform_account',
+)()
+const ProxyProxyIdActionsRouteLazyImport = createFileRoute(
+  '/proxy/$proxyId/actions',
+)()
+const PlatformAccountPlatformAccountIdActionsRouteLazyImport = createFileRoute(
+  '/platform-account/$platformAccountId/actions',
+)()
+const AgentsAgentSessionIdRouteLazyImport = createFileRoute(
+  '/agents/$agent/$sessionId',
+)()
+const AdkSessionSessionIdRouteLazyImport = createFileRoute(
+  '/adk/session/$sessionId',
+)()
+const WorkflowRunsWorkflowRunIdIndexLazyImport = createFileRoute(
+  '/workflow-runs/$workflowRunId/',
+)()
+const SiteNewIndexLazyImport = createFileRoute('/site/new/')()
+const ResourceResIdIndexLazyImport = createFileRoute('/resource/$resId/')()
+const ProxyProxyIdIndexLazyImport = createFileRoute('/proxy/$proxyId/')()
+const ChatSessionIdIndexLazyImport = createFileRoute('/chat/$sessionId/')()
+const AuthLoginIndexLazyImport = createFileRoute('/auth/login/')()
+const AdkSessionIndexLazyImport = createFileRoute('/adk/session/')()
+const WorkflowsWorkflowIdTriggerSmolaRouteLazyImport = createFileRoute(
+  '/workflows/$workflowId/trigger/smola',
+)()
+const WorkflowRunsWorkflowRunIdStepRunStepRunIdRouteLazyImport =
+  createFileRoute('/workflow-runs/$workflowRunId/stepRun/$stepRunId')()
+const TenantSettingsTenantSettingIdModelsettingsRouteLazyImport =
+  createFileRoute('/tenant/settings/$tenantSettingId/model_settings')()
+const SiteSiteIdPostCreateLazyImport = createFileRoute(
+  '/site/$siteId/post/create',
+)()
+const ResourceNewResPlatformaccountLazyImport = createFileRoute(
+  '/resource/new/res/platform_account',
+)()
+const ResourceNewResChatLazyImport = createFileRoute('/resource/new/res/chat')()
+const ResourceNewResBrowserLazyImport = createFileRoute(
+  '/resource/new/res/browser',
+)()
+const AgentsAgentSessionIdStateRouteLazyImport = createFileRoute(
+  '/agents/$agent/$sessionId/state',
+)()
+const WorkflowRunsWorkflowRunIdVisualizationIndexLazyImport = createFileRoute(
+  '/workflow-runs/$workflowRunId/visualization/',
+)()
+const WorkflowRunsWorkflowRunIdChatIndexLazyImport = createFileRoute(
+  '/workflow-runs/$workflowRunId/chat/',
+)()
+const TenantSettingsTenantSettingIdIndexLazyImport = createFileRoute(
+  '/tenant/settings/$tenantSettingId/',
+)()
+const SiteSiteIdPostIndexLazyImport = createFileRoute('/site/$siteId/post/')()
+const SiteSiteIdHostIndexLazyImport = createFileRoute('/site/$siteId/host/')()
+const ResourceResIdPlatformaccountIndexLazyImport = createFileRoute(
+  '/resource/$resId/platform_account/',
+)()
+const ProxyProxyIdActionsIndexLazyImport = createFileRoute(
+  '/proxy/$proxyId/actions/',
+)()
+const PlatformAccountPlatformAccountIdActionsIndexLazyImport = createFileRoute(
+  '/platform-account/$platformAccountId/actions/',
+)()
+const AgentsAgentSessionIdIndexLazyImport = createFileRoute(
+  '/agents/$agent/$sessionId/',
+)()
+const AdkSessionSessionIdIndexLazyImport = createFileRoute(
+  '/adk/session/$sessionId/',
+)()
+const WorkflowsWorkflowIdTriggerSmolaIndexLazyImport = createFileRoute(
+  '/workflows/$workflowId/trigger/smola/',
+)()
+const WorkflowRunsWorkflowRunIdStepRunStepRunIdIndexLazyImport =
+  createFileRoute('/workflow-runs/$workflowRunId/stepRun/$stepRunId/')()
+const TenantSettingsTenantSettingIdModelsettingsIndexLazyImport =
+  createFileRoute('/tenant/settings/$tenantSettingId/model_settings/')()
 
 // Create/Update Routes
 
-const LayoutsrootRoute = LayoutsrootImport.update({
-  id: '/__root',
-  getParentRoute: () => LayoutsRoute,
-} as any)
-
-const LayoutsRoute = LayoutsImport.update({
-  id: '/layouts',
-  path: '/layouts',
+const SiteRouteLazyRoute = SiteRouteLazyImport.update({
+  id: '/site',
+  path: '/site',
   getParentRoute: () => rootRoute,
-} as any)
+} as any).lazy(() => import('./routes/~site/~route.lazy').then((d) => d.Route))
 
-const PostsRoute = PostsImport.update({
-  id: '/posts',
-  path: '/posts',
+const SandboxRouteLazyRoute = SandboxRouteLazyImport.update({
+  id: '/sandbox',
+  path: '/sandbox',
   getParentRoute: () => rootRoute,
-} as any)
+} as any).lazy(() =>
+  import('./routes/~sandbox/~route.lazy').then((d) => d.Route),
+)
 
-const AnchorRoute = AnchorImport.update({
-  id: '/anchor',
-  path: '/anchor',
+const ResourceRouteLazyRoute = ResourceRouteLazyImport.update({
+  id: '/resource',
+  path: '/resource',
   getParentRoute: () => rootRoute,
-} as any)
+} as any).lazy(() =>
+  import('./routes/~resource/~route.lazy').then((d) => d.Route),
+)
 
-const LayoutRoute = LayoutImport.update({
-  id: '/_layout',
+const ChatRouteLazyRoute = ChatRouteLazyImport.update({
+  id: '/chat',
+  path: '/chat',
   getParentRoute: () => rootRoute,
-} as any)
+} as any).lazy(() => import('./routes/~chat/~route.lazy').then((d) => d.Route))
+
+const AutomateRouteLazyRoute = AutomateRouteLazyImport.update({
+  id: '/automate',
+  path: '/automate',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() =>
+  import('./routes/~automate/~route.lazy').then((d) => d.Route),
+)
+
+const AuthRouteLazyRoute = AuthRouteLazyImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/~auth/~route.lazy').then((d) => d.Route))
 
 const IndexRoute = IndexImport.update({
   id: '/',
@@ -66,47 +189,542 @@ const IndexRoute = IndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const WorkflowsIndexRoute = WorkflowsIndexImport.update({
-  id: '/workflows/',
-  path: '/workflows/',
-  getParentRoute: () => rootRoute,
-} as any)
+const WorkflowRunsWorkflowRunIdRouteLazyRoute =
+  WorkflowRunsWorkflowRunIdRouteLazyImport.update({
+    id: '/workflow-runs/$workflowRunId',
+    path: '/workflow-runs/$workflowRunId',
+    getParentRoute: () => rootRoute,
+  } as any).lazy(() =>
+    import('./routes/~workflow-runs/~$workflowRunId/~route.lazy').then(
+      (d) => d.Route,
+    ),
+  )
 
-const PostsIndexRoute = PostsIndexImport.update({
+const SiteSiteIdRouteLazyRoute = SiteSiteIdRouteLazyImport.update({
+  id: '/$siteId',
+  path: '/$siteId',
+  getParentRoute: () => SiteRouteLazyRoute,
+} as any).lazy(() =>
+  import('./routes/~site/~$siteId/~route.lazy').then((d) => d.Route),
+)
+
+const SandboxSandboxIdLazyRoute = SandboxSandboxIdLazyImport.update({
+  id: '/$sandboxId',
+  path: '/$sandboxId',
+  getParentRoute: () => SandboxRouteLazyRoute,
+} as any).lazy(() =>
+  import('./routes/~sandbox/~$sandboxId.lazy').then((d) => d.Route),
+)
+
+const ResourceNewRouteLazyRoute = ResourceNewRouteLazyImport.update({
+  id: '/new',
+  path: '/new',
+  getParentRoute: () => ResourceRouteLazyRoute,
+} as any).lazy(() =>
+  import('./routes/~resource/~new/~route.lazy').then((d) => d.Route),
+)
+
+const ResourceResIdRouteLazyRoute = ResourceResIdRouteLazyImport.update({
+  id: '/$resId',
+  path: '/$resId',
+  getParentRoute: () => ResourceRouteLazyRoute,
+} as any).lazy(() =>
+  import('./routes/~resource/~$resId/~route.lazy').then((d) => d.Route),
+)
+
+const ProxyNewRouteLazyRoute = ProxyNewRouteLazyImport.update({
+  id: '/proxy/new',
+  path: '/proxy/new',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() =>
+  import('./routes/~proxy/~new/~route.lazy').then((d) => d.Route),
+)
+
+const ProxyProxyIdRouteLazyRoute = ProxyProxyIdRouteLazyImport.update({
+  id: '/proxy/$proxyId',
+  path: '/proxy/$proxyId',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() =>
+  import('./routes/~proxy/~$proxyId/~route.lazy').then((d) => d.Route),
+)
+
+const AuthRegisterLazyRoute = AuthRegisterLazyImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => AuthRouteLazyRoute,
+} as any).lazy(() =>
+  import('./routes/~auth/~register.lazy').then((d) => d.Route),
+)
+
+const AuthLoginRouteLazyRoute = AuthLoginRouteLazyImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => AuthRouteLazyRoute,
+} as any).lazy(() =>
+  import('./routes/~auth/~login/~route.lazy').then((d) => d.Route),
+)
+
+const AdkSessionRouteLazyRoute = AdkSessionRouteLazyImport.update({
+  id: '/adk/session',
+  path: '/adk/session',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() =>
+  import('./routes/~adk/~session/~route.lazy').then((d) => d.Route),
+)
+
+const SiteIndexLazyRoute = SiteIndexLazyImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => PostsRoute,
-} as any)
+  getParentRoute: () => SiteRouteLazyRoute,
+} as any).lazy(() => import('./routes/~site/~index.lazy').then((d) => d.Route))
 
-const DashIndexRoute = DashIndexImport.update({
-  id: '/dash/',
-  path: '/dash/',
+const SandboxIndexLazyRoute = SandboxIndexLazyImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => SandboxRouteLazyRoute,
+} as any).lazy(() =>
+  import('./routes/~sandbox/~index.lazy').then((d) => d.Route),
+)
+
+const ResourceIndexLazyRoute = ResourceIndexLazyImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ResourceRouteLazyRoute,
+} as any).lazy(() =>
+  import('./routes/~resource/~index.lazy').then((d) => d.Route),
+)
+
+const MttaskIndexLazyRoute = MttaskIndexLazyImport.update({
+  id: '/mttask/',
+  path: '/mttask/',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() =>
+  import('./routes/~mttask/~index.lazy').then((d) => d.Route),
+)
+
+const ChatIndexLazyRoute = ChatIndexLazyImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ChatRouteLazyRoute,
+} as any).lazy(() => import('./routes/~chat/~index.lazy').then((d) => d.Route))
+
+const AutomateIndexLazyRoute = AutomateIndexLazyImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AutomateRouteLazyRoute,
+} as any).lazy(() =>
+  import('./routes/~automate/~index.lazy').then((d) => d.Route),
+)
+
+const EnvsCreateRoute = EnvsCreateImport.update({
+  id: '/envs/create',
+  path: '/envs/create',
   getParentRoute: () => rootRoute,
 } as any)
 
-const WorkflowsWorkflowIdRoute = WorkflowsWorkflowIdImport.update({
-  id: '/workflows/$workflowId',
-  path: '/workflows/$workflowId',
-  getParentRoute: () => rootRoute,
+const WorkflowRunsWorkflowRunIdVisualizationRouteLazyRoute =
+  WorkflowRunsWorkflowRunIdVisualizationRouteLazyImport.update({
+    id: '/visualization',
+    path: '/visualization',
+    getParentRoute: () => WorkflowRunsWorkflowRunIdRouteLazyRoute,
+  } as any).lazy(() =>
+    import(
+      './routes/~workflow-runs/~$workflowRunId/~visualization/~route.lazy'
+    ).then((d) => d.Route),
+  )
+
+const WorkflowRunsWorkflowRunIdSummaryLazyRoute =
+  WorkflowRunsWorkflowRunIdSummaryLazyImport.update({
+    id: '/summary',
+    path: '/summary',
+    getParentRoute: () => WorkflowRunsWorkflowRunIdRouteLazyRoute,
+  } as any).lazy(() =>
+    import('./routes/~workflow-runs/~$workflowRunId/~summary.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+
+const WorkflowRunsWorkflowRunIdInputLazyRoute =
+  WorkflowRunsWorkflowRunIdInputLazyImport.update({
+    id: '/input',
+    path: '/input',
+    getParentRoute: () => WorkflowRunsWorkflowRunIdRouteLazyRoute,
+  } as any).lazy(() =>
+    import('./routes/~workflow-runs/~$workflowRunId/~input.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+
+const WorkflowRunsWorkflowRunIdChatRouteLazyRoute =
+  WorkflowRunsWorkflowRunIdChatRouteLazyImport.update({
+    id: '/chat',
+    path: '/chat',
+    getParentRoute: () => WorkflowRunsWorkflowRunIdRouteLazyRoute,
+  } as any).lazy(() =>
+    import('./routes/~workflow-runs/~$workflowRunId/~chat/~route.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+
+const WorkflowRunsWorkflowRunIdAdditionalMetadataLazyRoute =
+  WorkflowRunsWorkflowRunIdAdditionalMetadataLazyImport.update({
+    id: '/additional-metadata',
+    path: '/additional-metadata',
+    getParentRoute: () => WorkflowRunsWorkflowRunIdRouteLazyRoute,
+  } as any).lazy(() =>
+    import(
+      './routes/~workflow-runs/~$workflowRunId/~additional-metadata.lazy'
+    ).then((d) => d.Route),
+  )
+
+const TenantSettingsTenantSettingIdRouteLazyRoute =
+  TenantSettingsTenantSettingIdRouteLazyImport.update({
+    id: '/tenant/settings/$tenantSettingId',
+    path: '/tenant/settings/$tenantSettingId',
+    getParentRoute: () => rootRoute,
+  } as any).lazy(() =>
+    import('./routes/~tenant/~settings/~$tenantSettingId/~route.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+
+const ResourceResIdPlatformaccountRouteLazyRoute =
+  ResourceResIdPlatformaccountRouteLazyImport.update({
+    id: '/platform_account',
+    path: '/platform_account',
+    getParentRoute: () => ResourceResIdRouteLazyRoute,
+  } as any).lazy(() =>
+    import('./routes/~resource/~$resId/~platform_account/~route.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+
+const ProxyProxyIdActionsRouteLazyRoute =
+  ProxyProxyIdActionsRouteLazyImport.update({
+    id: '/actions',
+    path: '/actions',
+    getParentRoute: () => ProxyProxyIdRouteLazyRoute,
+  } as any).lazy(() =>
+    import('./routes/~proxy/~$proxyId/~actions/~route.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+
+const PlatformAccountPlatformAccountIdActionsRouteLazyRoute =
+  PlatformAccountPlatformAccountIdActionsRouteLazyImport.update({
+    id: '/platform-account/$platformAccountId/actions',
+    path: '/platform-account/$platformAccountId/actions',
+    getParentRoute: () => rootRoute,
+  } as any).lazy(() =>
+    import(
+      './routes/~platform-account/~$platformAccountId/~actions/~route.lazy'
+    ).then((d) => d.Route),
+  )
+
+const AgentsAgentSessionIdRouteLazyRoute =
+  AgentsAgentSessionIdRouteLazyImport.update({
+    id: '/agents/$agent/$sessionId',
+    path: '/agents/$agent/$sessionId',
+    getParentRoute: () => rootRoute,
+  } as any).lazy(() =>
+    import('./routes/~agents/~$agent/~$sessionId/~route.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+
+const AdkSessionSessionIdRouteLazyRoute =
+  AdkSessionSessionIdRouteLazyImport.update({
+    id: '/$sessionId',
+    path: '/$sessionId',
+    getParentRoute: () => AdkSessionRouteLazyRoute,
+  } as any).lazy(() =>
+    import('./routes/~adk/~session/~$sessionId/~route.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+
+const WorkflowRunsWorkflowRunIdIndexLazyRoute =
+  WorkflowRunsWorkflowRunIdIndexLazyImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => WorkflowRunsWorkflowRunIdRouteLazyRoute,
+  } as any).lazy(() =>
+    import('./routes/~workflow-runs/~$workflowRunId/~index.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+
+const SiteNewIndexLazyRoute = SiteNewIndexLazyImport.update({
+  id: '/new/',
+  path: '/new/',
+  getParentRoute: () => SiteRouteLazyRoute,
+} as any).lazy(() =>
+  import('./routes/~site/~new/~index.lazy').then((d) => d.Route),
+)
+
+const ResourceResIdIndexLazyRoute = ResourceResIdIndexLazyImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ResourceResIdRouteLazyRoute,
+} as any).lazy(() =>
+  import('./routes/~resource/~$resId/~index.lazy').then((d) => d.Route),
+)
+
+const ProxyProxyIdIndexLazyRoute = ProxyProxyIdIndexLazyImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ProxyProxyIdRouteLazyRoute,
+} as any).lazy(() =>
+  import('./routes/~proxy/~$proxyId/~index.lazy').then((d) => d.Route),
+)
+
+const ChatSessionIdIndexLazyRoute = ChatSessionIdIndexLazyImport.update({
+  id: '/$sessionId/',
+  path: '/$sessionId/',
+  getParentRoute: () => ChatRouteLazyRoute,
+} as any).lazy(() =>
+  import('./routes/~chat/~$sessionId/~index.lazy').then((d) => d.Route),
+)
+
+const AuthLoginIndexLazyRoute = AuthLoginIndexLazyImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthLoginRouteLazyRoute,
+} as any).lazy(() =>
+  import('./routes/~auth/~login/~index.lazy').then((d) => d.Route),
+)
+
+const AdkSessionIndexLazyRoute = AdkSessionIndexLazyImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdkSessionRouteLazyRoute,
+} as any).lazy(() =>
+  import('./routes/~adk/~session/~index.lazy').then((d) => d.Route),
+)
+
+const SiteSiteIdIndexRoute = SiteSiteIdIndexImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => SiteSiteIdRouteLazyRoute,
 } as any)
 
-const PostsPostIdRoute = PostsPostIdImport.update({
-  id: '/$postId',
-  path: '/$postId',
-  getParentRoute: () => PostsRoute,
-} as any)
+const WorkflowsWorkflowIdTriggerSmolaRouteLazyRoute =
+  WorkflowsWorkflowIdTriggerSmolaRouteLazyImport.update({
+    id: '/workflows/$workflowId/trigger/smola',
+    path: '/workflows/$workflowId/trigger/smola',
+    getParentRoute: () => rootRoute,
+  } as any).lazy(() =>
+    import('./routes/~workflows/~$workflowId/~trigger/~smola/~route.lazy').then(
+      (d) => d.Route,
+    ),
+  )
 
-const LayoutsLayout2LayoutBRoute = LayoutsLayout2LayoutBImport.update({
-  id: '/_layout-2/layout-b',
-  path: '/layout-b',
-  getParentRoute: () => LayoutsRoute,
-} as any)
+const WorkflowRunsWorkflowRunIdStepRunStepRunIdRouteLazyRoute =
+  WorkflowRunsWorkflowRunIdStepRunStepRunIdRouteLazyImport.update({
+    id: '/stepRun/$stepRunId',
+    path: '/stepRun/$stepRunId',
+    getParentRoute: () => WorkflowRunsWorkflowRunIdRouteLazyRoute,
+  } as any).lazy(() =>
+    import(
+      './routes/~workflow-runs/~$workflowRunId/~stepRun/~$stepRunId/~route.lazy'
+    ).then((d) => d.Route),
+  )
 
-const LayoutsLayout2LayoutARoute = LayoutsLayout2LayoutAImport.update({
-  id: '/_layout-2/layout-a',
-  path: '/layout-a',
-  getParentRoute: () => LayoutsRoute,
-} as any)
+const TenantSettingsTenantSettingIdModelsettingsRouteLazyRoute =
+  TenantSettingsTenantSettingIdModelsettingsRouteLazyImport.update({
+    id: '/model_settings',
+    path: '/model_settings',
+    getParentRoute: () => TenantSettingsTenantSettingIdRouteLazyRoute,
+  } as any).lazy(() =>
+    import(
+      './routes/~tenant/~settings/~$tenantSettingId/~model_settings/~route.lazy'
+    ).then((d) => d.Route),
+  )
+
+const SiteSiteIdPostCreateLazyRoute = SiteSiteIdPostCreateLazyImport.update({
+  id: '/post/create',
+  path: '/post/create',
+  getParentRoute: () => SiteSiteIdRouteLazyRoute,
+} as any).lazy(() =>
+  import('./routes/~site/~$siteId/~post/~create.lazy').then((d) => d.Route),
+)
+
+const ResourceNewResPlatformaccountLazyRoute =
+  ResourceNewResPlatformaccountLazyImport.update({
+    id: '/res/platform_account',
+    path: '/res/platform_account',
+    getParentRoute: () => ResourceNewRouteLazyRoute,
+  } as any).lazy(() =>
+    import('./routes/~resource/~new/~res/~platform_account.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+
+const ResourceNewResChatLazyRoute = ResourceNewResChatLazyImport.update({
+  id: '/res/chat',
+  path: '/res/chat',
+  getParentRoute: () => ResourceNewRouteLazyRoute,
+} as any).lazy(() =>
+  import('./routes/~resource/~new/~res/~chat.lazy').then((d) => d.Route),
+)
+
+const ResourceNewResBrowserLazyRoute = ResourceNewResBrowserLazyImport.update({
+  id: '/res/browser',
+  path: '/res/browser',
+  getParentRoute: () => ResourceNewRouteLazyRoute,
+} as any).lazy(() =>
+  import('./routes/~resource/~new/~res/~browser.lazy').then((d) => d.Route),
+)
+
+const AgentsAgentSessionIdStateRouteLazyRoute =
+  AgentsAgentSessionIdStateRouteLazyImport.update({
+    id: '/state',
+    path: '/state',
+    getParentRoute: () => AgentsAgentSessionIdRouteLazyRoute,
+  } as any).lazy(() =>
+    import('./routes/~agents/~$agent/~$sessionId/~state/~route.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+
+const WorkflowRunsWorkflowRunIdVisualizationIndexLazyRoute =
+  WorkflowRunsWorkflowRunIdVisualizationIndexLazyImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => WorkflowRunsWorkflowRunIdVisualizationRouteLazyRoute,
+  } as any).lazy(() =>
+    import(
+      './routes/~workflow-runs/~$workflowRunId/~visualization/~index.lazy'
+    ).then((d) => d.Route),
+  )
+
+const WorkflowRunsWorkflowRunIdChatIndexLazyRoute =
+  WorkflowRunsWorkflowRunIdChatIndexLazyImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => WorkflowRunsWorkflowRunIdChatRouteLazyRoute,
+  } as any).lazy(() =>
+    import('./routes/~workflow-runs/~$workflowRunId/~chat/~index.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+
+const TenantSettingsTenantSettingIdIndexLazyRoute =
+  TenantSettingsTenantSettingIdIndexLazyImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => TenantSettingsTenantSettingIdRouteLazyRoute,
+  } as any).lazy(() =>
+    import('./routes/~tenant/~settings/~$tenantSettingId/~index.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+
+const SiteSiteIdPostIndexLazyRoute = SiteSiteIdPostIndexLazyImport.update({
+  id: '/post/',
+  path: '/post/',
+  getParentRoute: () => SiteSiteIdRouteLazyRoute,
+} as any).lazy(() =>
+  import('./routes/~site/~$siteId/~post/~index.lazy').then((d) => d.Route),
+)
+
+const SiteSiteIdHostIndexLazyRoute = SiteSiteIdHostIndexLazyImport.update({
+  id: '/host/',
+  path: '/host/',
+  getParentRoute: () => SiteSiteIdRouteLazyRoute,
+} as any).lazy(() =>
+  import('./routes/~site/~$siteId/~host/~index.lazy').then((d) => d.Route),
+)
+
+const ResourceResIdPlatformaccountIndexLazyRoute =
+  ResourceResIdPlatformaccountIndexLazyImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => ResourceResIdPlatformaccountRouteLazyRoute,
+  } as any).lazy(() =>
+    import('./routes/~resource/~$resId/~platform_account/~index.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+
+const ProxyProxyIdActionsIndexLazyRoute =
+  ProxyProxyIdActionsIndexLazyImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => ProxyProxyIdActionsRouteLazyRoute,
+  } as any).lazy(() =>
+    import('./routes/~proxy/~$proxyId/~actions/~index.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+
+const PlatformAccountPlatformAccountIdActionsIndexLazyRoute =
+  PlatformAccountPlatformAccountIdActionsIndexLazyImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => PlatformAccountPlatformAccountIdActionsRouteLazyRoute,
+  } as any).lazy(() =>
+    import(
+      './routes/~platform-account/~$platformAccountId/~actions/~index.lazy'
+    ).then((d) => d.Route),
+  )
+
+const AgentsAgentSessionIdIndexLazyRoute =
+  AgentsAgentSessionIdIndexLazyImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AgentsAgentSessionIdRouteLazyRoute,
+  } as any).lazy(() =>
+    import('./routes/~agents/~$agent/~$sessionId/~index.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+
+const AdkSessionSessionIdIndexLazyRoute =
+  AdkSessionSessionIdIndexLazyImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AdkSessionSessionIdRouteLazyRoute,
+  } as any).lazy(() =>
+    import('./routes/~adk/~session/~$sessionId/~index.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+
+const WorkflowsWorkflowIdTriggerSmolaIndexLazyRoute =
+  WorkflowsWorkflowIdTriggerSmolaIndexLazyImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => WorkflowsWorkflowIdTriggerSmolaRouteLazyRoute,
+  } as any).lazy(() =>
+    import('./routes/~workflows/~$workflowId/~trigger/~smola/~index.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+
+const WorkflowRunsWorkflowRunIdStepRunStepRunIdIndexLazyRoute =
+  WorkflowRunsWorkflowRunIdStepRunStepRunIdIndexLazyImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () =>
+      WorkflowRunsWorkflowRunIdStepRunStepRunIdRouteLazyRoute,
+  } as any).lazy(() =>
+    import(
+      './routes/~workflow-runs/~$workflowRunId/~stepRun/~$stepRunId/~index.lazy'
+    ).then((d) => d.Route),
+  )
+
+const TenantSettingsTenantSettingIdModelsettingsIndexLazyRoute =
+  TenantSettingsTenantSettingIdModelsettingsIndexLazyImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () =>
+      TenantSettingsTenantSettingIdModelsettingsRouteLazyRoute,
+  } as any).lazy(() =>
+    import(
+      './routes/~tenant/~settings/~$tenantSettingId/~model_settings/~index.lazy'
+    ).then((d) => d.Route),
+  )
 
 // Populate the FileRoutesByPath interface
 
@@ -119,234 +737,1230 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/_layout': {
-      id: '/_layout'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof LayoutImport
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteLazyImport
       parentRoute: typeof rootRoute
     }
-    '/anchor': {
-      id: '/anchor'
-      path: '/anchor'
-      fullPath: '/anchor'
-      preLoaderRoute: typeof AnchorImport
+    '/automate': {
+      id: '/automate'
+      path: '/automate'
+      fullPath: '/automate'
+      preLoaderRoute: typeof AutomateRouteLazyImport
       parentRoute: typeof rootRoute
     }
-    '/posts': {
-      id: '/posts'
-      path: '/posts'
-      fullPath: '/posts'
-      preLoaderRoute: typeof PostsImport
+    '/chat': {
+      id: '/chat'
+      path: '/chat'
+      fullPath: '/chat'
+      preLoaderRoute: typeof ChatRouteLazyImport
       parentRoute: typeof rootRoute
     }
-    '/layouts': {
-      id: '/layouts'
-      path: '/layouts'
-      fullPath: '/layouts'
-      preLoaderRoute: typeof LayoutsImport
+    '/resource': {
+      id: '/resource'
+      path: '/resource'
+      fullPath: '/resource'
+      preLoaderRoute: typeof ResourceRouteLazyImport
       parentRoute: typeof rootRoute
     }
-    '/layouts/__root': {
-      id: '/layouts/__root'
-      path: '/layouts'
-      fullPath: '/layouts'
-      preLoaderRoute: typeof LayoutsrootImport
-      parentRoute: typeof LayoutsRoute
-    }
-    '/posts/$postId': {
-      id: '/posts/$postId'
-      path: '/$postId'
-      fullPath: '/posts/$postId'
-      preLoaderRoute: typeof PostsPostIdImport
-      parentRoute: typeof PostsImport
-    }
-    '/workflows/$workflowId': {
-      id: '/workflows/$workflowId'
-      path: '/workflows/$workflowId'
-      fullPath: '/workflows/$workflowId'
-      preLoaderRoute: typeof WorkflowsWorkflowIdImport
+    '/sandbox': {
+      id: '/sandbox'
+      path: '/sandbox'
+      fullPath: '/sandbox'
+      preLoaderRoute: typeof SandboxRouteLazyImport
       parentRoute: typeof rootRoute
     }
-    '/dash/': {
-      id: '/dash/'
-      path: '/dash'
-      fullPath: '/dash'
-      preLoaderRoute: typeof DashIndexImport
+    '/site': {
+      id: '/site'
+      path: '/site'
+      fullPath: '/site'
+      preLoaderRoute: typeof SiteRouteLazyImport
       parentRoute: typeof rootRoute
     }
-    '/posts/': {
-      id: '/posts/'
+    '/envs/create': {
+      id: '/envs/create'
+      path: '/envs/create'
+      fullPath: '/envs/create'
+      preLoaderRoute: typeof EnvsCreateImport
+      parentRoute: typeof rootRoute
+    }
+    '/automate/': {
+      id: '/automate/'
       path: '/'
-      fullPath: '/posts/'
-      preLoaderRoute: typeof PostsIndexImport
-      parentRoute: typeof PostsImport
+      fullPath: '/automate/'
+      preLoaderRoute: typeof AutomateIndexLazyImport
+      parentRoute: typeof AutomateRouteLazyImport
     }
-    '/workflows/': {
-      id: '/workflows/'
-      path: '/workflows'
-      fullPath: '/workflows'
-      preLoaderRoute: typeof WorkflowsIndexImport
+    '/chat/': {
+      id: '/chat/'
+      path: '/'
+      fullPath: '/chat/'
+      preLoaderRoute: typeof ChatIndexLazyImport
+      parentRoute: typeof ChatRouteLazyImport
+    }
+    '/mttask/': {
+      id: '/mttask/'
+      path: '/mttask'
+      fullPath: '/mttask'
+      preLoaderRoute: typeof MttaskIndexLazyImport
       parentRoute: typeof rootRoute
     }
-    '/layouts/_layout-2/layout-a': {
-      id: '/layouts/_layout-2/layout-a'
-      path: '/layout-a'
-      fullPath: '/layouts/layout-a'
-      preLoaderRoute: typeof LayoutsLayout2LayoutAImport
-      parentRoute: typeof LayoutsImport
+    '/resource/': {
+      id: '/resource/'
+      path: '/'
+      fullPath: '/resource/'
+      preLoaderRoute: typeof ResourceIndexLazyImport
+      parentRoute: typeof ResourceRouteLazyImport
     }
-    '/layouts/_layout-2/layout-b': {
-      id: '/layouts/_layout-2/layout-b'
-      path: '/layout-b'
-      fullPath: '/layouts/layout-b'
-      preLoaderRoute: typeof LayoutsLayout2LayoutBImport
-      parentRoute: typeof LayoutsImport
+    '/sandbox/': {
+      id: '/sandbox/'
+      path: '/'
+      fullPath: '/sandbox/'
+      preLoaderRoute: typeof SandboxIndexLazyImport
+      parentRoute: typeof SandboxRouteLazyImport
+    }
+    '/site/': {
+      id: '/site/'
+      path: '/'
+      fullPath: '/site/'
+      preLoaderRoute: typeof SiteIndexLazyImport
+      parentRoute: typeof SiteRouteLazyImport
+    }
+    '/adk/session': {
+      id: '/adk/session'
+      path: '/adk/session'
+      fullPath: '/adk/session'
+      preLoaderRoute: typeof AdkSessionRouteLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/auth/login': {
+      id: '/auth/login'
+      path: '/login'
+      fullPath: '/auth/login'
+      preLoaderRoute: typeof AuthLoginRouteLazyImport
+      parentRoute: typeof AuthRouteLazyImport
+    }
+    '/auth/register': {
+      id: '/auth/register'
+      path: '/register'
+      fullPath: '/auth/register'
+      preLoaderRoute: typeof AuthRegisterLazyImport
+      parentRoute: typeof AuthRouteLazyImport
+    }
+    '/proxy/$proxyId': {
+      id: '/proxy/$proxyId'
+      path: '/proxy/$proxyId'
+      fullPath: '/proxy/$proxyId'
+      preLoaderRoute: typeof ProxyProxyIdRouteLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/proxy/new': {
+      id: '/proxy/new'
+      path: '/proxy/new'
+      fullPath: '/proxy/new'
+      preLoaderRoute: typeof ProxyNewRouteLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/resource/$resId': {
+      id: '/resource/$resId'
+      path: '/$resId'
+      fullPath: '/resource/$resId'
+      preLoaderRoute: typeof ResourceResIdRouteLazyImport
+      parentRoute: typeof ResourceRouteLazyImport
+    }
+    '/resource/new': {
+      id: '/resource/new'
+      path: '/new'
+      fullPath: '/resource/new'
+      preLoaderRoute: typeof ResourceNewRouteLazyImport
+      parentRoute: typeof ResourceRouteLazyImport
+    }
+    '/sandbox/$sandboxId': {
+      id: '/sandbox/$sandboxId'
+      path: '/$sandboxId'
+      fullPath: '/sandbox/$sandboxId'
+      preLoaderRoute: typeof SandboxSandboxIdLazyImport
+      parentRoute: typeof SandboxRouteLazyImport
+    }
+    '/site/$siteId': {
+      id: '/site/$siteId'
+      path: '/$siteId'
+      fullPath: '/site/$siteId'
+      preLoaderRoute: typeof SiteSiteIdRouteLazyImport
+      parentRoute: typeof SiteRouteLazyImport
+    }
+    '/workflow-runs/$workflowRunId': {
+      id: '/workflow-runs/$workflowRunId'
+      path: '/workflow-runs/$workflowRunId'
+      fullPath: '/workflow-runs/$workflowRunId'
+      preLoaderRoute: typeof WorkflowRunsWorkflowRunIdRouteLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/site/$siteId/': {
+      id: '/site/$siteId/'
+      path: '/'
+      fullPath: '/site/$siteId/'
+      preLoaderRoute: typeof SiteSiteIdIndexImport
+      parentRoute: typeof SiteSiteIdRouteLazyImport
+    }
+    '/adk/session/': {
+      id: '/adk/session/'
+      path: '/'
+      fullPath: '/adk/session/'
+      preLoaderRoute: typeof AdkSessionIndexLazyImport
+      parentRoute: typeof AdkSessionRouteLazyImport
+    }
+    '/auth/login/': {
+      id: '/auth/login/'
+      path: '/'
+      fullPath: '/auth/login/'
+      preLoaderRoute: typeof AuthLoginIndexLazyImport
+      parentRoute: typeof AuthLoginRouteLazyImport
+    }
+    '/chat/$sessionId/': {
+      id: '/chat/$sessionId/'
+      path: '/$sessionId'
+      fullPath: '/chat/$sessionId'
+      preLoaderRoute: typeof ChatSessionIdIndexLazyImport
+      parentRoute: typeof ChatRouteLazyImport
+    }
+    '/proxy/$proxyId/': {
+      id: '/proxy/$proxyId/'
+      path: '/'
+      fullPath: '/proxy/$proxyId/'
+      preLoaderRoute: typeof ProxyProxyIdIndexLazyImport
+      parentRoute: typeof ProxyProxyIdRouteLazyImport
+    }
+    '/resource/$resId/': {
+      id: '/resource/$resId/'
+      path: '/'
+      fullPath: '/resource/$resId/'
+      preLoaderRoute: typeof ResourceResIdIndexLazyImport
+      parentRoute: typeof ResourceResIdRouteLazyImport
+    }
+    '/site/new/': {
+      id: '/site/new/'
+      path: '/new'
+      fullPath: '/site/new'
+      preLoaderRoute: typeof SiteNewIndexLazyImport
+      parentRoute: typeof SiteRouteLazyImport
+    }
+    '/workflow-runs/$workflowRunId/': {
+      id: '/workflow-runs/$workflowRunId/'
+      path: '/'
+      fullPath: '/workflow-runs/$workflowRunId/'
+      preLoaderRoute: typeof WorkflowRunsWorkflowRunIdIndexLazyImport
+      parentRoute: typeof WorkflowRunsWorkflowRunIdRouteLazyImport
+    }
+    '/adk/session/$sessionId': {
+      id: '/adk/session/$sessionId'
+      path: '/$sessionId'
+      fullPath: '/adk/session/$sessionId'
+      preLoaderRoute: typeof AdkSessionSessionIdRouteLazyImport
+      parentRoute: typeof AdkSessionRouteLazyImport
+    }
+    '/agents/$agent/$sessionId': {
+      id: '/agents/$agent/$sessionId'
+      path: '/agents/$agent/$sessionId'
+      fullPath: '/agents/$agent/$sessionId'
+      preLoaderRoute: typeof AgentsAgentSessionIdRouteLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/platform-account/$platformAccountId/actions': {
+      id: '/platform-account/$platformAccountId/actions'
+      path: '/platform-account/$platformAccountId/actions'
+      fullPath: '/platform-account/$platformAccountId/actions'
+      preLoaderRoute: typeof PlatformAccountPlatformAccountIdActionsRouteLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/proxy/$proxyId/actions': {
+      id: '/proxy/$proxyId/actions'
+      path: '/actions'
+      fullPath: '/proxy/$proxyId/actions'
+      preLoaderRoute: typeof ProxyProxyIdActionsRouteLazyImport
+      parentRoute: typeof ProxyProxyIdRouteLazyImport
+    }
+    '/resource/$resId/platform_account': {
+      id: '/resource/$resId/platform_account'
+      path: '/platform_account'
+      fullPath: '/resource/$resId/platform_account'
+      preLoaderRoute: typeof ResourceResIdPlatformaccountRouteLazyImport
+      parentRoute: typeof ResourceResIdRouteLazyImport
+    }
+    '/tenant/settings/$tenantSettingId': {
+      id: '/tenant/settings/$tenantSettingId'
+      path: '/tenant/settings/$tenantSettingId'
+      fullPath: '/tenant/settings/$tenantSettingId'
+      preLoaderRoute: typeof TenantSettingsTenantSettingIdRouteLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/workflow-runs/$workflowRunId/additional-metadata': {
+      id: '/workflow-runs/$workflowRunId/additional-metadata'
+      path: '/additional-metadata'
+      fullPath: '/workflow-runs/$workflowRunId/additional-metadata'
+      preLoaderRoute: typeof WorkflowRunsWorkflowRunIdAdditionalMetadataLazyImport
+      parentRoute: typeof WorkflowRunsWorkflowRunIdRouteLazyImport
+    }
+    '/workflow-runs/$workflowRunId/chat': {
+      id: '/workflow-runs/$workflowRunId/chat'
+      path: '/chat'
+      fullPath: '/workflow-runs/$workflowRunId/chat'
+      preLoaderRoute: typeof WorkflowRunsWorkflowRunIdChatRouteLazyImport
+      parentRoute: typeof WorkflowRunsWorkflowRunIdRouteLazyImport
+    }
+    '/workflow-runs/$workflowRunId/input': {
+      id: '/workflow-runs/$workflowRunId/input'
+      path: '/input'
+      fullPath: '/workflow-runs/$workflowRunId/input'
+      preLoaderRoute: typeof WorkflowRunsWorkflowRunIdInputLazyImport
+      parentRoute: typeof WorkflowRunsWorkflowRunIdRouteLazyImport
+    }
+    '/workflow-runs/$workflowRunId/summary': {
+      id: '/workflow-runs/$workflowRunId/summary'
+      path: '/summary'
+      fullPath: '/workflow-runs/$workflowRunId/summary'
+      preLoaderRoute: typeof WorkflowRunsWorkflowRunIdSummaryLazyImport
+      parentRoute: typeof WorkflowRunsWorkflowRunIdRouteLazyImport
+    }
+    '/workflow-runs/$workflowRunId/visualization': {
+      id: '/workflow-runs/$workflowRunId/visualization'
+      path: '/visualization'
+      fullPath: '/workflow-runs/$workflowRunId/visualization'
+      preLoaderRoute: typeof WorkflowRunsWorkflowRunIdVisualizationRouteLazyImport
+      parentRoute: typeof WorkflowRunsWorkflowRunIdRouteLazyImport
+    }
+    '/adk/session/$sessionId/': {
+      id: '/adk/session/$sessionId/'
+      path: '/'
+      fullPath: '/adk/session/$sessionId/'
+      preLoaderRoute: typeof AdkSessionSessionIdIndexLazyImport
+      parentRoute: typeof AdkSessionSessionIdRouteLazyImport
+    }
+    '/agents/$agent/$sessionId/': {
+      id: '/agents/$agent/$sessionId/'
+      path: '/'
+      fullPath: '/agents/$agent/$sessionId/'
+      preLoaderRoute: typeof AgentsAgentSessionIdIndexLazyImport
+      parentRoute: typeof AgentsAgentSessionIdRouteLazyImport
+    }
+    '/platform-account/$platformAccountId/actions/': {
+      id: '/platform-account/$platformAccountId/actions/'
+      path: '/'
+      fullPath: '/platform-account/$platformAccountId/actions/'
+      preLoaderRoute: typeof PlatformAccountPlatformAccountIdActionsIndexLazyImport
+      parentRoute: typeof PlatformAccountPlatformAccountIdActionsRouteLazyImport
+    }
+    '/proxy/$proxyId/actions/': {
+      id: '/proxy/$proxyId/actions/'
+      path: '/'
+      fullPath: '/proxy/$proxyId/actions/'
+      preLoaderRoute: typeof ProxyProxyIdActionsIndexLazyImport
+      parentRoute: typeof ProxyProxyIdActionsRouteLazyImport
+    }
+    '/resource/$resId/platform_account/': {
+      id: '/resource/$resId/platform_account/'
+      path: '/'
+      fullPath: '/resource/$resId/platform_account/'
+      preLoaderRoute: typeof ResourceResIdPlatformaccountIndexLazyImport
+      parentRoute: typeof ResourceResIdPlatformaccountRouteLazyImport
+    }
+    '/site/$siteId/host/': {
+      id: '/site/$siteId/host/'
+      path: '/host'
+      fullPath: '/site/$siteId/host'
+      preLoaderRoute: typeof SiteSiteIdHostIndexLazyImport
+      parentRoute: typeof SiteSiteIdRouteLazyImport
+    }
+    '/site/$siteId/post/': {
+      id: '/site/$siteId/post/'
+      path: '/post'
+      fullPath: '/site/$siteId/post'
+      preLoaderRoute: typeof SiteSiteIdPostIndexLazyImport
+      parentRoute: typeof SiteSiteIdRouteLazyImport
+    }
+    '/tenant/settings/$tenantSettingId/': {
+      id: '/tenant/settings/$tenantSettingId/'
+      path: '/'
+      fullPath: '/tenant/settings/$tenantSettingId/'
+      preLoaderRoute: typeof TenantSettingsTenantSettingIdIndexLazyImport
+      parentRoute: typeof TenantSettingsTenantSettingIdRouteLazyImport
+    }
+    '/workflow-runs/$workflowRunId/chat/': {
+      id: '/workflow-runs/$workflowRunId/chat/'
+      path: '/'
+      fullPath: '/workflow-runs/$workflowRunId/chat/'
+      preLoaderRoute: typeof WorkflowRunsWorkflowRunIdChatIndexLazyImport
+      parentRoute: typeof WorkflowRunsWorkflowRunIdChatRouteLazyImport
+    }
+    '/workflow-runs/$workflowRunId/visualization/': {
+      id: '/workflow-runs/$workflowRunId/visualization/'
+      path: '/'
+      fullPath: '/workflow-runs/$workflowRunId/visualization/'
+      preLoaderRoute: typeof WorkflowRunsWorkflowRunIdVisualizationIndexLazyImport
+      parentRoute: typeof WorkflowRunsWorkflowRunIdVisualizationRouteLazyImport
+    }
+    '/agents/$agent/$sessionId/state': {
+      id: '/agents/$agent/$sessionId/state'
+      path: '/state'
+      fullPath: '/agents/$agent/$sessionId/state'
+      preLoaderRoute: typeof AgentsAgentSessionIdStateRouteLazyImport
+      parentRoute: typeof AgentsAgentSessionIdRouteLazyImport
+    }
+    '/resource/new/res/browser': {
+      id: '/resource/new/res/browser'
+      path: '/res/browser'
+      fullPath: '/resource/new/res/browser'
+      preLoaderRoute: typeof ResourceNewResBrowserLazyImport
+      parentRoute: typeof ResourceNewRouteLazyImport
+    }
+    '/resource/new/res/chat': {
+      id: '/resource/new/res/chat'
+      path: '/res/chat'
+      fullPath: '/resource/new/res/chat'
+      preLoaderRoute: typeof ResourceNewResChatLazyImport
+      parentRoute: typeof ResourceNewRouteLazyImport
+    }
+    '/resource/new/res/platform_account': {
+      id: '/resource/new/res/platform_account'
+      path: '/res/platform_account'
+      fullPath: '/resource/new/res/platform_account'
+      preLoaderRoute: typeof ResourceNewResPlatformaccountLazyImport
+      parentRoute: typeof ResourceNewRouteLazyImport
+    }
+    '/site/$siteId/post/create': {
+      id: '/site/$siteId/post/create'
+      path: '/post/create'
+      fullPath: '/site/$siteId/post/create'
+      preLoaderRoute: typeof SiteSiteIdPostCreateLazyImport
+      parentRoute: typeof SiteSiteIdRouteLazyImport
+    }
+    '/tenant/settings/$tenantSettingId/model_settings': {
+      id: '/tenant/settings/$tenantSettingId/model_settings'
+      path: '/model_settings'
+      fullPath: '/tenant/settings/$tenantSettingId/model_settings'
+      preLoaderRoute: typeof TenantSettingsTenantSettingIdModelsettingsRouteLazyImport
+      parentRoute: typeof TenantSettingsTenantSettingIdRouteLazyImport
+    }
+    '/workflow-runs/$workflowRunId/stepRun/$stepRunId': {
+      id: '/workflow-runs/$workflowRunId/stepRun/$stepRunId'
+      path: '/stepRun/$stepRunId'
+      fullPath: '/workflow-runs/$workflowRunId/stepRun/$stepRunId'
+      preLoaderRoute: typeof WorkflowRunsWorkflowRunIdStepRunStepRunIdRouteLazyImport
+      parentRoute: typeof WorkflowRunsWorkflowRunIdRouteLazyImport
+    }
+    '/workflows/$workflowId/trigger/smola': {
+      id: '/workflows/$workflowId/trigger/smola'
+      path: '/workflows/$workflowId/trigger/smola'
+      fullPath: '/workflows/$workflowId/trigger/smola'
+      preLoaderRoute: typeof WorkflowsWorkflowIdTriggerSmolaRouteLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/tenant/settings/$tenantSettingId/model_settings/': {
+      id: '/tenant/settings/$tenantSettingId/model_settings/'
+      path: '/'
+      fullPath: '/tenant/settings/$tenantSettingId/model_settings/'
+      preLoaderRoute: typeof TenantSettingsTenantSettingIdModelsettingsIndexLazyImport
+      parentRoute: typeof TenantSettingsTenantSettingIdModelsettingsRouteLazyImport
+    }
+    '/workflow-runs/$workflowRunId/stepRun/$stepRunId/': {
+      id: '/workflow-runs/$workflowRunId/stepRun/$stepRunId/'
+      path: '/'
+      fullPath: '/workflow-runs/$workflowRunId/stepRun/$stepRunId/'
+      preLoaderRoute: typeof WorkflowRunsWorkflowRunIdStepRunStepRunIdIndexLazyImport
+      parentRoute: typeof WorkflowRunsWorkflowRunIdStepRunStepRunIdRouteLazyImport
+    }
+    '/workflows/$workflowId/trigger/smola/': {
+      id: '/workflows/$workflowId/trigger/smola/'
+      path: '/'
+      fullPath: '/workflows/$workflowId/trigger/smola/'
+      preLoaderRoute: typeof WorkflowsWorkflowIdTriggerSmolaIndexLazyImport
+      parentRoute: typeof WorkflowsWorkflowIdTriggerSmolaRouteLazyImport
     }
   }
 }
 
 // Create and export the route tree
 
-interface PostsRouteChildren {
-  PostsPostIdRoute: typeof PostsPostIdRoute
-  PostsIndexRoute: typeof PostsIndexRoute
+interface AuthLoginRouteLazyRouteChildren {
+  AuthLoginIndexLazyRoute: typeof AuthLoginIndexLazyRoute
 }
 
-const PostsRouteChildren: PostsRouteChildren = {
-  PostsPostIdRoute: PostsPostIdRoute,
-  PostsIndexRoute: PostsIndexRoute,
+const AuthLoginRouteLazyRouteChildren: AuthLoginRouteLazyRouteChildren = {
+  AuthLoginIndexLazyRoute: AuthLoginIndexLazyRoute,
 }
 
-const PostsRouteWithChildren = PostsRoute._addFileChildren(PostsRouteChildren)
+const AuthLoginRouteLazyRouteWithChildren =
+  AuthLoginRouteLazyRoute._addFileChildren(AuthLoginRouteLazyRouteChildren)
 
-interface LayoutsRouteChildren {
-  LayoutsrootRoute: typeof LayoutsrootRoute
-  LayoutsLayout2LayoutARoute: typeof LayoutsLayout2LayoutARoute
-  LayoutsLayout2LayoutBRoute: typeof LayoutsLayout2LayoutBRoute
+interface AuthRouteLazyRouteChildren {
+  AuthLoginRouteLazyRoute: typeof AuthLoginRouteLazyRouteWithChildren
+  AuthRegisterLazyRoute: typeof AuthRegisterLazyRoute
 }
 
-const LayoutsRouteChildren: LayoutsRouteChildren = {
-  LayoutsrootRoute: LayoutsrootRoute,
-  LayoutsLayout2LayoutARoute: LayoutsLayout2LayoutARoute,
-  LayoutsLayout2LayoutBRoute: LayoutsLayout2LayoutBRoute,
+const AuthRouteLazyRouteChildren: AuthRouteLazyRouteChildren = {
+  AuthLoginRouteLazyRoute: AuthLoginRouteLazyRouteWithChildren,
+  AuthRegisterLazyRoute: AuthRegisterLazyRoute,
 }
 
-const LayoutsRouteWithChildren =
-  LayoutsRoute._addFileChildren(LayoutsRouteChildren)
+const AuthRouteLazyRouteWithChildren = AuthRouteLazyRoute._addFileChildren(
+  AuthRouteLazyRouteChildren,
+)
+
+interface AutomateRouteLazyRouteChildren {
+  AutomateIndexLazyRoute: typeof AutomateIndexLazyRoute
+}
+
+const AutomateRouteLazyRouteChildren: AutomateRouteLazyRouteChildren = {
+  AutomateIndexLazyRoute: AutomateIndexLazyRoute,
+}
+
+const AutomateRouteLazyRouteWithChildren =
+  AutomateRouteLazyRoute._addFileChildren(AutomateRouteLazyRouteChildren)
+
+interface ChatRouteLazyRouteChildren {
+  ChatIndexLazyRoute: typeof ChatIndexLazyRoute
+  ChatSessionIdIndexLazyRoute: typeof ChatSessionIdIndexLazyRoute
+}
+
+const ChatRouteLazyRouteChildren: ChatRouteLazyRouteChildren = {
+  ChatIndexLazyRoute: ChatIndexLazyRoute,
+  ChatSessionIdIndexLazyRoute: ChatSessionIdIndexLazyRoute,
+}
+
+const ChatRouteLazyRouteWithChildren = ChatRouteLazyRoute._addFileChildren(
+  ChatRouteLazyRouteChildren,
+)
+
+interface ResourceResIdPlatformaccountRouteLazyRouteChildren {
+  ResourceResIdPlatformaccountIndexLazyRoute: typeof ResourceResIdPlatformaccountIndexLazyRoute
+}
+
+const ResourceResIdPlatformaccountRouteLazyRouteChildren: ResourceResIdPlatformaccountRouteLazyRouteChildren =
+  {
+    ResourceResIdPlatformaccountIndexLazyRoute:
+      ResourceResIdPlatformaccountIndexLazyRoute,
+  }
+
+const ResourceResIdPlatformaccountRouteLazyRouteWithChildren =
+  ResourceResIdPlatformaccountRouteLazyRoute._addFileChildren(
+    ResourceResIdPlatformaccountRouteLazyRouteChildren,
+  )
+
+interface ResourceResIdRouteLazyRouteChildren {
+  ResourceResIdIndexLazyRoute: typeof ResourceResIdIndexLazyRoute
+  ResourceResIdPlatformaccountRouteLazyRoute: typeof ResourceResIdPlatformaccountRouteLazyRouteWithChildren
+}
+
+const ResourceResIdRouteLazyRouteChildren: ResourceResIdRouteLazyRouteChildren =
+  {
+    ResourceResIdIndexLazyRoute: ResourceResIdIndexLazyRoute,
+    ResourceResIdPlatformaccountRouteLazyRoute:
+      ResourceResIdPlatformaccountRouteLazyRouteWithChildren,
+  }
+
+const ResourceResIdRouteLazyRouteWithChildren =
+  ResourceResIdRouteLazyRoute._addFileChildren(
+    ResourceResIdRouteLazyRouteChildren,
+  )
+
+interface ResourceNewRouteLazyRouteChildren {
+  ResourceNewResBrowserLazyRoute: typeof ResourceNewResBrowserLazyRoute
+  ResourceNewResChatLazyRoute: typeof ResourceNewResChatLazyRoute
+  ResourceNewResPlatformaccountLazyRoute: typeof ResourceNewResPlatformaccountLazyRoute
+}
+
+const ResourceNewRouteLazyRouteChildren: ResourceNewRouteLazyRouteChildren = {
+  ResourceNewResBrowserLazyRoute: ResourceNewResBrowserLazyRoute,
+  ResourceNewResChatLazyRoute: ResourceNewResChatLazyRoute,
+  ResourceNewResPlatformaccountLazyRoute:
+    ResourceNewResPlatformaccountLazyRoute,
+}
+
+const ResourceNewRouteLazyRouteWithChildren =
+  ResourceNewRouteLazyRoute._addFileChildren(ResourceNewRouteLazyRouteChildren)
+
+interface ResourceRouteLazyRouteChildren {
+  ResourceIndexLazyRoute: typeof ResourceIndexLazyRoute
+  ResourceResIdRouteLazyRoute: typeof ResourceResIdRouteLazyRouteWithChildren
+  ResourceNewRouteLazyRoute: typeof ResourceNewRouteLazyRouteWithChildren
+}
+
+const ResourceRouteLazyRouteChildren: ResourceRouteLazyRouteChildren = {
+  ResourceIndexLazyRoute: ResourceIndexLazyRoute,
+  ResourceResIdRouteLazyRoute: ResourceResIdRouteLazyRouteWithChildren,
+  ResourceNewRouteLazyRoute: ResourceNewRouteLazyRouteWithChildren,
+}
+
+const ResourceRouteLazyRouteWithChildren =
+  ResourceRouteLazyRoute._addFileChildren(ResourceRouteLazyRouteChildren)
+
+interface SandboxRouteLazyRouteChildren {
+  SandboxIndexLazyRoute: typeof SandboxIndexLazyRoute
+  SandboxSandboxIdLazyRoute: typeof SandboxSandboxIdLazyRoute
+}
+
+const SandboxRouteLazyRouteChildren: SandboxRouteLazyRouteChildren = {
+  SandboxIndexLazyRoute: SandboxIndexLazyRoute,
+  SandboxSandboxIdLazyRoute: SandboxSandboxIdLazyRoute,
+}
+
+const SandboxRouteLazyRouteWithChildren =
+  SandboxRouteLazyRoute._addFileChildren(SandboxRouteLazyRouteChildren)
+
+interface SiteSiteIdRouteLazyRouteChildren {
+  SiteSiteIdIndexRoute: typeof SiteSiteIdIndexRoute
+  SiteSiteIdHostIndexLazyRoute: typeof SiteSiteIdHostIndexLazyRoute
+  SiteSiteIdPostIndexLazyRoute: typeof SiteSiteIdPostIndexLazyRoute
+  SiteSiteIdPostCreateLazyRoute: typeof SiteSiteIdPostCreateLazyRoute
+}
+
+const SiteSiteIdRouteLazyRouteChildren: SiteSiteIdRouteLazyRouteChildren = {
+  SiteSiteIdIndexRoute: SiteSiteIdIndexRoute,
+  SiteSiteIdHostIndexLazyRoute: SiteSiteIdHostIndexLazyRoute,
+  SiteSiteIdPostIndexLazyRoute: SiteSiteIdPostIndexLazyRoute,
+  SiteSiteIdPostCreateLazyRoute: SiteSiteIdPostCreateLazyRoute,
+}
+
+const SiteSiteIdRouteLazyRouteWithChildren =
+  SiteSiteIdRouteLazyRoute._addFileChildren(SiteSiteIdRouteLazyRouteChildren)
+
+interface SiteRouteLazyRouteChildren {
+  SiteIndexLazyRoute: typeof SiteIndexLazyRoute
+  SiteSiteIdRouteLazyRoute: typeof SiteSiteIdRouteLazyRouteWithChildren
+  SiteNewIndexLazyRoute: typeof SiteNewIndexLazyRoute
+}
+
+const SiteRouteLazyRouteChildren: SiteRouteLazyRouteChildren = {
+  SiteIndexLazyRoute: SiteIndexLazyRoute,
+  SiteSiteIdRouteLazyRoute: SiteSiteIdRouteLazyRouteWithChildren,
+  SiteNewIndexLazyRoute: SiteNewIndexLazyRoute,
+}
+
+const SiteRouteLazyRouteWithChildren = SiteRouteLazyRoute._addFileChildren(
+  SiteRouteLazyRouteChildren,
+)
+
+interface AdkSessionSessionIdRouteLazyRouteChildren {
+  AdkSessionSessionIdIndexLazyRoute: typeof AdkSessionSessionIdIndexLazyRoute
+}
+
+const AdkSessionSessionIdRouteLazyRouteChildren: AdkSessionSessionIdRouteLazyRouteChildren =
+  {
+    AdkSessionSessionIdIndexLazyRoute: AdkSessionSessionIdIndexLazyRoute,
+  }
+
+const AdkSessionSessionIdRouteLazyRouteWithChildren =
+  AdkSessionSessionIdRouteLazyRoute._addFileChildren(
+    AdkSessionSessionIdRouteLazyRouteChildren,
+  )
+
+interface AdkSessionRouteLazyRouteChildren {
+  AdkSessionIndexLazyRoute: typeof AdkSessionIndexLazyRoute
+  AdkSessionSessionIdRouteLazyRoute: typeof AdkSessionSessionIdRouteLazyRouteWithChildren
+}
+
+const AdkSessionRouteLazyRouteChildren: AdkSessionRouteLazyRouteChildren = {
+  AdkSessionIndexLazyRoute: AdkSessionIndexLazyRoute,
+  AdkSessionSessionIdRouteLazyRoute:
+    AdkSessionSessionIdRouteLazyRouteWithChildren,
+}
+
+const AdkSessionRouteLazyRouteWithChildren =
+  AdkSessionRouteLazyRoute._addFileChildren(AdkSessionRouteLazyRouteChildren)
+
+interface ProxyProxyIdActionsRouteLazyRouteChildren {
+  ProxyProxyIdActionsIndexLazyRoute: typeof ProxyProxyIdActionsIndexLazyRoute
+}
+
+const ProxyProxyIdActionsRouteLazyRouteChildren: ProxyProxyIdActionsRouteLazyRouteChildren =
+  {
+    ProxyProxyIdActionsIndexLazyRoute: ProxyProxyIdActionsIndexLazyRoute,
+  }
+
+const ProxyProxyIdActionsRouteLazyRouteWithChildren =
+  ProxyProxyIdActionsRouteLazyRoute._addFileChildren(
+    ProxyProxyIdActionsRouteLazyRouteChildren,
+  )
+
+interface ProxyProxyIdRouteLazyRouteChildren {
+  ProxyProxyIdIndexLazyRoute: typeof ProxyProxyIdIndexLazyRoute
+  ProxyProxyIdActionsRouteLazyRoute: typeof ProxyProxyIdActionsRouteLazyRouteWithChildren
+}
+
+const ProxyProxyIdRouteLazyRouteChildren: ProxyProxyIdRouteLazyRouteChildren = {
+  ProxyProxyIdIndexLazyRoute: ProxyProxyIdIndexLazyRoute,
+  ProxyProxyIdActionsRouteLazyRoute:
+    ProxyProxyIdActionsRouteLazyRouteWithChildren,
+}
+
+const ProxyProxyIdRouteLazyRouteWithChildren =
+  ProxyProxyIdRouteLazyRoute._addFileChildren(
+    ProxyProxyIdRouteLazyRouteChildren,
+  )
+
+interface WorkflowRunsWorkflowRunIdChatRouteLazyRouteChildren {
+  WorkflowRunsWorkflowRunIdChatIndexLazyRoute: typeof WorkflowRunsWorkflowRunIdChatIndexLazyRoute
+}
+
+const WorkflowRunsWorkflowRunIdChatRouteLazyRouteChildren: WorkflowRunsWorkflowRunIdChatRouteLazyRouteChildren =
+  {
+    WorkflowRunsWorkflowRunIdChatIndexLazyRoute:
+      WorkflowRunsWorkflowRunIdChatIndexLazyRoute,
+  }
+
+const WorkflowRunsWorkflowRunIdChatRouteLazyRouteWithChildren =
+  WorkflowRunsWorkflowRunIdChatRouteLazyRoute._addFileChildren(
+    WorkflowRunsWorkflowRunIdChatRouteLazyRouteChildren,
+  )
+
+interface WorkflowRunsWorkflowRunIdVisualizationRouteLazyRouteChildren {
+  WorkflowRunsWorkflowRunIdVisualizationIndexLazyRoute: typeof WorkflowRunsWorkflowRunIdVisualizationIndexLazyRoute
+}
+
+const WorkflowRunsWorkflowRunIdVisualizationRouteLazyRouteChildren: WorkflowRunsWorkflowRunIdVisualizationRouteLazyRouteChildren =
+  {
+    WorkflowRunsWorkflowRunIdVisualizationIndexLazyRoute:
+      WorkflowRunsWorkflowRunIdVisualizationIndexLazyRoute,
+  }
+
+const WorkflowRunsWorkflowRunIdVisualizationRouteLazyRouteWithChildren =
+  WorkflowRunsWorkflowRunIdVisualizationRouteLazyRoute._addFileChildren(
+    WorkflowRunsWorkflowRunIdVisualizationRouteLazyRouteChildren,
+  )
+
+interface WorkflowRunsWorkflowRunIdStepRunStepRunIdRouteLazyRouteChildren {
+  WorkflowRunsWorkflowRunIdStepRunStepRunIdIndexLazyRoute: typeof WorkflowRunsWorkflowRunIdStepRunStepRunIdIndexLazyRoute
+}
+
+const WorkflowRunsWorkflowRunIdStepRunStepRunIdRouteLazyRouteChildren: WorkflowRunsWorkflowRunIdStepRunStepRunIdRouteLazyRouteChildren =
+  {
+    WorkflowRunsWorkflowRunIdStepRunStepRunIdIndexLazyRoute:
+      WorkflowRunsWorkflowRunIdStepRunStepRunIdIndexLazyRoute,
+  }
+
+const WorkflowRunsWorkflowRunIdStepRunStepRunIdRouteLazyRouteWithChildren =
+  WorkflowRunsWorkflowRunIdStepRunStepRunIdRouteLazyRoute._addFileChildren(
+    WorkflowRunsWorkflowRunIdStepRunStepRunIdRouteLazyRouteChildren,
+  )
+
+interface WorkflowRunsWorkflowRunIdRouteLazyRouteChildren {
+  WorkflowRunsWorkflowRunIdIndexLazyRoute: typeof WorkflowRunsWorkflowRunIdIndexLazyRoute
+  WorkflowRunsWorkflowRunIdAdditionalMetadataLazyRoute: typeof WorkflowRunsWorkflowRunIdAdditionalMetadataLazyRoute
+  WorkflowRunsWorkflowRunIdChatRouteLazyRoute: typeof WorkflowRunsWorkflowRunIdChatRouteLazyRouteWithChildren
+  WorkflowRunsWorkflowRunIdInputLazyRoute: typeof WorkflowRunsWorkflowRunIdInputLazyRoute
+  WorkflowRunsWorkflowRunIdSummaryLazyRoute: typeof WorkflowRunsWorkflowRunIdSummaryLazyRoute
+  WorkflowRunsWorkflowRunIdVisualizationRouteLazyRoute: typeof WorkflowRunsWorkflowRunIdVisualizationRouteLazyRouteWithChildren
+  WorkflowRunsWorkflowRunIdStepRunStepRunIdRouteLazyRoute: typeof WorkflowRunsWorkflowRunIdStepRunStepRunIdRouteLazyRouteWithChildren
+}
+
+const WorkflowRunsWorkflowRunIdRouteLazyRouteChildren: WorkflowRunsWorkflowRunIdRouteLazyRouteChildren =
+  {
+    WorkflowRunsWorkflowRunIdIndexLazyRoute:
+      WorkflowRunsWorkflowRunIdIndexLazyRoute,
+    WorkflowRunsWorkflowRunIdAdditionalMetadataLazyRoute:
+      WorkflowRunsWorkflowRunIdAdditionalMetadataLazyRoute,
+    WorkflowRunsWorkflowRunIdChatRouteLazyRoute:
+      WorkflowRunsWorkflowRunIdChatRouteLazyRouteWithChildren,
+    WorkflowRunsWorkflowRunIdInputLazyRoute:
+      WorkflowRunsWorkflowRunIdInputLazyRoute,
+    WorkflowRunsWorkflowRunIdSummaryLazyRoute:
+      WorkflowRunsWorkflowRunIdSummaryLazyRoute,
+    WorkflowRunsWorkflowRunIdVisualizationRouteLazyRoute:
+      WorkflowRunsWorkflowRunIdVisualizationRouteLazyRouteWithChildren,
+    WorkflowRunsWorkflowRunIdStepRunStepRunIdRouteLazyRoute:
+      WorkflowRunsWorkflowRunIdStepRunStepRunIdRouteLazyRouteWithChildren,
+  }
+
+const WorkflowRunsWorkflowRunIdRouteLazyRouteWithChildren =
+  WorkflowRunsWorkflowRunIdRouteLazyRoute._addFileChildren(
+    WorkflowRunsWorkflowRunIdRouteLazyRouteChildren,
+  )
+
+interface AgentsAgentSessionIdRouteLazyRouteChildren {
+  AgentsAgentSessionIdIndexLazyRoute: typeof AgentsAgentSessionIdIndexLazyRoute
+  AgentsAgentSessionIdStateRouteLazyRoute: typeof AgentsAgentSessionIdStateRouteLazyRoute
+}
+
+const AgentsAgentSessionIdRouteLazyRouteChildren: AgentsAgentSessionIdRouteLazyRouteChildren =
+  {
+    AgentsAgentSessionIdIndexLazyRoute: AgentsAgentSessionIdIndexLazyRoute,
+    AgentsAgentSessionIdStateRouteLazyRoute:
+      AgentsAgentSessionIdStateRouteLazyRoute,
+  }
+
+const AgentsAgentSessionIdRouteLazyRouteWithChildren =
+  AgentsAgentSessionIdRouteLazyRoute._addFileChildren(
+    AgentsAgentSessionIdRouteLazyRouteChildren,
+  )
+
+interface PlatformAccountPlatformAccountIdActionsRouteLazyRouteChildren {
+  PlatformAccountPlatformAccountIdActionsIndexLazyRoute: typeof PlatformAccountPlatformAccountIdActionsIndexLazyRoute
+}
+
+const PlatformAccountPlatformAccountIdActionsRouteLazyRouteChildren: PlatformAccountPlatformAccountIdActionsRouteLazyRouteChildren =
+  {
+    PlatformAccountPlatformAccountIdActionsIndexLazyRoute:
+      PlatformAccountPlatformAccountIdActionsIndexLazyRoute,
+  }
+
+const PlatformAccountPlatformAccountIdActionsRouteLazyRouteWithChildren =
+  PlatformAccountPlatformAccountIdActionsRouteLazyRoute._addFileChildren(
+    PlatformAccountPlatformAccountIdActionsRouteLazyRouteChildren,
+  )
+
+interface TenantSettingsTenantSettingIdModelsettingsRouteLazyRouteChildren {
+  TenantSettingsTenantSettingIdModelsettingsIndexLazyRoute: typeof TenantSettingsTenantSettingIdModelsettingsIndexLazyRoute
+}
+
+const TenantSettingsTenantSettingIdModelsettingsRouteLazyRouteChildren: TenantSettingsTenantSettingIdModelsettingsRouteLazyRouteChildren =
+  {
+    TenantSettingsTenantSettingIdModelsettingsIndexLazyRoute:
+      TenantSettingsTenantSettingIdModelsettingsIndexLazyRoute,
+  }
+
+const TenantSettingsTenantSettingIdModelsettingsRouteLazyRouteWithChildren =
+  TenantSettingsTenantSettingIdModelsettingsRouteLazyRoute._addFileChildren(
+    TenantSettingsTenantSettingIdModelsettingsRouteLazyRouteChildren,
+  )
+
+interface TenantSettingsTenantSettingIdRouteLazyRouteChildren {
+  TenantSettingsTenantSettingIdIndexLazyRoute: typeof TenantSettingsTenantSettingIdIndexLazyRoute
+  TenantSettingsTenantSettingIdModelsettingsRouteLazyRoute: typeof TenantSettingsTenantSettingIdModelsettingsRouteLazyRouteWithChildren
+}
+
+const TenantSettingsTenantSettingIdRouteLazyRouteChildren: TenantSettingsTenantSettingIdRouteLazyRouteChildren =
+  {
+    TenantSettingsTenantSettingIdIndexLazyRoute:
+      TenantSettingsTenantSettingIdIndexLazyRoute,
+    TenantSettingsTenantSettingIdModelsettingsRouteLazyRoute:
+      TenantSettingsTenantSettingIdModelsettingsRouteLazyRouteWithChildren,
+  }
+
+const TenantSettingsTenantSettingIdRouteLazyRouteWithChildren =
+  TenantSettingsTenantSettingIdRouteLazyRoute._addFileChildren(
+    TenantSettingsTenantSettingIdRouteLazyRouteChildren,
+  )
+
+interface WorkflowsWorkflowIdTriggerSmolaRouteLazyRouteChildren {
+  WorkflowsWorkflowIdTriggerSmolaIndexLazyRoute: typeof WorkflowsWorkflowIdTriggerSmolaIndexLazyRoute
+}
+
+const WorkflowsWorkflowIdTriggerSmolaRouteLazyRouteChildren: WorkflowsWorkflowIdTriggerSmolaRouteLazyRouteChildren =
+  {
+    WorkflowsWorkflowIdTriggerSmolaIndexLazyRoute:
+      WorkflowsWorkflowIdTriggerSmolaIndexLazyRoute,
+  }
+
+const WorkflowsWorkflowIdTriggerSmolaRouteLazyRouteWithChildren =
+  WorkflowsWorkflowIdTriggerSmolaRouteLazyRoute._addFileChildren(
+    WorkflowsWorkflowIdTriggerSmolaRouteLazyRouteChildren,
+  )
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '': typeof LayoutRoute
-  '/anchor': typeof AnchorRoute
-  '/posts': typeof PostsRouteWithChildren
-  '/layouts': typeof LayoutsrootRoute
-  '/posts/$postId': typeof PostsPostIdRoute
-  '/workflows/$workflowId': typeof WorkflowsWorkflowIdRoute
-  '/dash': typeof DashIndexRoute
-  '/posts/': typeof PostsIndexRoute
-  '/workflows': typeof WorkflowsIndexRoute
-  '/layouts/layout-a': typeof LayoutsLayout2LayoutARoute
-  '/layouts/layout-b': typeof LayoutsLayout2LayoutBRoute
+  '/auth': typeof AuthRouteLazyRouteWithChildren
+  '/automate': typeof AutomateRouteLazyRouteWithChildren
+  '/chat': typeof ChatRouteLazyRouteWithChildren
+  '/resource': typeof ResourceRouteLazyRouteWithChildren
+  '/sandbox': typeof SandboxRouteLazyRouteWithChildren
+  '/site': typeof SiteRouteLazyRouteWithChildren
+  '/envs/create': typeof EnvsCreateRoute
+  '/automate/': typeof AutomateIndexLazyRoute
+  '/chat/': typeof ChatIndexLazyRoute
+  '/mttask': typeof MttaskIndexLazyRoute
+  '/resource/': typeof ResourceIndexLazyRoute
+  '/sandbox/': typeof SandboxIndexLazyRoute
+  '/site/': typeof SiteIndexLazyRoute
+  '/adk/session': typeof AdkSessionRouteLazyRouteWithChildren
+  '/auth/login': typeof AuthLoginRouteLazyRouteWithChildren
+  '/auth/register': typeof AuthRegisterLazyRoute
+  '/proxy/$proxyId': typeof ProxyProxyIdRouteLazyRouteWithChildren
+  '/proxy/new': typeof ProxyNewRouteLazyRoute
+  '/resource/$resId': typeof ResourceResIdRouteLazyRouteWithChildren
+  '/resource/new': typeof ResourceNewRouteLazyRouteWithChildren
+  '/sandbox/$sandboxId': typeof SandboxSandboxIdLazyRoute
+  '/site/$siteId': typeof SiteSiteIdRouteLazyRouteWithChildren
+  '/workflow-runs/$workflowRunId': typeof WorkflowRunsWorkflowRunIdRouteLazyRouteWithChildren
+  '/site/$siteId/': typeof SiteSiteIdIndexRoute
+  '/adk/session/': typeof AdkSessionIndexLazyRoute
+  '/auth/login/': typeof AuthLoginIndexLazyRoute
+  '/chat/$sessionId': typeof ChatSessionIdIndexLazyRoute
+  '/proxy/$proxyId/': typeof ProxyProxyIdIndexLazyRoute
+  '/resource/$resId/': typeof ResourceResIdIndexLazyRoute
+  '/site/new': typeof SiteNewIndexLazyRoute
+  '/workflow-runs/$workflowRunId/': typeof WorkflowRunsWorkflowRunIdIndexLazyRoute
+  '/adk/session/$sessionId': typeof AdkSessionSessionIdRouteLazyRouteWithChildren
+  '/agents/$agent/$sessionId': typeof AgentsAgentSessionIdRouteLazyRouteWithChildren
+  '/platform-account/$platformAccountId/actions': typeof PlatformAccountPlatformAccountIdActionsRouteLazyRouteWithChildren
+  '/proxy/$proxyId/actions': typeof ProxyProxyIdActionsRouteLazyRouteWithChildren
+  '/resource/$resId/platform_account': typeof ResourceResIdPlatformaccountRouteLazyRouteWithChildren
+  '/tenant/settings/$tenantSettingId': typeof TenantSettingsTenantSettingIdRouteLazyRouteWithChildren
+  '/workflow-runs/$workflowRunId/additional-metadata': typeof WorkflowRunsWorkflowRunIdAdditionalMetadataLazyRoute
+  '/workflow-runs/$workflowRunId/chat': typeof WorkflowRunsWorkflowRunIdChatRouteLazyRouteWithChildren
+  '/workflow-runs/$workflowRunId/input': typeof WorkflowRunsWorkflowRunIdInputLazyRoute
+  '/workflow-runs/$workflowRunId/summary': typeof WorkflowRunsWorkflowRunIdSummaryLazyRoute
+  '/workflow-runs/$workflowRunId/visualization': typeof WorkflowRunsWorkflowRunIdVisualizationRouteLazyRouteWithChildren
+  '/adk/session/$sessionId/': typeof AdkSessionSessionIdIndexLazyRoute
+  '/agents/$agent/$sessionId/': typeof AgentsAgentSessionIdIndexLazyRoute
+  '/platform-account/$platformAccountId/actions/': typeof PlatformAccountPlatformAccountIdActionsIndexLazyRoute
+  '/proxy/$proxyId/actions/': typeof ProxyProxyIdActionsIndexLazyRoute
+  '/resource/$resId/platform_account/': typeof ResourceResIdPlatformaccountIndexLazyRoute
+  '/site/$siteId/host': typeof SiteSiteIdHostIndexLazyRoute
+  '/site/$siteId/post': typeof SiteSiteIdPostIndexLazyRoute
+  '/tenant/settings/$tenantSettingId/': typeof TenantSettingsTenantSettingIdIndexLazyRoute
+  '/workflow-runs/$workflowRunId/chat/': typeof WorkflowRunsWorkflowRunIdChatIndexLazyRoute
+  '/workflow-runs/$workflowRunId/visualization/': typeof WorkflowRunsWorkflowRunIdVisualizationIndexLazyRoute
+  '/agents/$agent/$sessionId/state': typeof AgentsAgentSessionIdStateRouteLazyRoute
+  '/resource/new/res/browser': typeof ResourceNewResBrowserLazyRoute
+  '/resource/new/res/chat': typeof ResourceNewResChatLazyRoute
+  '/resource/new/res/platform_account': typeof ResourceNewResPlatformaccountLazyRoute
+  '/site/$siteId/post/create': typeof SiteSiteIdPostCreateLazyRoute
+  '/tenant/settings/$tenantSettingId/model_settings': typeof TenantSettingsTenantSettingIdModelsettingsRouteLazyRouteWithChildren
+  '/workflow-runs/$workflowRunId/stepRun/$stepRunId': typeof WorkflowRunsWorkflowRunIdStepRunStepRunIdRouteLazyRouteWithChildren
+  '/workflows/$workflowId/trigger/smola': typeof WorkflowsWorkflowIdTriggerSmolaRouteLazyRouteWithChildren
+  '/tenant/settings/$tenantSettingId/model_settings/': typeof TenantSettingsTenantSettingIdModelsettingsIndexLazyRoute
+  '/workflow-runs/$workflowRunId/stepRun/$stepRunId/': typeof WorkflowRunsWorkflowRunIdStepRunStepRunIdIndexLazyRoute
+  '/workflows/$workflowId/trigger/smola/': typeof WorkflowsWorkflowIdTriggerSmolaIndexLazyRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '': typeof LayoutRoute
-  '/anchor': typeof AnchorRoute
-  '/layouts': typeof LayoutsrootRoute
-  '/posts/$postId': typeof PostsPostIdRoute
-  '/workflows/$workflowId': typeof WorkflowsWorkflowIdRoute
-  '/dash': typeof DashIndexRoute
-  '/posts': typeof PostsIndexRoute
-  '/workflows': typeof WorkflowsIndexRoute
-  '/layouts/layout-a': typeof LayoutsLayout2LayoutARoute
-  '/layouts/layout-b': typeof LayoutsLayout2LayoutBRoute
+  '/auth': typeof AuthRouteLazyRouteWithChildren
+  '/envs/create': typeof EnvsCreateRoute
+  '/automate': typeof AutomateIndexLazyRoute
+  '/chat': typeof ChatIndexLazyRoute
+  '/mttask': typeof MttaskIndexLazyRoute
+  '/resource': typeof ResourceIndexLazyRoute
+  '/sandbox': typeof SandboxIndexLazyRoute
+  '/site': typeof SiteIndexLazyRoute
+  '/auth/register': typeof AuthRegisterLazyRoute
+  '/proxy/new': typeof ProxyNewRouteLazyRoute
+  '/resource/new': typeof ResourceNewRouteLazyRouteWithChildren
+  '/sandbox/$sandboxId': typeof SandboxSandboxIdLazyRoute
+  '/site/$siteId': typeof SiteSiteIdIndexRoute
+  '/adk/session': typeof AdkSessionIndexLazyRoute
+  '/auth/login': typeof AuthLoginIndexLazyRoute
+  '/chat/$sessionId': typeof ChatSessionIdIndexLazyRoute
+  '/proxy/$proxyId': typeof ProxyProxyIdIndexLazyRoute
+  '/resource/$resId': typeof ResourceResIdIndexLazyRoute
+  '/site/new': typeof SiteNewIndexLazyRoute
+  '/workflow-runs/$workflowRunId': typeof WorkflowRunsWorkflowRunIdIndexLazyRoute
+  '/workflow-runs/$workflowRunId/additional-metadata': typeof WorkflowRunsWorkflowRunIdAdditionalMetadataLazyRoute
+  '/workflow-runs/$workflowRunId/input': typeof WorkflowRunsWorkflowRunIdInputLazyRoute
+  '/workflow-runs/$workflowRunId/summary': typeof WorkflowRunsWorkflowRunIdSummaryLazyRoute
+  '/adk/session/$sessionId': typeof AdkSessionSessionIdIndexLazyRoute
+  '/agents/$agent/$sessionId': typeof AgentsAgentSessionIdIndexLazyRoute
+  '/platform-account/$platformAccountId/actions': typeof PlatformAccountPlatformAccountIdActionsIndexLazyRoute
+  '/proxy/$proxyId/actions': typeof ProxyProxyIdActionsIndexLazyRoute
+  '/resource/$resId/platform_account': typeof ResourceResIdPlatformaccountIndexLazyRoute
+  '/site/$siteId/host': typeof SiteSiteIdHostIndexLazyRoute
+  '/site/$siteId/post': typeof SiteSiteIdPostIndexLazyRoute
+  '/tenant/settings/$tenantSettingId': typeof TenantSettingsTenantSettingIdIndexLazyRoute
+  '/workflow-runs/$workflowRunId/chat': typeof WorkflowRunsWorkflowRunIdChatIndexLazyRoute
+  '/workflow-runs/$workflowRunId/visualization': typeof WorkflowRunsWorkflowRunIdVisualizationIndexLazyRoute
+  '/agents/$agent/$sessionId/state': typeof AgentsAgentSessionIdStateRouteLazyRoute
+  '/resource/new/res/browser': typeof ResourceNewResBrowserLazyRoute
+  '/resource/new/res/chat': typeof ResourceNewResChatLazyRoute
+  '/resource/new/res/platform_account': typeof ResourceNewResPlatformaccountLazyRoute
+  '/site/$siteId/post/create': typeof SiteSiteIdPostCreateLazyRoute
+  '/tenant/settings/$tenantSettingId/model_settings': typeof TenantSettingsTenantSettingIdModelsettingsIndexLazyRoute
+  '/workflow-runs/$workflowRunId/stepRun/$stepRunId': typeof WorkflowRunsWorkflowRunIdStepRunStepRunIdIndexLazyRoute
+  '/workflows/$workflowId/trigger/smola': typeof WorkflowsWorkflowIdTriggerSmolaIndexLazyRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
-  '/_layout': typeof LayoutRoute
-  '/anchor': typeof AnchorRoute
-  '/posts': typeof PostsRouteWithChildren
-  '/layouts': typeof LayoutsRouteWithChildren
-  '/layouts/__root': typeof LayoutsrootRoute
-  '/posts/$postId': typeof PostsPostIdRoute
-  '/workflows/$workflowId': typeof WorkflowsWorkflowIdRoute
-  '/dash/': typeof DashIndexRoute
-  '/posts/': typeof PostsIndexRoute
-  '/workflows/': typeof WorkflowsIndexRoute
-  '/layouts/_layout-2/layout-a': typeof LayoutsLayout2LayoutARoute
-  '/layouts/_layout-2/layout-b': typeof LayoutsLayout2LayoutBRoute
+  '/auth': typeof AuthRouteLazyRouteWithChildren
+  '/automate': typeof AutomateRouteLazyRouteWithChildren
+  '/chat': typeof ChatRouteLazyRouteWithChildren
+  '/resource': typeof ResourceRouteLazyRouteWithChildren
+  '/sandbox': typeof SandboxRouteLazyRouteWithChildren
+  '/site': typeof SiteRouteLazyRouteWithChildren
+  '/envs/create': typeof EnvsCreateRoute
+  '/automate/': typeof AutomateIndexLazyRoute
+  '/chat/': typeof ChatIndexLazyRoute
+  '/mttask/': typeof MttaskIndexLazyRoute
+  '/resource/': typeof ResourceIndexLazyRoute
+  '/sandbox/': typeof SandboxIndexLazyRoute
+  '/site/': typeof SiteIndexLazyRoute
+  '/adk/session': typeof AdkSessionRouteLazyRouteWithChildren
+  '/auth/login': typeof AuthLoginRouteLazyRouteWithChildren
+  '/auth/register': typeof AuthRegisterLazyRoute
+  '/proxy/$proxyId': typeof ProxyProxyIdRouteLazyRouteWithChildren
+  '/proxy/new': typeof ProxyNewRouteLazyRoute
+  '/resource/$resId': typeof ResourceResIdRouteLazyRouteWithChildren
+  '/resource/new': typeof ResourceNewRouteLazyRouteWithChildren
+  '/sandbox/$sandboxId': typeof SandboxSandboxIdLazyRoute
+  '/site/$siteId': typeof SiteSiteIdRouteLazyRouteWithChildren
+  '/workflow-runs/$workflowRunId': typeof WorkflowRunsWorkflowRunIdRouteLazyRouteWithChildren
+  '/site/$siteId/': typeof SiteSiteIdIndexRoute
+  '/adk/session/': typeof AdkSessionIndexLazyRoute
+  '/auth/login/': typeof AuthLoginIndexLazyRoute
+  '/chat/$sessionId/': typeof ChatSessionIdIndexLazyRoute
+  '/proxy/$proxyId/': typeof ProxyProxyIdIndexLazyRoute
+  '/resource/$resId/': typeof ResourceResIdIndexLazyRoute
+  '/site/new/': typeof SiteNewIndexLazyRoute
+  '/workflow-runs/$workflowRunId/': typeof WorkflowRunsWorkflowRunIdIndexLazyRoute
+  '/adk/session/$sessionId': typeof AdkSessionSessionIdRouteLazyRouteWithChildren
+  '/agents/$agent/$sessionId': typeof AgentsAgentSessionIdRouteLazyRouteWithChildren
+  '/platform-account/$platformAccountId/actions': typeof PlatformAccountPlatformAccountIdActionsRouteLazyRouteWithChildren
+  '/proxy/$proxyId/actions': typeof ProxyProxyIdActionsRouteLazyRouteWithChildren
+  '/resource/$resId/platform_account': typeof ResourceResIdPlatformaccountRouteLazyRouteWithChildren
+  '/tenant/settings/$tenantSettingId': typeof TenantSettingsTenantSettingIdRouteLazyRouteWithChildren
+  '/workflow-runs/$workflowRunId/additional-metadata': typeof WorkflowRunsWorkflowRunIdAdditionalMetadataLazyRoute
+  '/workflow-runs/$workflowRunId/chat': typeof WorkflowRunsWorkflowRunIdChatRouteLazyRouteWithChildren
+  '/workflow-runs/$workflowRunId/input': typeof WorkflowRunsWorkflowRunIdInputLazyRoute
+  '/workflow-runs/$workflowRunId/summary': typeof WorkflowRunsWorkflowRunIdSummaryLazyRoute
+  '/workflow-runs/$workflowRunId/visualization': typeof WorkflowRunsWorkflowRunIdVisualizationRouteLazyRouteWithChildren
+  '/adk/session/$sessionId/': typeof AdkSessionSessionIdIndexLazyRoute
+  '/agents/$agent/$sessionId/': typeof AgentsAgentSessionIdIndexLazyRoute
+  '/platform-account/$platformAccountId/actions/': typeof PlatformAccountPlatformAccountIdActionsIndexLazyRoute
+  '/proxy/$proxyId/actions/': typeof ProxyProxyIdActionsIndexLazyRoute
+  '/resource/$resId/platform_account/': typeof ResourceResIdPlatformaccountIndexLazyRoute
+  '/site/$siteId/host/': typeof SiteSiteIdHostIndexLazyRoute
+  '/site/$siteId/post/': typeof SiteSiteIdPostIndexLazyRoute
+  '/tenant/settings/$tenantSettingId/': typeof TenantSettingsTenantSettingIdIndexLazyRoute
+  '/workflow-runs/$workflowRunId/chat/': typeof WorkflowRunsWorkflowRunIdChatIndexLazyRoute
+  '/workflow-runs/$workflowRunId/visualization/': typeof WorkflowRunsWorkflowRunIdVisualizationIndexLazyRoute
+  '/agents/$agent/$sessionId/state': typeof AgentsAgentSessionIdStateRouteLazyRoute
+  '/resource/new/res/browser': typeof ResourceNewResBrowserLazyRoute
+  '/resource/new/res/chat': typeof ResourceNewResChatLazyRoute
+  '/resource/new/res/platform_account': typeof ResourceNewResPlatformaccountLazyRoute
+  '/site/$siteId/post/create': typeof SiteSiteIdPostCreateLazyRoute
+  '/tenant/settings/$tenantSettingId/model_settings': typeof TenantSettingsTenantSettingIdModelsettingsRouteLazyRouteWithChildren
+  '/workflow-runs/$workflowRunId/stepRun/$stepRunId': typeof WorkflowRunsWorkflowRunIdStepRunStepRunIdRouteLazyRouteWithChildren
+  '/workflows/$workflowId/trigger/smola': typeof WorkflowsWorkflowIdTriggerSmolaRouteLazyRouteWithChildren
+  '/tenant/settings/$tenantSettingId/model_settings/': typeof TenantSettingsTenantSettingIdModelsettingsIndexLazyRoute
+  '/workflow-runs/$workflowRunId/stepRun/$stepRunId/': typeof WorkflowRunsWorkflowRunIdStepRunStepRunIdIndexLazyRoute
+  '/workflows/$workflowId/trigger/smola/': typeof WorkflowsWorkflowIdTriggerSmolaIndexLazyRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | ''
-    | '/anchor'
-    | '/posts'
-    | '/layouts'
-    | '/posts/$postId'
-    | '/workflows/$workflowId'
-    | '/dash'
-    | '/posts/'
-    | '/workflows'
-    | '/layouts/layout-a'
-    | '/layouts/layout-b'
+    | '/auth'
+    | '/automate'
+    | '/chat'
+    | '/resource'
+    | '/sandbox'
+    | '/site'
+    | '/envs/create'
+    | '/automate/'
+    | '/chat/'
+    | '/mttask'
+    | '/resource/'
+    | '/sandbox/'
+    | '/site/'
+    | '/adk/session'
+    | '/auth/login'
+    | '/auth/register'
+    | '/proxy/$proxyId'
+    | '/proxy/new'
+    | '/resource/$resId'
+    | '/resource/new'
+    | '/sandbox/$sandboxId'
+    | '/site/$siteId'
+    | '/workflow-runs/$workflowRunId'
+    | '/site/$siteId/'
+    | '/adk/session/'
+    | '/auth/login/'
+    | '/chat/$sessionId'
+    | '/proxy/$proxyId/'
+    | '/resource/$resId/'
+    | '/site/new'
+    | '/workflow-runs/$workflowRunId/'
+    | '/adk/session/$sessionId'
+    | '/agents/$agent/$sessionId'
+    | '/platform-account/$platformAccountId/actions'
+    | '/proxy/$proxyId/actions'
+    | '/resource/$resId/platform_account'
+    | '/tenant/settings/$tenantSettingId'
+    | '/workflow-runs/$workflowRunId/additional-metadata'
+    | '/workflow-runs/$workflowRunId/chat'
+    | '/workflow-runs/$workflowRunId/input'
+    | '/workflow-runs/$workflowRunId/summary'
+    | '/workflow-runs/$workflowRunId/visualization'
+    | '/adk/session/$sessionId/'
+    | '/agents/$agent/$sessionId/'
+    | '/platform-account/$platformAccountId/actions/'
+    | '/proxy/$proxyId/actions/'
+    | '/resource/$resId/platform_account/'
+    | '/site/$siteId/host'
+    | '/site/$siteId/post'
+    | '/tenant/settings/$tenantSettingId/'
+    | '/workflow-runs/$workflowRunId/chat/'
+    | '/workflow-runs/$workflowRunId/visualization/'
+    | '/agents/$agent/$sessionId/state'
+    | '/resource/new/res/browser'
+    | '/resource/new/res/chat'
+    | '/resource/new/res/platform_account'
+    | '/site/$siteId/post/create'
+    | '/tenant/settings/$tenantSettingId/model_settings'
+    | '/workflow-runs/$workflowRunId/stepRun/$stepRunId'
+    | '/workflows/$workflowId/trigger/smola'
+    | '/tenant/settings/$tenantSettingId/model_settings/'
+    | '/workflow-runs/$workflowRunId/stepRun/$stepRunId/'
+    | '/workflows/$workflowId/trigger/smola/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | ''
-    | '/anchor'
-    | '/layouts'
-    | '/posts/$postId'
-    | '/workflows/$workflowId'
-    | '/dash'
-    | '/posts'
-    | '/workflows'
-    | '/layouts/layout-a'
-    | '/layouts/layout-b'
+    | '/auth'
+    | '/envs/create'
+    | '/automate'
+    | '/chat'
+    | '/mttask'
+    | '/resource'
+    | '/sandbox'
+    | '/site'
+    | '/auth/register'
+    | '/proxy/new'
+    | '/resource/new'
+    | '/sandbox/$sandboxId'
+    | '/site/$siteId'
+    | '/adk/session'
+    | '/auth/login'
+    | '/chat/$sessionId'
+    | '/proxy/$proxyId'
+    | '/resource/$resId'
+    | '/site/new'
+    | '/workflow-runs/$workflowRunId'
+    | '/workflow-runs/$workflowRunId/additional-metadata'
+    | '/workflow-runs/$workflowRunId/input'
+    | '/workflow-runs/$workflowRunId/summary'
+    | '/adk/session/$sessionId'
+    | '/agents/$agent/$sessionId'
+    | '/platform-account/$platformAccountId/actions'
+    | '/proxy/$proxyId/actions'
+    | '/resource/$resId/platform_account'
+    | '/site/$siteId/host'
+    | '/site/$siteId/post'
+    | '/tenant/settings/$tenantSettingId'
+    | '/workflow-runs/$workflowRunId/chat'
+    | '/workflow-runs/$workflowRunId/visualization'
+    | '/agents/$agent/$sessionId/state'
+    | '/resource/new/res/browser'
+    | '/resource/new/res/chat'
+    | '/resource/new/res/platform_account'
+    | '/site/$siteId/post/create'
+    | '/tenant/settings/$tenantSettingId/model_settings'
+    | '/workflow-runs/$workflowRunId/stepRun/$stepRunId'
+    | '/workflows/$workflowId/trigger/smola'
   id:
     | '__root__'
     | '/'
-    | '/_layout'
-    | '/anchor'
-    | '/posts'
-    | '/layouts'
-    | '/layouts/__root'
-    | '/posts/$postId'
-    | '/workflows/$workflowId'
-    | '/dash/'
-    | '/posts/'
-    | '/workflows/'
-    | '/layouts/_layout-2/layout-a'
-    | '/layouts/_layout-2/layout-b'
+    | '/auth'
+    | '/automate'
+    | '/chat'
+    | '/resource'
+    | '/sandbox'
+    | '/site'
+    | '/envs/create'
+    | '/automate/'
+    | '/chat/'
+    | '/mttask/'
+    | '/resource/'
+    | '/sandbox/'
+    | '/site/'
+    | '/adk/session'
+    | '/auth/login'
+    | '/auth/register'
+    | '/proxy/$proxyId'
+    | '/proxy/new'
+    | '/resource/$resId'
+    | '/resource/new'
+    | '/sandbox/$sandboxId'
+    | '/site/$siteId'
+    | '/workflow-runs/$workflowRunId'
+    | '/site/$siteId/'
+    | '/adk/session/'
+    | '/auth/login/'
+    | '/chat/$sessionId/'
+    | '/proxy/$proxyId/'
+    | '/resource/$resId/'
+    | '/site/new/'
+    | '/workflow-runs/$workflowRunId/'
+    | '/adk/session/$sessionId'
+    | '/agents/$agent/$sessionId'
+    | '/platform-account/$platformAccountId/actions'
+    | '/proxy/$proxyId/actions'
+    | '/resource/$resId/platform_account'
+    | '/tenant/settings/$tenantSettingId'
+    | '/workflow-runs/$workflowRunId/additional-metadata'
+    | '/workflow-runs/$workflowRunId/chat'
+    | '/workflow-runs/$workflowRunId/input'
+    | '/workflow-runs/$workflowRunId/summary'
+    | '/workflow-runs/$workflowRunId/visualization'
+    | '/adk/session/$sessionId/'
+    | '/agents/$agent/$sessionId/'
+    | '/platform-account/$platformAccountId/actions/'
+    | '/proxy/$proxyId/actions/'
+    | '/resource/$resId/platform_account/'
+    | '/site/$siteId/host/'
+    | '/site/$siteId/post/'
+    | '/tenant/settings/$tenantSettingId/'
+    | '/workflow-runs/$workflowRunId/chat/'
+    | '/workflow-runs/$workflowRunId/visualization/'
+    | '/agents/$agent/$sessionId/state'
+    | '/resource/new/res/browser'
+    | '/resource/new/res/chat'
+    | '/resource/new/res/platform_account'
+    | '/site/$siteId/post/create'
+    | '/tenant/settings/$tenantSettingId/model_settings'
+    | '/workflow-runs/$workflowRunId/stepRun/$stepRunId'
+    | '/workflows/$workflowId/trigger/smola'
+    | '/tenant/settings/$tenantSettingId/model_settings/'
+    | '/workflow-runs/$workflowRunId/stepRun/$stepRunId/'
+    | '/workflows/$workflowId/trigger/smola/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  LayoutRoute: typeof LayoutRoute
-  AnchorRoute: typeof AnchorRoute
-  PostsRoute: typeof PostsRouteWithChildren
-  LayoutsRoute: typeof LayoutsRouteWithChildren
-  WorkflowsWorkflowIdRoute: typeof WorkflowsWorkflowIdRoute
-  DashIndexRoute: typeof DashIndexRoute
-  WorkflowsIndexRoute: typeof WorkflowsIndexRoute
+  AuthRouteLazyRoute: typeof AuthRouteLazyRouteWithChildren
+  AutomateRouteLazyRoute: typeof AutomateRouteLazyRouteWithChildren
+  ChatRouteLazyRoute: typeof ChatRouteLazyRouteWithChildren
+  ResourceRouteLazyRoute: typeof ResourceRouteLazyRouteWithChildren
+  SandboxRouteLazyRoute: typeof SandboxRouteLazyRouteWithChildren
+  SiteRouteLazyRoute: typeof SiteRouteLazyRouteWithChildren
+  EnvsCreateRoute: typeof EnvsCreateRoute
+  MttaskIndexLazyRoute: typeof MttaskIndexLazyRoute
+  AdkSessionRouteLazyRoute: typeof AdkSessionRouteLazyRouteWithChildren
+  ProxyProxyIdRouteLazyRoute: typeof ProxyProxyIdRouteLazyRouteWithChildren
+  ProxyNewRouteLazyRoute: typeof ProxyNewRouteLazyRoute
+  WorkflowRunsWorkflowRunIdRouteLazyRoute: typeof WorkflowRunsWorkflowRunIdRouteLazyRouteWithChildren
+  AgentsAgentSessionIdRouteLazyRoute: typeof AgentsAgentSessionIdRouteLazyRouteWithChildren
+  PlatformAccountPlatformAccountIdActionsRouteLazyRoute: typeof PlatformAccountPlatformAccountIdActionsRouteLazyRouteWithChildren
+  TenantSettingsTenantSettingIdRouteLazyRoute: typeof TenantSettingsTenantSettingIdRouteLazyRouteWithChildren
+  WorkflowsWorkflowIdTriggerSmolaRouteLazyRoute: typeof WorkflowsWorkflowIdTriggerSmolaRouteLazyRouteWithChildren
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  LayoutRoute: LayoutRoute,
-  AnchorRoute: AnchorRoute,
-  PostsRoute: PostsRouteWithChildren,
-  LayoutsRoute: LayoutsRouteWithChildren,
-  WorkflowsWorkflowIdRoute: WorkflowsWorkflowIdRoute,
-  DashIndexRoute: DashIndexRoute,
-  WorkflowsIndexRoute: WorkflowsIndexRoute,
+  AuthRouteLazyRoute: AuthRouteLazyRouteWithChildren,
+  AutomateRouteLazyRoute: AutomateRouteLazyRouteWithChildren,
+  ChatRouteLazyRoute: ChatRouteLazyRouteWithChildren,
+  ResourceRouteLazyRoute: ResourceRouteLazyRouteWithChildren,
+  SandboxRouteLazyRoute: SandboxRouteLazyRouteWithChildren,
+  SiteRouteLazyRoute: SiteRouteLazyRouteWithChildren,
+  EnvsCreateRoute: EnvsCreateRoute,
+  MttaskIndexLazyRoute: MttaskIndexLazyRoute,
+  AdkSessionRouteLazyRoute: AdkSessionRouteLazyRouteWithChildren,
+  ProxyProxyIdRouteLazyRoute: ProxyProxyIdRouteLazyRouteWithChildren,
+  ProxyNewRouteLazyRoute: ProxyNewRouteLazyRoute,
+  WorkflowRunsWorkflowRunIdRouteLazyRoute:
+    WorkflowRunsWorkflowRunIdRouteLazyRouteWithChildren,
+  AgentsAgentSessionIdRouteLazyRoute:
+    AgentsAgentSessionIdRouteLazyRouteWithChildren,
+  PlatformAccountPlatformAccountIdActionsRouteLazyRoute:
+    PlatformAccountPlatformAccountIdActionsRouteLazyRouteWithChildren,
+  TenantSettingsTenantSettingIdRouteLazyRoute:
+    TenantSettingsTenantSettingIdRouteLazyRouteWithChildren,
+  WorkflowsWorkflowIdTriggerSmolaRouteLazyRoute:
+    WorkflowsWorkflowIdTriggerSmolaRouteLazyRouteWithChildren,
 }
 
 export const routeTree = rootRoute
@@ -357,70 +1971,360 @@ export const routeTree = rootRoute
 {
   "routes": {
     "__root__": {
-      "filePath": "__root.tsx",
+      "filePath": "~__root.tsx",
       "children": [
         "/",
-        "/_layout",
-        "/anchor",
-        "/posts",
-        "/layouts",
-        "/workflows/$workflowId",
-        "/dash/",
-        "/workflows/"
+        "/auth",
+        "/automate",
+        "/chat",
+        "/resource",
+        "/sandbox",
+        "/site",
+        "/envs/create",
+        "/mttask/",
+        "/adk/session",
+        "/proxy/$proxyId",
+        "/proxy/new",
+        "/workflow-runs/$workflowRunId",
+        "/agents/$agent/$sessionId",
+        "/platform-account/$platformAccountId/actions",
+        "/tenant/settings/$tenantSettingId",
+        "/workflows/$workflowId/trigger/smola"
       ]
     },
     "/": {
-      "filePath": "index.tsx"
+      "filePath": "~index.tsx"
     },
-    "/_layout": {
-      "filePath": "_layout.tsx"
-    },
-    "/anchor": {
-      "filePath": "anchor.tsx"
-    },
-    "/posts": {
-      "filePath": "posts.tsx",
+    "/auth": {
+      "filePath": "~auth/~route.lazy.tsx",
       "children": [
-        "/posts/$postId",
-        "/posts/"
+        "/auth/login",
+        "/auth/register"
       ]
     },
-    "/layouts": {
-      "filePath": "layouts",
+    "/automate": {
+      "filePath": "~automate/~route.lazy.tsx",
       "children": [
-        "/layouts/__root",
-        "/layouts/_layout-2/layout-a",
-        "/layouts/_layout-2/layout-b"
+        "/automate/"
       ]
     },
-    "/layouts/__root": {
-      "filePath": "layouts/__root.tsx",
-      "parent": "/layouts"
+    "/chat": {
+      "filePath": "~chat/~route.lazy.tsx",
+      "children": [
+        "/chat/",
+        "/chat/$sessionId/"
+      ]
     },
-    "/posts/$postId": {
-      "filePath": "posts/$postId.tsx",
-      "parent": "/posts"
+    "/resource": {
+      "filePath": "~resource/~route.lazy.tsx",
+      "children": [
+        "/resource/",
+        "/resource/$resId",
+        "/resource/new"
+      ]
     },
-    "/workflows/$workflowId": {
-      "filePath": "workflows/$workflowId.tsx"
+    "/sandbox": {
+      "filePath": "~sandbox/~route.lazy.tsx",
+      "children": [
+        "/sandbox/",
+        "/sandbox/$sandboxId"
+      ]
     },
-    "/dash/": {
-      "filePath": "dash/index.tsx"
+    "/site": {
+      "filePath": "~site/~route.lazy.tsx",
+      "children": [
+        "/site/",
+        "/site/$siteId",
+        "/site/new/"
+      ]
     },
-    "/posts/": {
-      "filePath": "posts/index.tsx",
-      "parent": "/posts"
+    "/envs/create": {
+      "filePath": "~envs/~create.tsx"
     },
-    "/workflows/": {
-      "filePath": "workflows/index.tsx"
+    "/automate/": {
+      "filePath": "~automate/~index.lazy.tsx",
+      "parent": "/automate"
     },
-    "/layouts/_layout-2/layout-a": {
-      "filePath": "layouts/_layout-2/layout-a.tsx",
-      "parent": "/layouts"
+    "/chat/": {
+      "filePath": "~chat/~index.lazy.tsx",
+      "parent": "/chat"
     },
-    "/layouts/_layout-2/layout-b": {
-      "filePath": "layouts/_layout-2/layout-b.tsx",
-      "parent": "/layouts"
+    "/mttask/": {
+      "filePath": "~mttask/~index.lazy.tsx"
+    },
+    "/resource/": {
+      "filePath": "~resource/~index.lazy.tsx",
+      "parent": "/resource"
+    },
+    "/sandbox/": {
+      "filePath": "~sandbox/~index.lazy.tsx",
+      "parent": "/sandbox"
+    },
+    "/site/": {
+      "filePath": "~site/~index.lazy.tsx",
+      "parent": "/site"
+    },
+    "/adk/session": {
+      "filePath": "~adk/~session/~route.lazy.tsx",
+      "children": [
+        "/adk/session/",
+        "/adk/session/$sessionId"
+      ]
+    },
+    "/auth/login": {
+      "filePath": "~auth/~login/~route.lazy.tsx",
+      "parent": "/auth",
+      "children": [
+        "/auth/login/"
+      ]
+    },
+    "/auth/register": {
+      "filePath": "~auth/~register.lazy.tsx",
+      "parent": "/auth"
+    },
+    "/proxy/$proxyId": {
+      "filePath": "~proxy/~$proxyId/~route.lazy.tsx",
+      "children": [
+        "/proxy/$proxyId/",
+        "/proxy/$proxyId/actions"
+      ]
+    },
+    "/proxy/new": {
+      "filePath": "~proxy/~new/~route.lazy.tsx"
+    },
+    "/resource/$resId": {
+      "filePath": "~resource/~$resId/~route.lazy.tsx",
+      "parent": "/resource",
+      "children": [
+        "/resource/$resId/",
+        "/resource/$resId/platform_account"
+      ]
+    },
+    "/resource/new": {
+      "filePath": "~resource/~new/~route.lazy.tsx",
+      "parent": "/resource",
+      "children": [
+        "/resource/new/res/browser",
+        "/resource/new/res/chat",
+        "/resource/new/res/platform_account"
+      ]
+    },
+    "/sandbox/$sandboxId": {
+      "filePath": "~sandbox/~$sandboxId.lazy.tsx",
+      "parent": "/sandbox"
+    },
+    "/site/$siteId": {
+      "filePath": "~site/~$siteId/~route.lazy.tsx",
+      "parent": "/site",
+      "children": [
+        "/site/$siteId/",
+        "/site/$siteId/host/",
+        "/site/$siteId/post/",
+        "/site/$siteId/post/create"
+      ]
+    },
+    "/workflow-runs/$workflowRunId": {
+      "filePath": "~workflow-runs/~$workflowRunId/~route.lazy.tsx",
+      "children": [
+        "/workflow-runs/$workflowRunId/",
+        "/workflow-runs/$workflowRunId/additional-metadata",
+        "/workflow-runs/$workflowRunId/chat",
+        "/workflow-runs/$workflowRunId/input",
+        "/workflow-runs/$workflowRunId/summary",
+        "/workflow-runs/$workflowRunId/visualization",
+        "/workflow-runs/$workflowRunId/stepRun/$stepRunId"
+      ]
+    },
+    "/site/$siteId/": {
+      "filePath": "~site/~$siteId/~index.tsx",
+      "parent": "/site/$siteId"
+    },
+    "/adk/session/": {
+      "filePath": "~adk/~session/~index.lazy.tsx",
+      "parent": "/adk/session"
+    },
+    "/auth/login/": {
+      "filePath": "~auth/~login/~index.lazy.tsx",
+      "parent": "/auth/login"
+    },
+    "/chat/$sessionId/": {
+      "filePath": "~chat/~$sessionId/~index.lazy.tsx",
+      "parent": "/chat"
+    },
+    "/proxy/$proxyId/": {
+      "filePath": "~proxy/~$proxyId/~index.lazy.tsx",
+      "parent": "/proxy/$proxyId"
+    },
+    "/resource/$resId/": {
+      "filePath": "~resource/~$resId/~index.lazy.tsx",
+      "parent": "/resource/$resId"
+    },
+    "/site/new/": {
+      "filePath": "~site/~new/~index.lazy.tsx",
+      "parent": "/site"
+    },
+    "/workflow-runs/$workflowRunId/": {
+      "filePath": "~workflow-runs/~$workflowRunId/~index.lazy.tsx",
+      "parent": "/workflow-runs/$workflowRunId"
+    },
+    "/adk/session/$sessionId": {
+      "filePath": "~adk/~session/~$sessionId/~route.lazy.tsx",
+      "parent": "/adk/session",
+      "children": [
+        "/adk/session/$sessionId/"
+      ]
+    },
+    "/agents/$agent/$sessionId": {
+      "filePath": "~agents/~$agent/~$sessionId/~route.lazy.tsx",
+      "children": [
+        "/agents/$agent/$sessionId/",
+        "/agents/$agent/$sessionId/state"
+      ]
+    },
+    "/platform-account/$platformAccountId/actions": {
+      "filePath": "~platform-account/~$platformAccountId/~actions/~route.lazy.tsx",
+      "children": [
+        "/platform-account/$platformAccountId/actions/"
+      ]
+    },
+    "/proxy/$proxyId/actions": {
+      "filePath": "~proxy/~$proxyId/~actions/~route.lazy.tsx",
+      "parent": "/proxy/$proxyId",
+      "children": [
+        "/proxy/$proxyId/actions/"
+      ]
+    },
+    "/resource/$resId/platform_account": {
+      "filePath": "~resource/~$resId/~platform_account/~route.lazy.tsx",
+      "parent": "/resource/$resId",
+      "children": [
+        "/resource/$resId/platform_account/"
+      ]
+    },
+    "/tenant/settings/$tenantSettingId": {
+      "filePath": "~tenant/~settings/~$tenantSettingId/~route.lazy.tsx",
+      "children": [
+        "/tenant/settings/$tenantSettingId/",
+        "/tenant/settings/$tenantSettingId/model_settings"
+      ]
+    },
+    "/workflow-runs/$workflowRunId/additional-metadata": {
+      "filePath": "~workflow-runs/~$workflowRunId/~additional-metadata.lazy.tsx",
+      "parent": "/workflow-runs/$workflowRunId"
+    },
+    "/workflow-runs/$workflowRunId/chat": {
+      "filePath": "~workflow-runs/~$workflowRunId/~chat/~route.lazy.tsx",
+      "parent": "/workflow-runs/$workflowRunId",
+      "children": [
+        "/workflow-runs/$workflowRunId/chat/"
+      ]
+    },
+    "/workflow-runs/$workflowRunId/input": {
+      "filePath": "~workflow-runs/~$workflowRunId/~input.lazy.tsx",
+      "parent": "/workflow-runs/$workflowRunId"
+    },
+    "/workflow-runs/$workflowRunId/summary": {
+      "filePath": "~workflow-runs/~$workflowRunId/~summary.lazy.tsx",
+      "parent": "/workflow-runs/$workflowRunId"
+    },
+    "/workflow-runs/$workflowRunId/visualization": {
+      "filePath": "~workflow-runs/~$workflowRunId/~visualization/~route.lazy.tsx",
+      "parent": "/workflow-runs/$workflowRunId",
+      "children": [
+        "/workflow-runs/$workflowRunId/visualization/"
+      ]
+    },
+    "/adk/session/$sessionId/": {
+      "filePath": "~adk/~session/~$sessionId/~index.lazy.tsx",
+      "parent": "/adk/session/$sessionId"
+    },
+    "/agents/$agent/$sessionId/": {
+      "filePath": "~agents/~$agent/~$sessionId/~index.lazy.tsx",
+      "parent": "/agents/$agent/$sessionId"
+    },
+    "/platform-account/$platformAccountId/actions/": {
+      "filePath": "~platform-account/~$platformAccountId/~actions/~index.lazy.tsx",
+      "parent": "/platform-account/$platformAccountId/actions"
+    },
+    "/proxy/$proxyId/actions/": {
+      "filePath": "~proxy/~$proxyId/~actions/~index.lazy.tsx",
+      "parent": "/proxy/$proxyId/actions"
+    },
+    "/resource/$resId/platform_account/": {
+      "filePath": "~resource/~$resId/~platform_account/~index.lazy.tsx",
+      "parent": "/resource/$resId/platform_account"
+    },
+    "/site/$siteId/host/": {
+      "filePath": "~site/~$siteId/~host/~index.lazy.tsx",
+      "parent": "/site/$siteId"
+    },
+    "/site/$siteId/post/": {
+      "filePath": "~site/~$siteId/~post/~index.lazy.tsx",
+      "parent": "/site/$siteId"
+    },
+    "/tenant/settings/$tenantSettingId/": {
+      "filePath": "~tenant/~settings/~$tenantSettingId/~index.lazy.tsx",
+      "parent": "/tenant/settings/$tenantSettingId"
+    },
+    "/workflow-runs/$workflowRunId/chat/": {
+      "filePath": "~workflow-runs/~$workflowRunId/~chat/~index.lazy.tsx",
+      "parent": "/workflow-runs/$workflowRunId/chat"
+    },
+    "/workflow-runs/$workflowRunId/visualization/": {
+      "filePath": "~workflow-runs/~$workflowRunId/~visualization/~index.lazy.tsx",
+      "parent": "/workflow-runs/$workflowRunId/visualization"
+    },
+    "/agents/$agent/$sessionId/state": {
+      "filePath": "~agents/~$agent/~$sessionId/~state/~route.lazy.tsx",
+      "parent": "/agents/$agent/$sessionId"
+    },
+    "/resource/new/res/browser": {
+      "filePath": "~resource/~new/~res/~browser.lazy.tsx",
+      "parent": "/resource/new"
+    },
+    "/resource/new/res/chat": {
+      "filePath": "~resource/~new/~res/~chat.lazy.tsx",
+      "parent": "/resource/new"
+    },
+    "/resource/new/res/platform_account": {
+      "filePath": "~resource/~new/~res/~platform_account.lazy.tsx",
+      "parent": "/resource/new"
+    },
+    "/site/$siteId/post/create": {
+      "filePath": "~site/~$siteId/~post/~create.lazy.tsx",
+      "parent": "/site/$siteId"
+    },
+    "/tenant/settings/$tenantSettingId/model_settings": {
+      "filePath": "~tenant/~settings/~$tenantSettingId/~model_settings/~route.lazy.tsx",
+      "parent": "/tenant/settings/$tenantSettingId",
+      "children": [
+        "/tenant/settings/$tenantSettingId/model_settings/"
+      ]
+    },
+    "/workflow-runs/$workflowRunId/stepRun/$stepRunId": {
+      "filePath": "~workflow-runs/~$workflowRunId/~stepRun/~$stepRunId/~route.lazy.tsx",
+      "parent": "/workflow-runs/$workflowRunId",
+      "children": [
+        "/workflow-runs/$workflowRunId/stepRun/$stepRunId/"
+      ]
+    },
+    "/workflows/$workflowId/trigger/smola": {
+      "filePath": "~workflows/~$workflowId/~trigger/~smola/~route.lazy.tsx",
+      "children": [
+        "/workflows/$workflowId/trigger/smola/"
+      ]
+    },
+    "/tenant/settings/$tenantSettingId/model_settings/": {
+      "filePath": "~tenant/~settings/~$tenantSettingId/~model_settings/~index.lazy.tsx",
+      "parent": "/tenant/settings/$tenantSettingId/model_settings"
+    },
+    "/workflow-runs/$workflowRunId/stepRun/$stepRunId/": {
+      "filePath": "~workflow-runs/~$workflowRunId/~stepRun/~$stepRunId/~index.lazy.tsx",
+      "parent": "/workflow-runs/$workflowRunId/stepRun/$stepRunId"
+    },
+    "/workflows/$workflowId/trigger/smola/": {
+      "filePath": "~workflows/~$workflowId/~trigger/~smola/~index.lazy.tsx",
+      "parent": "/workflows/$workflowId/trigger/smola"
     }
   }
 }

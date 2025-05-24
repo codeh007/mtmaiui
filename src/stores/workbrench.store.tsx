@@ -1,396 +1,398 @@
 "use client";
 
-import { type ChangeEvent, createContext, useContext, useMemo } from "react";
-import { v4 as uuidv4 } from "uuid";
+import { type UseMutationResult, useMutation } from "@tanstack/react-query";
+import type { Message } from "ai";
+import { debounce } from "lodash";
+import { useHotkeys } from "react-hotkeys-hook";
+
+import type { RootAgentState } from "@mtmaiui/agent_state/root_agent_state";
+import {
+  type AdkEvent,
+  // type AgentRunRequestV3,
+  type ApiErrors,
+  // type ChatMessage,
+  // type ChatMessageList,
+  type Content,
+  // type FlowTeamInput,
+  type Options,
+  // type RootAgentState,
+  // type SocialTeam,
+  // type SocialTeamManagerState,
+  type Tenant,
+  type WorkflowRun,
+  type WorkflowRunCreateData,
+  // adkEventsListOptions,
+  // adkSessionGet,
+  workflowRunCreateMutation,
+} from "mtmaiapi";
+import { generateUUID } from "mtxuilib/lib/utils";
+import type React from "react";
+import { createContext, useContext, useMemo, useTransition } from "react";
 import { type StateCreator, createStore, useStore } from "zustand";
 import { devtools, subscribeWithSelector } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 import { useShallow } from "zustand/react/shallow";
-// import {
-//   addMessage,
-//   deleteMessageById,
-//   updateMessageById,
-//   updateMessageContentById,
-// } from "../../../../apps/mtmaiadmin/src/lib/messageUtils";
+import type { ChatAgentOutgoingMessage, ChatAgentState } from "../agent_state/chat_agent_state";
+import { parseEventStream } from "../agent_utils/agent_utils";
+import data from "../data/ig_settings_xiaoto33.json";
+import { useTenant, useTenantId } from "../hooks/useAuth";
+import { handleAgentOutgoingEvent } from "./ag-event-handlers";
+// import { exampleTeamConfig } from "./exampleTeamConfig";
 
-import type {
-  AssisantMenus,
-  AssisantWorkbenchConfig,
-  Message,
-  ThreadUIState,
-} from "mtmaiapi";
-import type React from "react";
-
-import { debounce } from "lodash";
-// import type { ThreadForm } from "mtmaiapi";
-import type { Tenant } from "mtmaiapi/api";
-import type { components } from "mtmaiapi/query_client/generated";
-import { io } from "socket.io-client";
-import type { Suggestion } from "../db/schema";
-import { addMessage, deleteMessageById, updateMessageById, updateMessageContentById } from "../lib/messageUtils";
-import type {
-  IAction,
-  IAsk,
-  IFileRef,
-  IInputHistory,
-  IMessageElement,
-  IStep,
-  ITasklistElement,
-  IThread,
-  IToken,
-} from "../types";
-import type { HubmanInput } from "../types/hatchet-types";
-import { subscribeSse } from "./eventHandler";
-import { handleSseSubmit } from "./handleSubmit";
-export interface IAskForm {
-  callback: (data) => void;
-  askForm: ThreadForm;
-}
+const DEFAULT_APP_NAME = "chat";
+const DEFAULT_AGENT_URL = "https://mtmag.yuepa8.com";
 export interface WorkbenchProps {
-  backendUrl: string;
-  accessToken?: string;
-  chatProfile?: string;
-  params?: Record<string, any>;
-  // assisantConfig?: AssisantConfig;
-  // onFnCalls?: (fn_call: ICallFn) => any;
-  // autoConnectWs?: boolean;
-  openDebugPanel?: boolean;
-  threadId?: string;
-  tenant: Tenant;
+  sessionId?: string;
 }
-export type StreamingDelta = {
-  type: "text-delta" | "title" | "id" | "suggestion" | "clear" | "finish";
-  content: string | Suggestion;
-};
-
-// 新增聊天事件类型
-export type MtmaiChatEvent = {
-  type: "newChatId" | "chatEnd";
-  data: any;
-};
-
 export interface WorkbrenchState extends WorkbenchProps {
-  setThreadId: (threadId: string) => void;
-  isOpenWorkbenchChat: boolean;
-  setIsOpenWorkbenchChat: (isOpenWorkbenchChat: boolean) => void;
-  setOpenDebugPanel: (openDebugPanel: boolean) => void;
-  workbenchViewProps?: Record<string, any>;
-  setWorkbenchViewProps: (props?: Record<string, any>) => void;
-  // currentView: string;
-  // setCurrentView: (view: string) => void;
-
-  workbenchConfig: AssisantWorkbenchConfig | undefined;
-  // setWorkbenchConfig: (config: AssisantWorkbenchConfig) => void;
-  // setAssisantConfig: (config: AssisantConfig) => void;
-  openWorkbench: (viewName: string, viewProps?: Record<string, any>) => void;
-  // started: boolean;
-  // setStarted: (started: boolean) => void;
-  // aborted: boolean;
-  // setAborted: (aborted: boolean) => void;
-  //--------------------------------------------------------------------------------------
-  // useChat 状态提升到这里
-  appendChatMessageCb?: (message) => void;
-  //--------------------------------------------------------------------------------------
-  messages: IStep[];
-  setMessages: (messagesState: IStep[]) => void;
-
+  agentUrl: string;
+  setAgentUrl: (agentUrl: string) => void;
+  agentPathPrefix: string;
+  setAgentPathPrefix: (agentPathPrefix: string) => void;
+  accessToken?: string;
   setAccessToken: (accessToken: string) => void;
-  // setParams: (params: Record<string, any>) => void;
+  params?: Record<string, any>;
+  tenant: Tenant;
+  setSessionId: (threadId?: string) => void;
+  adkAppName: string;
+  setAdkAppName: (adkAppName: string) => void;
   messageParser?: (messages: Message[]) => void;
   setMessageParser: (messageParser: (messages: Message[]) => void) => void;
-  // input: string;
-  // setInput: (input: string) => void;
-  handleAisdkInputChange:
-    | ((event: ChangeEvent<HTMLTextAreaElement>) => void)
-    | undefined;
-  //-----------------------------------
-  setShowWorkbench: (openWorkbench: boolean) => void;
+  openChat?: boolean;
   setOpenChat: (openChat: boolean) => void;
-  openView: (
-    viewName: string,
-    viewProps?: Record<string, any>,
-    target?: AssisantMenus["target"],
-  ) => void;
   setCurrentWorkbenchView: (id: string) => void;
-
-  //--------------------------------------------------------------------------------------------
-  // socket?: Socket | null;
-  // setSocket: (socket: Socket | null) => void;
-  // messageContext: IMessageContext;
-  // setMessageContext: (messageContext: IMessageContext) => void;
-
-  chatEndpoint: string;
-  setChatEndpoint: (chatEndpoint: string) => void;
   isConnected: boolean;
   setIsConnected: (isConnected: boolean) => void;
-  // ws 是否可以启动连接
-  // canConnect?: boolean;
-  // setCanConnect: (canConnect: boolean) => void;
-
-  inputHistoryState: IInputHistory; // inputHistoryState 不知具体作用
-  setInputHistoryState: (inputHistoryState: IInputHistory) => void;
-  onUpdateMessage: (message: IStep) => void;
-  onNewMessage: (message: IStep) => void;
-
-  onDeleteMessage: (message: IStep) => void;
-  onStreamStart: (message: IStep) => void;
-  onStreamToken: (token: IToken) => void;
-  onAsk: (message: IStep) => void;
-
-  uiState: ThreadUIState;
-  setUiState: (uiState) => void;
-  sessionId: string;
-  setSessionId: (sessionId: string) => void;
-
   firstUserInteraction?: string;
   setFirstUserInteraction: (firstUserInteraction: string) => void;
-
   loading: boolean;
   setLoading: (loading: boolean) => void;
+  input?: string;
+  setInput: (input: string) => void;
+  handleHumanInput: (input: Content) => void;
+  // handleRunTeam: (team: FlowTeamInput) => void;
+  workflowRunId?: string;
+  setWorkflowRunId: (workflowRunId: string) => void;
+  chatStarted: boolean;
+  setChatStarted: (chatStarted: boolean) => void;
+  // messages: ChatMessage[];
+  // setMessages: (messages: ChatMessage[]) => void;
+  isDebug: boolean;
+  setIsDebug: (isDebug: boolean) => void;
+  openWorkbench?: boolean;
+  setOpenWorkbench: (openWorkbench: boolean) => void;
 
-  askUser?: IAsk;
-  setAskUser: (askUserState?: IAsk) => void;
+  openRightPanel?: boolean;
+  setOpenRightPanel: (openRightPanel: boolean) => void;
 
-  askForm?: IAskForm;
-  setAskForm: (askForm?: IAskForm) => void;
+  //似乎没用了.
+  activeArtiface: unknown;
+  setActiveArtiface: (activeArtiface: unknown) => void;
 
-  elementState: IMessageElement[];
-  setElementState: (elementState: IMessageElement[]) => void;
+  // assisantState
+  assistantState: ChatAgentState;
+  setAssistantState: (assistantState: ChatAgentState) => void;
 
-  //在侧边栏 显示的单个 element
-  sideViewState?: IMessageElement;
-  setSideViewState: (sideViewState?: IMessageElement) => void;
-
-  tasklistState: ITasklistElement[];
-  setTasklistState: (tasklistState: ITasklistElement[]) => void;
-
-  actionState: IAction[];
-  setActionState: (actionState: IAction[]) => void;
-  // connectWs: () => void;
-  askUserState?: IAsk;
-  setAskUserState: (askUserState?: IAsk) => void;
-  chatProfile?: string;
-  setChatProfile: (chatProfileState?: string) => void;
-  setChatProfileId: (chatProfileId: string) => void;
-
-  handleHumanInput: (input: HubmanInput) => void;
-
-  mtrouter: { push: (path: string) => void };
-  isWs?: boolean;
-  setIsWs: (isWs: boolean) => void;
-  handleEvents: (eventName: string, data: any) => void;
-  chatBotType: "";
-  nodeState?: components["schemas"]["AgentNode"];
-  subscribeEvents: (options: {
-    runId: string;
-  }) => void;
-  resource?: string;
-  setResource: (resource: string) => void;
-  resourceId?: string;
+  isOpenWorkbenchChat: boolean;
+  setIsOpenWorkbenchChat: (isOpenWorkbenchChat: boolean) => void;
+  isStreaming: boolean;
+  setIsStreaming: (isStreaming: boolean) => void;
+  firstTokenReceived: boolean;
+  setFirstTokenReceived: (firstTokenReceived: boolean) => void;
+  // addMessage: (message: ChatMessage) => void;
   setResourceId: (resourceId: string) => void;
+  // setTeamState: (teamState: SocialTeamManagerState) => void;
+  // loadChatMessageList: (response?: ChatMessageList) => void;
+  workflowRunCreateMut: UseMutationResult<
+    WorkflowRun,
+    ApiErrors,
+    Options<WorkflowRunCreateData>,
+    unknown
+  >;
+  workflowRunCreate: (
+    name: string,
+    input: Record<string, any>,
+    additionalMetadata: Record<string, any>,
+  ) => Promise<WorkflowRun>;
+
+  lastestWorkflowRun?: WorkflowRun;
+  setLastestWorkflowRun: (lastestWorkflowRun: WorkflowRun) => void;
+
+  // team: SocialTeam;
+  // setTeam: (team: SocialTeam) => void;
+  adkEvents: AdkEvent[];
+  setAdkEvents: (adkEvents: AdkEvent[]) => void;
+
+  agentState?: RootAgentState;
+  setAgentState: (agentState: RootAgentState) => void;
+
+  taskList: any[];
+  setTaskList: (taskList: any[]) => void;
+
+  onAgentMessageEvent: (message: MessageEvent<any>) => void;
 }
 
-export const createWorkbrenchSlice: StateCreator<
-  WorkbrenchState,
-  [],
-  [],
-  WorkbrenchState
-> = (set, get, init) => {
+export const createWorkbrenchSlice: StateCreator<WorkbrenchState, [], [], WorkbrenchState> = (
+  set,
+  get,
+  init,
+) => {
   return {
-    isDev: false,
-    backendUrl: "",
-    nodeState: undefined,
-    chatEndpoint: "/api/v1/chat/ws/socket.io",
-    // use chat ----------------------------------------------------------------------------
-    appendChatMessageCb: (message) => {
-      // set({ messages: [...get().messages, message] });
-      console.log("append", message);
-    },
-    setOpenDebugPanel: (openDebugPanel) => set({ openDebugPanel }),
-    currentView: "",
-    setCurrentView: (view) => set({ currentView: view }),
-    workbenchConfig: undefined,
-    setWorkbenchConfig: (config) => set({ workbenchConfig: config }),
-    workbenchViewProps: {},
-    setWorkbenchViewProps: (props) => set({ workbenchViewProps: props }),
-    assisantConfig: undefined,
-    setAssisantConfig: (config) => set({ assisantConfig: config }),
-
-    setIsWs: (isWs) => set({ isWs }),
-    //---------------------------------------------------------------------------------------------
-
+    userAgentState: {},
+    setInput: (input) => set({ input }),
     messages: [],
-    elementState: [],
-    setElementState: (elementState) => {
-      set({ elementState });
-    },
-    actionState: [],
-    setActionState: (actionState) => {
-      set({ actionState });
-    },
-    input: "",
     firstUserInteraction: undefined,
-    setFirstUserInteraction: (firstUserInteraction) =>
-      set({ firstUserInteraction }),
-    uiState: {},
-    setUistate: (uiState) => {
-      set({ uiState });
-    },
-    setInput: (input: string) => {
-      set({ input });
-    },
+    setFirstUserInteraction: (firstUserInteraction) => set({ firstUserInteraction }),
     setAccessToken: (accessToken: string) => {
       set({ accessToken });
     },
     setParams: (params: Record<string, any>) => {
       set({ params });
     },
+    agentPathPrefix: "api",
+    setAgentPathPrefix: (agentPathPrefix: string) => {
+      set({ agentPathPrefix });
+    },
     setMessageParser: (messageParser: (messages: Message[]) => void) => {
       set({ messageParser });
     },
-
-    handleAisdkInputChange: (event: ChangeEvent<HTMLTextAreaElement>) =>
-      set({ input: event.target.value }),
-    handleHumanInput: debounce(async ({ message, resource, resourceId }) => {
-      set({ input: message, resource, resourceId });
-      const newStep: IStep = {
-        threadId: "",
-        id: uuidv4(),
-        name: "User", //实际的用户名
-        type: "user_message",
-        output: message,
-        createdAt: new Date().toISOString(),
-      };
-      set({ messages: [...(message || []), newStep] });
-      if (get().isWs) {
-        const fileReferences: IFileRef[] = [];
-        if (!get().socket?.connected) {
-          await get().connectWs();
-        }
-        const latestMessages = get().messages[get().messages.length - 1];
-        get().socket?.emit("client_message", {
-          message: latestMessages,
-          fileReferences,
-        });
-      } else {
-        handleSseSubmit(set, get);
+    openChat: false,
+    setOpenChat: (openChat: boolean) => {
+      set({ openChat });
+    },
+    openRightPanel: false,
+    setOpenRightPanel: (openRightPanel: boolean) => {
+      set({ openRightPanel });
+    },
+    isDebug: false,
+    setIsDebug: (isDebug: boolean) => {
+      set({ isDebug });
+    },
+    // team: exampleTeamConfig,
+    // setTeam: (team) => {
+    //   set({ team });
+    // },
+    agentState: undefined,
+    setAgentState: (agentState) => {
+      set({ agentState });
+    },
+    activeArtiface: undefined,
+    setActiveArtiface: (activeArtiface) => {
+      set({ activeArtiface });
+    },
+    adkAppName: DEFAULT_APP_NAME,
+    setAdkAppName: (adkAppName) => {
+      console.log("setAdkAppName", adkAppName);
+      set({ adkAppName });
+    },
+    agentUrl: DEFAULT_AGENT_URL,
+    setAgentUrl: (agentUrl) => {
+      set({ agentUrl });
+    },
+    adkEvents: [],
+    setAdkEvents: (adkEvents) => {
+      set({ adkEvents });
+    },
+    taskList: [],
+    setTaskList: (taskList) => {
+      console.log("setTaskList", taskList);
+      set({ taskList });
+    },
+    handleHumanInput: debounce(async (input: Content) => {
+      // console.log("handleHumanInput", input);
+      get().setChatStarted(true);
+      const sessionId = get().sessionId ?? generateUUID();
+      set({
+        input: "",
+        adkEvents: [
+          ...get().adkEvents,
+          {
+            content: input,
+            timestamp: new Date().toISOString(),
+            metadata: {
+              id: generateUUID(),
+              createdAt: new Date().toISOString(),
+              updatedAt: new Date().toISOString(),
+            },
+            app_name: get().adkAppName,
+            // user_id: get().tenant.metadata.id,
+            user_id: "fack_user_id",
+            session_id: sessionId,
+            author: "user",
+            invocation_id: generateUUID(),
+            actions: {},
+            id: generateUUID(),
+          },
+        ],
+      });
+      const url = `${get().agentUrl}/api/chat_v2/sse`;
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "text/event-stream",
+          "Accept-Encoding": "gzip, deflate, br, zstd",
+        },
+        body: JSON.stringify({
+          session_id: sessionId,
+          app_name: get().adkAppName,
+          // user_id: get().tenant.metadata.id,
+          user_id: "fack_user_id",
+          new_message: input,
+          streaming: true,
+          init_state: {
+            hello_init_state_from_web: "hello_init_state_from_web",
+            ig_settings: data,
+          },
+        } satisfies AgentRunRequestV3),
+      });
+      const reader = response.body?.getReader();
+      if (!reader) {
+        throw new Error("Failed to get reader from response body");
       }
-    }, 200),
+      for await (const event of parseEventStream(reader)) {
+        handleAgentOutgoingEvent(event, get, set);
+      }
+      // const data = await response.json();
+      // console.log("data", data);
+
+      // const response = await workflowRunCreate({
+      //   path: {
+      //     workflow: FlowNames.TEAM,
+      //   },
+      //   body: {
+      //     input: {
+      //       app_name: "root",
+      //       component: get().team,
+      //       session_id: sessionId,
+      //       // init_state: {},
+      //       task: {
+      //         type: AgentEventType.TEXT_MESSAGE,
+      //         content: task,
+      //         source: "user",
+      //         metadata: {},
+      //       },
+      //       content: input,
+      //     } satisfies FlowTeamInput,
+      //     additionalMetadata: {
+      //       sessionId: sessionId,
+      //     },
+      //   },
+      // });
+      // if (response?.data) {
+      //   get().setLastestWorkflowRun(response?.data);
+      // }
+      // if (response?.data) {
+      //   // pull stream event
+      //   if (response.data?.metadata?.id) {
+      //     const workflowRunId = response.data.metadata?.id;
+      //     set({ workflowRunId: workflowRunId });
+      //     // const result = await get().dispatcherClient.subscribeToWorkflowEvents({
+      //     //   workflowRunId: workflowRunId,
+      //     // });
+      //     // for await (const event of result) {
+      //     //   handleWorkflowRunEvent(event, get, set);
+      //     // }
+      //   }
+      // }
+    }, 30),
+
     setMessages: (messages) => set({ messages }),
-    setShowWorkbench: (openWorkbench) =>
-      set({ uiState: { ...get().uiState, openWorkbench } }),
-    setOpenChat: (openChat) => {
-      set({ uiState: { ...get().uiState, openChat: openChat } });
+    setShowWorkbench: (openWorkbench) => {
+      set({ openWorkbench });
     },
-    setStarted: (started) => set({ started }),
-    setAborted: (aborted) => set({ aborted }),
-    setThreadId: (threadId: string) => {
-      set({ threadId });
-      console.log("setThreadId", threadId);
-    },
-    isOpenWorkbenchChat: false,
-    setIsOpenWorkbenchChat: (isOpenWorkbenchChat: boolean) => {
-      set({ isOpenWorkbenchChat });
-    },
-    openView: (viewName, viewProps, targetView) => {
-      console.log("openListView", viewName, viewProps, targetView);
-      const target = targetView || "workbench";
-      if (target === "asider") {
-        console.log("todo openListView asider");
-      } else if (targetView === "workbench") {
-        set({
-          uiState: {
-            ...get().uiState,
-            openWorkbench: true,
-            // currentWorkbenchView: viewName,
-          },
-          // currentWorkbenchView: viewName,
-          workbenchViewProps: viewProps,
-        });
-      } else if (targetView === "cmdk") {
-        console.log("todo openListView cmdk");
+    setSessionId: async (sessionId) => {
+      // console.log("setSessionId", sessionId);
+      set({ sessionId });
+      if (!sessionId) {
+        return;
       }
+      // const adkSession = await adkSessionGet({
+      //   path: {
+      //     tenant: get().tenant.metadata.id,
+      //     app: get().adkAppName,
+      //     session: sessionId ?? "",
+      //   },
+      // });
+      // console.log("adkStateQuery Result", adkSession);
+      // if (adkSession.data) {
+      //   set({ agentState: adkSession.data.state as RootAgentState });
+      // }
     },
-    setCurrentWorkbenchView: (viewName: string) => {
-      set({
-        uiState: {
-          ...get().uiState,
-          // currentWorkbenchView: viewName,
+    setWorkflowRunId: (workflowRunId) => {
+      set({ workflowRunId });
+    },
+    chatStarted: false,
+    setChatStarted: (chatStarted: boolean) => {
+      set({ chatStarted });
+    },
+    setOpenWorkbench: (openWorkbench: boolean) => {
+      set({ openWorkbench });
+    },
+    setIsStreaming: (isStreaming: boolean) => {
+      set({ isStreaming });
+    },
+    setFirstTokenReceived: (firstTokenReceived: boolean) => {
+      set({ firstTokenReceived });
+    },
+    addMessage: (message: ChatMessage) => {
+      const prevMessages = get().messages;
+      set({ messages: [...prevMessages, message] });
+    },
+    setLastestWorkflowRun: (lastestWorkflowRun) => {
+      console.log("setLastestWorkflowRun", lastestWorkflowRun);
+      set({ lastestWorkflowRun });
+    },
+    loadChatMessageList: (chatMessageList) => {
+      const messages = chatMessageList?.rows?.map((row) => {
+        return {
+          ...row,
+          role: row.type,
+          content: JSON.parse(row.content),
+        };
+      });
+      set({ messages: messages });
+    },
+    workflowRunCreate: async (name, input, additionalMetadata) => {
+      const response = await get().workflowRunCreateMut.mutateAsync({
+        path: {
+          workflow: name,
+        },
+        body: {
+          input,
+          additionalMetadata,
         },
       });
+      return response;
     },
-    openWorkbench: (viewName, viewProps) => {
-      console.log("openWorkbench", viewName, viewProps);
-      set({
-        uiState: {
-          ...get().uiState,
-          openWorkbench: true,
-          // currentWorkbenchView: viewName,
-        },
-        workbenchViewProps: viewProps,
-      });
+    setAssistantState: (assistantState) => {
+      set({ assistantState });
     },
+    onAgentMessageEvent: (message) => {
+      console.log("onAgentMessageEvent", message);
 
-    connect: async () => {
-      // 拉取消息
-      console.log("拉取消息 connect");
-      const response = await fetch(
-        `${get().backendUrl}/api/v1/chat/completions`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${get().accessToken}`,
-          },
-          body: JSON.stringify({
-            messages: [],
-            chatProfile: get().chatProfile,
-            isChat: true,
-            params: get().params,
-            isPull: true,
-          }),
-        },
-      );
-      if (response.ok) {
+      const parsedMessage = JSON.parse(message.data) as ChatAgentOutgoingMessage;
+      const messageType = parsedMessage?.type;
+      switch (messageType) {
+        //@ts-expect-error
+        case "cf_agent_chat_messages":
+          // 对话消息
+          break;
       }
-    },
-    setIsConnected: (isConnected) => set({ isConnected }),
-    setSocket: (socket) => set({ socket }),
-    connectWs: () => connectWs(null, set, get),
-    onNewMessage: (message) => {
-      const preMessages = get().messages;
-      const newMessages = addMessage(preMessages, message);
-      set({ messages: newMessages });
-    },
-    onUpdateMessage: (message) => {
-      const preMessages = get().messages;
-      const newMessages = updateMessageById(preMessages, message.id, message);
-      set({ messages: newMessages });
-    },
-    onDeleteMessage: (msg) => {
-      const newMessages = deleteMessageById(get().messages, msg.id);
-      set({ messages: newMessages });
+      // set({ onAgentMessageEvent: message });
     },
 
-    setAskUserState: (askUserState) => set({ askUserState }),
-    setChatProfile: (chatProfile) => set({ chatProfile }),
-    subscribeEvents: (options) => subscribeSse(options, set, get),
-    setResource: (resource) => set({ resource }),
-    setResourceId: (resourceId) => set({ resourceId }),
     ...init,
   };
 };
 
-type mtappStore = ReturnType<typeof createWordbrenchStore>;
-export type WorkbrenchStoreState = WorkbrenchState;
-
-const createWordbrenchStore = (initProps?: Partial<WorkbrenchStoreState>) => {
-  return createStore<WorkbrenchStoreState>()(
+const createWordbrenchStore = (initProps?: Partial<WorkbrenchState>) => {
+  return createStore<WorkbrenchState>()(
     subscribeWithSelector(
       // persist(
       devtools(
         immer((...a) => ({
           ...createWorkbrenchSlice(...a),
-          // ...createMessageParserSlice(...a),
           ...initProps,
         })),
         {
@@ -400,237 +402,164 @@ const createWordbrenchStore = (initProps?: Partial<WorkbrenchStoreState>) => {
     ),
   );
 };
-const mtmaiStoreContext = createContext<mtappStore | null>(null);
+const mtmaiStoreContext = createContext<ReturnType<typeof createWordbrenchStore> | null>(null);
 
-type AppProviderProps = React.PropsWithChildren<WorkbenchProps>;
-export const WorkbrenchProvider = (props: AppProviderProps) => {
+export const WorkbrenchProvider = (props: React.PropsWithChildren<WorkbenchProps>) => {
   const { children, ...etc } = props;
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  const mystore = useMemo(() => createWordbrenchStore(etc), [etc]);
+  const [isPending, startTransition] = useTransition();
+  const tenant = useTenant();
+  const workflowRunCreate = useMutation({
+    ...workflowRunCreateMutation(),
+  });
+
+  const tid = useTenantId();
+  const mystore = useMemo(
+    () =>
+      createWordbrenchStore({
+        ...etc,
+        tenant: tenant,
+        workflowRunCreateMut: workflowRunCreate,
+      }),
+    [tenant, workflowRunCreate],
+  );
+
+  // const agStateListQuery = useQuery({
+  //   ...agStateListOptions({
+  //     path: {
+  //       tenant: tid!,
+  //     },
+  //     query: {
+  //       session: etc.sessionId,
+  //     },
+  //   }),
+  //   enabled: !!etc.sessionId,
+  // });
+
+  // useEffect(() => {
+  //   if (agStateListQuery.data) {
+  //     console.log("加载了:agStateListQuery.data", etc.sessionId, agStateListQuery.data);
+  //     //TODO: 如何正确识别 UserAgentState?
+  //     for (const state of agStateListQuery.data?.rows ?? []) {
+  //       if (state.topic === "user") {
+  //         mystore.setState({ userAgentState: state.state as UserAgentState });
+  //       }
+  //     }
+  //   }
+  // }, [agStateListQuery.data, mystore, etc.sessionId]);
+
+  // useEffect(() => {
+  //   return mystore.subscribe(
+  //     (state) => {
+  //       return state.lastestWorkflowRun;
+  //     },
+  //     async (cur, prev) => {
+  //       console.log("lastestWorkflowRun changed", cur, "prev", prev);
+  //       if (cur?.additionalMetadata?.sessionId) {
+  //         startTransition(() => {
+  //           nav({
+  //             to: `/adk/session/${cur?.additionalMetadata?.sessionId}`,
+  //             search: search,
+  //           });
+  //         });
+  //         const sessionId = cur?.additionalMetadata?.sessionId;
+  //         const messageList = await chatMessagesList({
+  //           path: {
+  //             tenant: tid!,
+  //             chat: sessionId as string,
+  //           },
+  //         });
+  //         mystore.getState().loadChatMessageList(messageList.data);
+  //         console.log("messageList", messageList);
+  //       }
+  //     },
+  //   );
+  // }, [mystore, nav, search, tid]);
+
+  // const adkEventsQuery = useQuery({
+  //   ...adkEventsListOptions({
+  //     path: {
+  //       tenant: tid,
+  //     },
+  //     query: {
+  //       session: etc.sessionId,
+  //     },
+  //   }),
+  //   enabled: !!etc.sessionId,
+  // });
+  // useEffect(() => {
+  //   if (adkEventsQuery.data) {
+  //     mystore.setState({ adkEvents: adkEventsQuery.data.rows });
+  //   }
+  // }, [adkEventsQuery.data, mystore]);
+
+  // const adkSessionQuery = useQuery({
+  //   ...adkSessionGetOptions({
+  //     path: {
+  //       tenant: tid,
+  //       session: etc.sessionId!,
+  //     },
+  //   }),
+  //   enabled: !!etc.sessionId,
+  // });
+  // useEffect(() => {
+  //   if (adkSessionQuery.data) {
+  //     console.log("adkSessionQuery.data", adkSessionQuery.data);
+  //     mystore.setState({ agentState: adkSessionQuery.data.state as RootAgentState });
+  //   }
+  // }, [adkSessionQuery.data, mystore]);
+
+  useHotkeys(
+    "alt+.",
+    () => {
+      mystore.setState({ isDebug: !mystore.getState().isDebug });
+    },
+    [mystore],
+  );
   return (
     <mtmaiStoreContext.Provider value={mystore}>
       {children}
+      {/* <OnSessionChange /> */}
     </mtmaiStoreContext.Provider>
   );
 };
 
 const DEFAULT_USE_SHALLOW = false;
-export function useWorkbrenchStore(): WorkbrenchStoreState;
-export function useWorkbrenchStore<T>(
-  selector: (state: WorkbrenchStoreState) => T,
-): T;
-export function useWorkbrenchStore<T>(
-  selector?: (state: WorkbrenchStoreState) => T,
-) {
+export function useWorkbenchStore(): WorkbrenchState;
+export function useWorkbenchStore<T>(selector: (state: WorkbrenchState) => T): T;
+export function useWorkbenchStore<T>(selector?: (state: WorkbrenchState) => T) {
   const store = useContext(mtmaiStoreContext);
-  if (!store) throw new Error("useWorkbrenchStore must in WorkbrenchProvider");
+  if (!store) throw new Error("useWorkbenchStore must in WorkbrenchProvider");
   if (selector) {
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    return useStore(
-      store,
-      DEFAULT_USE_SHALLOW ? useShallow(selector) : selector,
-    );
+    return useStore(store, DEFAULT_USE_SHALLOW ? useShallow(selector) : selector);
   }
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   return useStore(store);
 }
 
-const connectWs = (
-  params,
-  set: (
-    partial:
-      | Partial<WorkbrenchState>
-      | ((state: WorkbrenchState) => Partial<WorkbrenchState>),
-  ) => void,
-  get: () => WorkbrenchState,
-) => {
-  return new Promise((resolve, reject) => {
-    let ws = get().socket;
-    if (ws?.connected) {
-      resolve(true);
-    } else {
-      if (!ws) {
-        const baseUrl = get().backendUrl;
-        const { protocol, host, pathname } = new URL(
-          `${baseUrl}${get().chatEndpoint}`,
-        );
-        const uri = `${protocol}//${host}`;
+// export const OnSessionChange = () => {
+//   const sessionId = useWorkbenchStore((state) => state.sessionId);
+//   const adkAppName = useWorkbenchStore((state) => state.adkAppName);
+//   const setAdkEvents = useWorkbenchStore((state) => state.setAdkEvents);
+//   const tid = useTenantId();
+//   // const adkEventsQuery = useQuery({
+//   //   ...adkEventsListOptions({
+//   //     path: {
+//   //       tenant: tid,
+//   //     },
+//   //     query: {
+//   //       app_name: adkAppName,
+//   //       session: sessionId!,
+//   //     },
+//   //   }),
+//   // });
 
-        const chatProfile = get().chatProfile;
-        console.log("sio connect", {
-          uri,
-          pathname,
-          chatProfile,
-          threadId: get().threadId,
-        });
-        ws = io(uri, {
-          path: pathname,
-          autoConnect: true,
-          extraHeaders: {
-            ...(get().accessToken && {
-              Authorization: `Bearer ${get().accessToken}`,
-            }),
-            "X-Chainlit-Chat-Profile": get().chatProfile || "",
-            "user-env": JSON.stringify({}),
-            "X-Chainlit-Client-Type": "web_app",
-            "X-Chainlit-Session-Id": get().sessionId || "",
-            "X-Chainlit-Thread-Id": get().threadId || "",
-          },
-        });
-        get().setSocket(ws);
-        get().socket?.on("connect", () => {
-          console.log("emit connection_successful", {
-            threadId: get().threadId,
-          });
-          get().socket?.emit("connection_successful");
-          get().setIsConnected(true);
-          resolve(true);
-        });
-        get().socket?.on("connect_error", (error) => {
-          console.error("ws connect error", error);
-        });
-        get().socket?.on("disconnect", () => {
-          console.warn("ws disconnect");
-          get().setIsConnected(false);
-        });
-        get().socket?.on(
-          "first_interaction",
-          (data: { interaction: string; thread_id: string }) => {
-            console.log("first_interaction", data);
-            get().setThreadId(data.thread_id);
-            get().setFirstUserInteraction(data.interaction);
-            get().setStarted(true);
-            // const url = new URL(window.location.href);
-            // 提示：前端不做路由跳转，路由跳转功能由后端控制
-            // url.pathname = `/dash/chat-profile/${chatProfileId}/thread/${data.thread_id}`;
-            // window.history.replaceState({}, "", url);
-          },
-        );
-        get().socket?.on("new_message", (data) => {
-          get().onNewMessage(data);
-        });
-        get().socket?.on("update_message", (data) => {
-          get().onUpdateMessage(data);
-        });
-        get().socket?.on("delete_message", (data) => {
-          get().onDeleteMessage(data);
-        });
-        get().socket?.on("thread_ui_state", (data) => {
-          console.log("thread_ui_state", data);
-          get().setUiState(data);
-        });
-        get().socket?.on("stream_start", (message) => {
-          console.log("stream_start", message);
-          const preMessages = get().messages;
-          const newMessage = addMessage(preMessages, message);
-          get().setMessages(newMessage);
-        });
-        get().socket?.on(
-          "stream_token",
-          ({ id, token, isSequence, isInput }: IToken) => {
-            const preMessages = get().messages;
-            const newMessage = updateMessageContentById(
-              preMessages,
-              id,
-              token,
-              isSequence,
-              isInput,
-            );
-            get().setMessages(newMessage);
-          },
-        );
-        get().socket?.on("ask", (data) => {
-          console.log("ask", data);
-          get().setAskUserState(data);
-        });
-        get().socket?.on("ask_timeout", (data) => {
-          console.log("ask_timeout", data);
-          get().setAskUserState(undefined);
-          get().setLoading(false);
-        });
-        get().socket?.on("clear_ask", (data) => {
-          get().setAskUserState(undefined);
-        });
-        get().socket?.on("clear_call_fn", (data) => {
-          console.warn("clear_call_fn", data);
-        });
-        get().socket?.on("call_fn_timeout", (data) => {
-          console.warn("call_fn_timeout", data);
-        });
-        get().socket?.on("ask_form", ({ formData, callback }) => {
-          //自定义表单
-          // console.log("ask_form", data);
-          get().setAskForm({
-            askForm: formData,
-            callback,
-          });
-        });
-        get().socket?.on("clear_ask_form", (data) => {
-          // //这个是自定义的事件，不是 chainlit 自带的事件，现在 看起来没什么用了。
-          get().setAskForm(undefined);
-        });
-        get().socket?.on("chat_settings", (data) => {
-          console.log("TODO: chat_settings", data);
-        });
-        get().socket?.on("chat_settings_update", (data) => {
-          console.log("chat_settings_update", data);
-        });
-        get().socket?.on("resume_thread", (thread: IThread) => {
-          console.warn("resume_thread", thread);
-          get().setMessages(thread.steps);
-          // const elements = thread.elements || [];
-        });
-        get().socket?.on("element", (element) => {
-          if (element.type === "tasklist") {
-            console.warn("TODO: 处理 tasklist 元素", element);
-          } else {
-            const index = get().elementState.findIndex(
-              (e) => e.id === element.id,
-            );
-            console.log("处理 element", index, element);
-
-            if (index === -1) {
-              get().setElementState([...get().elementState, element]);
-            } else {
-              get().setElementState([
-                ...get().elementState.slice(0, index),
-                element,
-                ...get().elementState.slice(index + 1),
-              ]);
-            }
-          }
-        });
-        get().socket?.on("remove_element", (element) => {
-          console.log("remove_element", element);
-        });
-        get().socket?.on("action", (action) => {
-          console.log("action", action);
-        });
-        get().socket?.on("remove_action", (action) => {
-          console.log("remove_action", action);
-        });
-        get().socket?.on("token_usage", (data) => {
-          console.log("token_usage", data);
-        });
-        get().socket?.on("ui_state_upate", (data) => {
-          console.log("ui_state_upate", data);
-          get().setUiState({
-            ...get().uiState,
-            ...data,
-          });
-        });
-        get().socket?.on("logs", (data) => {
-          console.log("[backend] logs", data);
-        });
-        get().socket?.on("reload", (data) => {
-          console.log("reload", data);
-        });
-        get().socket?.on("mtroute", (data) => {
-          console.log("[evt]mtroute", data);
-          get().mtrouter.push(data.path);
-        });
-      }
-    }
-  });
-};
+//   // useEffect(() => {
+//   //   if (adkEventsQuery.data) {
+//   //     console.log("adkEventsQuery.data", adkEventsQuery.data);
+//   //     setAdkEvents(adkEventsQuery.data.rows || []);
+//   //   }
+//   // }, [adkEventsQuery.data, setAdkEvents]);
+//   return null;
+// };

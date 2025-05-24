@@ -1,6 +1,5 @@
 "use client";
 
-import classNames from "classnames";
 import { cn } from "mtxuilib/lib/utils";
 import { SendButton } from "./SendButton.client";
 
@@ -10,7 +9,7 @@ interface BoltPromptBoxProps {
   chatStarted: boolean;
   textareaRef?: React.RefObject<HTMLTextAreaElement> | undefined;
   sendMessage?: (messageInput?: string) => void;
-  handleInputChange?: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  handleInputChange?: (msg: string) => void;
   isStreaming?: boolean;
   input?: string;
   stop?: () => void;
@@ -36,19 +35,19 @@ export const BoltPromptBox = ({
     <>
       <div
         className={cn("relative w-full max-w-chat mx-auto z-prompt", {
-          "sticky bottom-6": chatStarted,
+          "sticky bottom-1": chatStarted,
         })}
       >
         <div
           className={cn(
-            "shadow-sm border border-bolt-elements-borderColor bg-bolt-elements-prompt-background backdrop-filter backdrop-blur-[8px] rounded-lg overflow-hidden",
+            "shadow-xs border border-bolt-elements-borderColor bg-bolt-elements-prompt-background backdrop-filter backdrop-blur-[8px] rounded-lg overflow-hidden",
             "mx-4",
           )}
         >
           <textarea
             ref={textareaRef}
             className={
-              "w-full pl-4 pt-4 pr-16 focus:outline-none resize-none text-md text-bolt-elements-textPrimary placeholder-bolt-elements-textTertiary bg-transparent"
+              "w-full pl-4 pt-2 pr-16 focus:outline-hidden resize-none text-md text-bolt-elements-textPrimary placeholder-bolt-elements-textTertiary bg-transparent"
             }
             onKeyDown={(event) => {
               if (event.key === "Enter") {
@@ -63,7 +62,7 @@ export const BoltPromptBox = ({
             }}
             value={input}
             onChange={(event) => {
-              handleInputChange?.(event);
+              handleInputChange?.(event.target.value);
             }}
             style={{
               minHeight: TEXTAREA_MIN_HEIGHT,
@@ -88,7 +87,7 @@ export const BoltPromptBox = ({
 
           <div className="flex justify-between text-sm p-4 pt-2">
             <div className="flex gap-1 items-center">
-              <IconButton
+              {/* <Button
                 title="Enhance prompt"
                 disabled={input?.length === 0 || enhancingPrompt}
                 className={classNames({
@@ -111,7 +110,7 @@ export const BoltPromptBox = ({
                     )}
                   </>
                 )}
-              </IconButton>
+              </Button> */}
             </div>
             {input?.length > 3 ? (
               <div className="text-xs text-bolt-elements-textTertiary">
@@ -121,9 +120,9 @@ export const BoltPromptBox = ({
             ) : null}
           </div>
         </div>
-        <div className="bg-bolt-elements-background-depth-1 pb-6">
-          {/* Ghost Element */}
-        </div>
+        {/* <div className="bg-bolt-elements-background-depth-1 pb-6">
+          Ghost Element
+        </div> */}
       </div>
     </>
   );

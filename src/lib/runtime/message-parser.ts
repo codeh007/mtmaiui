@@ -1,3 +1,4 @@
+import { camelToDashCase } from "mtxuilib/lib/utils";
 import type {
   ActionType,
   BoltAction,
@@ -5,8 +6,8 @@ import type {
   FileAction,
   ShellAction,
 } from "../../types/actions";
-import type { BoltArtifactData } from "../../types/artifact";
-import { unreachable } from "../utils/unreachable";
+import type { BoltArtifactData } from "../../types/artifact.ts--";
+import { unreachable } from "../utils/unreachable.ts--";
 
 const ARTIFACT_TAG_OPEN = "<boltArtifact";
 const ARTIFACT_TAG_CLOSE = "</boltArtifact>";
@@ -314,6 +315,6 @@ const createArtifactElement: ElementFactory = (props) => {
   return `<div ${elementProps.join(" ")}></div>`;
 };
 
-function camelToDashCase(input: string) {
-  return input.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
-}
+// function camelToDashCase(input: string) {
+//   return input.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
+// }

@@ -6,10 +6,10 @@ import { classNames } from "mtxuilib/lib/utils";
 
 import { memo, useEffect, useRef, useState } from "react";
 
-import { WORK_DIR } from "../../../lib/utils/constants";
+import { WORK_DIR } from "../../../lib/constants";
 
 import { cubicEasingFn } from "mtxuilib/mt/easings";
-import type { FileMap } from "../../../stores/files";
+import type { FileMap } from "../../../stores/files.ts--";
 import FileTree from "./FileTree";
 
 const WORK_DIR_REGEX = new RegExp(
@@ -134,7 +134,7 @@ export const FileBreadcrumb = memo<FileBreadcrumbProps>(
                           variants={contextMenuVariants}
                         >
                           <div className="rounded-lg overflow-hidden">
-                            <div className="max-h-[50vh] min-w-[300px] overflow-scroll bg-bolt-elements-background-depth-1 border border-bolt-elements-borderColor shadow-sm rounded-lg">
+                            <div className="max-h-[50vh] min-w-[300px] overflow-scroll bg-bolt-elements-background-depth-1 border border-bolt-elements-borderColor shadow-xs rounded-lg">
                               <FileTree
                                 files={files}
                                 hideRoot

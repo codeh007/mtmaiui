@@ -11,14 +11,11 @@ import {
 
 import { LuBanknote } from "react-icons/lu";
 
-import { cloudApi } from "mtmaiapi/api/api";
-import type { TenantPaymentMethod } from "mtmaiapi/api/generated/cloud/data-contracts";
 import { Spinner } from "mtxuilib/mt/mtloading";
 import { Button } from "mtxuilib/ui/button";
 import { useState } from "react";
 import type { IconType } from "react-icons/lib";
-import { useTenant } from "../../../hooks";
-import { useApiError } from "../../../hooks/useApi";
+import { useTenant } from "../../../hooks/useAuth";
 
 const ccIcons: Record<string, IconType> = {
   visa: FaCcVisa,
@@ -42,21 +39,20 @@ export function PaymentMethods({
 }: PaymentMethodsProps) {
   const tenant = useTenant();
 
-  const { handleApiError } = useApiError({});
   const [loading, setLoading] = useState(false);
 
   const manageClicked = async () => {
-    try {
-      setLoading(true);
-      const link = await cloudApi.billingPortalLinkGet(tenant.metadata.id);
-      if (link.data.url) {
-        window.location.href = link.data.url;
-      }
-    } catch (e) {
-      handleApiError(e as any);
-    } finally {
-      setLoading(false);
-    }
+    // try {
+    //   setLoading(true);
+    //   const link = await cloudApi.billingPortalLinkGet(tenant.metadata.id);
+    //   if (link.data.url) {
+    //     window.location.href = link.data.url;
+    //   }
+    // } catch (e) {
+    //   handleApiError(e as any);
+    // } finally {
+    //   setLoading(false);
+    // }
   };
 
   return (

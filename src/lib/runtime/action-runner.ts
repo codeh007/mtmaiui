@@ -3,7 +3,7 @@ import type { WebContainer } from "@webcontainer/api";
 import { type MapStore, map } from "nanostores";
 import * as nodePath from "node:path";
 import type { BoltAction } from "../../types/actions";
-import { unreachable } from "../utils/unreachable";
+import { unreachable } from "../utils/unreachable.ts--";
 import type { ActionCallbackData } from "./message-parser";
 
 export type ActionStatus =

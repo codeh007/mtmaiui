@@ -5,7 +5,7 @@ import { memo, useCallback, useEffect } from "react";
 import type {
   OnChangeCallback as OnEditorChange,
   OnScrollCallback as OnEditorScroll,
-} from "../../../components/editor/codemirror/CodeMirrorEditor";
+} from "../../editor/codemirror/CodeMirrorEditor.tsx--";
 
 import { computed } from "nanostores";
 
@@ -13,12 +13,12 @@ import { PanelHeaderButton } from "../../ui/PanelHeaderButton";
 
 import { useStore } from "@nanostores/react";
 import { Icons } from "mtxuilib/icons/icons";
+import { cn } from "mtxuilib/lib/utils";
 import { toast } from "react-toastify";
-import { WorkbenchView } from "../../../components/WorkbenchView";
-import { useWorkbrenchStore } from "../../../stores/workbrench.store";
+import { useWorkbenchStore } from "../../../stores/workbrench.store";
+import { WorkbenchView } from "../../WorkbenchView";
 import { EditorPanel } from "./EditorPanel";
 import { Preview } from "./Preview";
-import { cn } from "mtxuilib/lib/utils";
 
 export interface WorkspaceProps {
   chatStarted?: boolean;
@@ -39,17 +39,15 @@ const sliderOptions: SliderOptions<WorkbenchViewType> = {
 export const WebContainerWorkbench = memo(({ isStreaming }: WorkspaceProps) => {
   renderLogger.trace("WebContainerWorkbench");
 
-  const hasPreview = useStore(
-    computed(workbenchStore.previews, (previews) => previews.length > 0),
-  );
-  const showWorkbench = useWorkbrenchStore((x) => x.uiState.openWorkbench);
-  const setShowWorkbench = useWorkbrenchStore((x) => x.setShowWorkbench);
+  const hasPreview = useStore(computed(workbenchStore.previews, (previews) => previews.length > 0));
+  const showWorkbench = useWorkbenchStore((x) => x.openWorkbench);
+  const setShowWorkbench = useWorkbenchStore((x) => x.setShowWorkbench);
   const selectedFile = useStore(workbenchStore.selectedFile);
   const currentDocument = useStore(workbenchStore.currentDocument);
   const unsavedFiles = useStore(workbenchStore.unsavedFiles);
   const files = useStore(workbenchStore.files);
-  const currentView = useWorkbrenchStore((x) => x.currentView);
-  const setCurrentView = useWorkbrenchStore((x) => x.setCurrentView);
+  const currentView = useWorkbenchStore((x) => x.currentView);
+  const setCurrentView = useWorkbenchStore((x) => x.setCurrentView);
 
   // const setSelectedView = (view: WorkbenchViewType) => {
   // 	setCurrentView(view);
@@ -99,22 +97,16 @@ export const WebContainerWorkbench = memo(({ isStreaming }: WorkspaceProps) => {
       )}
     >
       <div className="absolute inset-0 px-1">
-        <div className="h-full flex flex-col bg-bolt-elements-background-depth-2 border border-bolt-elements-borderColor shadow-sm rounded-lg overflow-hidden">
+        <div className="h-full flex flex-col bg-bolt-elements-background-depth-2 border border-bolt-elements-borderColor shadow-xs rounded-lg overflow-hidden">
           <div className="flex items-center px-3 py-2 border-b border-bolt-elements-borderColor">
-            <MtSlider
-              selected={currentView}
-              options={sliderOptions}
-              setSelected={setCurrentView}
-            />
+            <MtSlider selected={currentView} options={sliderOptions} setSelected={setCurrentView} />
 
             <div className="ml-auto" />
             {currentView === "code" && (
               <PanelHeaderButton
                 className="mr-1 text-sm"
                 onClick={() => {
-                  workbenchStore.toggleTerminal(
-                    !workbenchStore.showTerminal.get(),
-                  );
+                  workbenchStore.toggleTerminal(!workbenchStore.showTerminal.get());
                 }}
               >
                 <div className="i-ph:terminal" />

@@ -1,3 +1,4 @@
+import { camelToDashCase } from "mtxuilib/lib/utils";
 import type {
   ActionType,
   BoltAction,
@@ -5,9 +6,9 @@ import type {
   FileAction,
   ShellAction,
 } from "../../types/actions";
-import type { BoltArtifactData } from "../../types/artifact";
+import type { BoltArtifactData } from "../../types/artifact.ts--";
 
-import { unreachable } from "../utils/unreachable";
+import { unreachable } from "../utils/unreachable.ts--";
 
 const ARTIFACT_TAG_OPEN = "<mtmai_response";
 const ARTIFACT_TAG_CLOSE = "</mtmai_response>";
@@ -100,11 +101,7 @@ export class StreamingFlowMessageParser {
 
           // 如果找到action结束标签
           if (closeIndex !== -1) {
-            console.log(
-              "找到action结束标签",
-              closeIndex,
-              ARTIFACT_ACTION_TAG_CLOSE,
-            );
+            console.log("找到action结束标签", closeIndex, ARTIFACT_ACTION_TAG_CLOSE);
             // 提取action内容并处理
             currentAction.content += input.slice(i, closeIndex);
 
@@ -151,11 +148,7 @@ export class StreamingFlowMessageParser {
               state.insideAction = true;
 
               // 解析action标签
-              state.currentAction = this.#parseActionTag(
-                input,
-                actionOpenIndex,
-                actionEndIndex,
-              );
+              state.currentAction = this.#parseActionTag(input, actionOpenIndex, actionEndIndex);
 
               // 触发action开始回调
               console.log("触发action开始回调", state.currentAction);
@@ -195,10 +188,7 @@ export class StreamingFlowMessageParser {
         let potentialTag = "";
 
         // 尝试匹配artifact开始标签
-        while (
-          j < input.length &&
-          potentialTag.length < ARTIFACT_TAG_OPEN.length
-        ) {
+        while (j < input.length && potentialTag.length < ARTIFACT_TAG_OPEN.length) {
           potentialTag += input[j];
 
           if (potentialTag === ARTIFACT_TAG_OPEN) {
@@ -218,14 +208,8 @@ export class StreamingFlowMessageParser {
               // 解析artifact标签
               const artifactTag = input.slice(i, openTagEnd + 1);
 
-              const artifactTitle = this.#extractAttribute(
-                artifactTag,
-                "title",
-              ) as string;
-              const artifactId = this.#extractAttribute(
-                artifactTag,
-                "id",
-              ) as string;
+              const artifactTitle = this.#extractAttribute(artifactTag, "title") as string;
+              const artifactId = this.#extractAttribute(artifactTag, "id") as string;
 
               if (!artifactTitle) {
                 // logger.warn("Artifact title missing");
@@ -252,8 +236,7 @@ export class StreamingFlowMessageParser {
               });
 
               // 创建artifact元素
-              const artifactFactory =
-                this._options.artifactElement ?? createArtifactElement;
+              const artifactFactory = this._options.artifactElement ?? createArtifactElement;
 
               output += artifactFactory({ messageId });
 
@@ -298,11 +281,7 @@ export class StreamingFlowMessageParser {
     this.#messages.clear();
   }
 
-  #parseActionTag(
-    input: string,
-    actionOpenIndex: number,
-    actionEndIndex: number,
-  ) {
+  #parseActionTag(input: string, actionOpenIndex: number, actionEndIndex: number) {
     const actionTag = input.slice(actionOpenIndex, actionEndIndex + 1);
 
     const actionType = this.#extractAttribute(actionTag, "type") as ActionType;
@@ -345,6 +324,6 @@ const createArtifactElement: ElementFactory = (props) => {
   return `<div ${elementProps.join(" ")}></div>`;
 };
 
-function camelToDashCase(input: string) {
-  return input.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
-}
+// function camelToDashCase(input: string) {
+//   return input.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
+// }

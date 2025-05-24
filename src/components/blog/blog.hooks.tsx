@@ -1,24 +1,19 @@
 "use client";
 
-import { useMtmClient, useTenant } from "../../hooks";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import {  useTenantId } from "../../hooks/useAuth";
+import { blogGetOptions } from "mtmaiapi";
+
 
 export function useBlog(blogId: string) {
-  const mtmapi = useMtmClient();
-  const tenant = useTenant();
-  const blogQuery = mtmapi.useSuspenseQuery(
-    "get",
-    "/api/v1/tenants/{tenant}/blogs/{blog}",
-    {
-      params: {
+  const tid = useTenantId();
+  const blogQuery = useSuspenseQuery({
+    ...blogGetOptions({
         path: {
-          tenant: tenant.metadata.id,
+          tenant: tid,
           blog: blogId,
         },
-      },
-    },
-    {
-      // refetchInterval: 5000,
-    },
-  );
+    })
+  });
   return blogQuery;
 }

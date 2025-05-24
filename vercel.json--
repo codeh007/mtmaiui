@@ -1,0 +1,11 @@
+{
+  "buildCommand": "bun run build",
+  "installCommand": "bun i",
+  "framework": "nextjs",
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "api/index.go"
+    }
+  ]
+}

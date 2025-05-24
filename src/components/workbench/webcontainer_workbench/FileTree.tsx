@@ -1,9 +1,9 @@
 "use client";
 
-import { type ReactNode, memo, useEffect, useMemo, useState } from "react";
-import type { FileMap } from "../../../stores/files";
 import classNames from "classnames";
 import { cn } from "mtxuilib/lib/utils";
+import { type ReactNode, memo, useEffect, useMemo, useState } from "react";
+import type { FileMap } from "../../../stores/files.ts--";
 
 // const logger = createScopedLogger("FileTree");
 

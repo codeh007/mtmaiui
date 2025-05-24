@@ -13,7 +13,9 @@ import {
   useOptimistic,
   useState,
 } from "react";
-import { useMtmClient, useTenant } from "../../hooks";
+import { useTenant, useTenantId } from "../../hooks/useAuth";
+import { useQuery } from "@tanstack/react-query";
+import { blogListOptions } from "mtmaiapi";
 export function BlogSelector({
   className,
   selectedBlogId,
@@ -24,20 +26,15 @@ export function BlogSelector({
   const [optimisticModelId, setOptimisticModelId] =
     useOptimistic(selectedBlogId);
 
-  // const selectModel = useMemo(
-  //   () => models.find((model) => model.id === optimisticModelId),
-  //   [optimisticModelId],
-  // );
 
-  const mtmapi = useMtmClient();
-  const tenant = useTenant();
+  const tid = useTenantId();
 
-  const blogsQuery = mtmapi.useQuery("get", "/api/v1/tenants/{tenant}/blogs", {
-    params: {
-      path: {
-        tenant: tenant.metadata.id,
-      },
-    },
+  const blogsQuery = useQuery({
+    ...blogListOptions({
+        path: {
+          tenant: tid,
+        },
+    })
   });
 
   return (

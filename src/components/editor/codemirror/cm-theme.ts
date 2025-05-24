@@ -4,27 +4,20 @@ import { Compartment, type Extension } from "@codemirror/state";
 import { EditorView } from "@codemirror/view";
 import { vscodeDark, vscodeLight } from "@uiw/codemirror-theme-vscode";
 import type { Theme } from "../../../types/theme";
-import type { EditorSettings } from "./CodeMirrorEditor";
+import type { EditorSettings } from "./CodeMirrorEditor.tsx--";
 
 export const darkTheme = EditorView.theme({}, { dark: true });
 export const themeSelection = new Compartment();
 
-export function getTheme(
-  theme: Theme,
-  settings: EditorSettings = {},
-): Extension {
+export function getTheme(theme: Theme, settings: EditorSettings = {}): Extension {
   return [
     getEditorTheme(settings),
-    theme === "dark"
-      ? themeSelection.of([getDarkTheme()])
-      : themeSelection.of([getLightTheme()]),
+    theme === "dark" ? themeSelection.of([getDarkTheme()]) : themeSelection.of([getLightTheme()]),
   ];
 }
 
 export function reconfigureTheme(theme: Theme) {
-  return themeSelection.reconfigure(
-    theme === "dark" ? getDarkTheme() : getLightTheme(),
-  );
+  return themeSelection.reconfigure(theme === "dark" ? getDarkTheme() : getLightTheme());
 }
 
 function getEditorTheme(settings: EditorSettings) {
@@ -38,8 +31,7 @@ function getEditorTheme(settings: EditorSettings) {
       color: "var(--cm-textColor)",
     },
     ".cm-cursor": {
-      borderLeft:
-        "var(--cm-cursor-width) solid var(--cm-cursor-backgroundColor)",
+      borderLeft: "var(--cm-cursor-width) solid var(--cm-cursor-backgroundColor)",
     },
     ".cm-scroller": {
       lineHeight: "1.5",
@@ -50,17 +42,14 @@ function getEditorTheme(settings: EditorSettings) {
     ".cm-line": {
       padding: "0 0 0 4px",
     },
-    "&.cm-focused > .cm-scroller > .cm-selectionLayer .cm-selectionBackground":
-      {
-        backgroundColor:
-          "var(--cm-selection-backgroundColorFocused) !important",
-        opacity: "var(--cm-selection-backgroundOpacityFocused, 0.3)",
-      },
-    "&:not(.cm-focused) > .cm-scroller > .cm-selectionLayer .cm-selectionBackground":
-      {
-        backgroundColor: "var(--cm-selection-backgroundColorBlured)",
-        opacity: "var(--cm-selection-backgroundOpacityBlured, 0.3)",
-      },
+    "&.cm-focused > .cm-scroller > .cm-selectionLayer .cm-selectionBackground": {
+      backgroundColor: "var(--cm-selection-backgroundColorFocused) !important",
+      opacity: "var(--cm-selection-backgroundOpacityFocused, 0.3)",
+    },
+    "&:not(.cm-focused) > .cm-scroller > .cm-selectionLayer .cm-selectionBackground": {
+      backgroundColor: "var(--cm-selection-backgroundColorBlured)",
+      opacity: "var(--cm-selection-backgroundOpacityBlured, 0.3)",
+    },
     "&.cm-focused > .cm-scroller .cm-matchingBracket": {
       backgroundColor: "var(--cm-matching-bracket)",
     },

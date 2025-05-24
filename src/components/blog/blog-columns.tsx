@@ -1,39 +1,20 @@
 "use client";
 import { ChevronRightIcon } from "@radix-ui/react-icons";
 import type { ColumnDef } from "@tanstack/react-table";
+import type { Blog } from "mtmaiapi";
 import { DataTableColumnHeader } from "mtxuilib/data-table/data-table-column-header";
 import { RelativeDate } from "mtxuilib/mt/relative-date";
 import Link from "next/link";
-import { useBasePath } from "../../hooks/useBasePath";
-import type { Blog } from "../../types/hatchet-types";
 
 export const columns: ColumnDef<Blog>[] = [
-  // {
-  //   accessorKey: "Status",
-  //   header: ({ column }) => (
-  //     <DataTableColumnHeader column={column} title="Status" />
-  //   ),
-  //   cell: ({ row }) => (
-  //     <>
-  //       {row.original?.isPaused ? (
-  //         <Badge variant="inProgress">Paused</Badge>
-  //       ) : (
-  //         <Badge variant="successful">Active</Badge>
-  //       )}
-  //     </>
-  //   ),
-  //   enableSorting: false,
-  //   enableHiding: false,
-  // },
   {
     accessorKey: "title",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Title" />
     ),
     cell: ({ row }) => {
-      const basePath = useBasePath();
       return (
-        <Link href={`${basePath}/blogs/${row.original.metadata.id}`}>
+        <Link href={`/blogs/${row.original.metadata.id}`}>
           <div className="cursor-pointer hover:underline min-w-fit whitespace-nowrap text-md p-2">
             {row.original.title}
           </div>
@@ -72,10 +53,9 @@ export const columns: ColumnDef<Blog>[] = [
     header: () => <></>,
     accessorKey: "chevron",
     cell: ({ row }) => {
-      const basePath = useBasePath();
       return (
         <div className="flex gap-2 justify-end">
-          <Link href={`${basePath}/workflows/${row.original.metadata.id}`}>
+          <Link href={`/workflows/${row.original.metadata.id}`}>
             <div className="cursor-pointer hover:underline min-w-fit whitespace-nowrap text-md p-2">
               <ChevronRightIcon
                 className="h-5 w-5 flex-none text-gray-700 dark:text-gray-300"

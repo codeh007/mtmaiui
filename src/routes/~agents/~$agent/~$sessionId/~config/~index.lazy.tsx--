@@ -1,0 +1,10 @@
+import { createLazyFileRoute } from "@tanstack/react-router";
+// import { SocialTeamEditor } from "../../../../../components/chat/SocialTeamEditor";
+
+export const Route = createLazyFileRoute("/agents/$agent/$sessionId/config/")({
+  component: RouteComponent,
+});
+
+function RouteComponent() {
+  return <>{/* <SocialTeamEditor /> */}</>;
+}

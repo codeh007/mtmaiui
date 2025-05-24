@@ -1,0 +1,13 @@
+{
+  "buildCommand": "bun run build",
+  "installCommand": "bun i",
+  "framework": "nextjs",
+  "outputDirectory": "./apps/mtmaiui/.next",
+
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "api/index.go"
+    }
+  ]
+}

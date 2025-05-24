@@ -1,0 +1,89 @@
+"use client";
+// import ReactDOM from "react-dom/client";
+import { createRoot } from "react-dom/client";
+import { MtmClientApp } from "./App";
+import "./styles/globals.css";
+
+const rootElementId = "mtmaiapp_slug";
+// const css = "/assets/mamai_assistant.css";
+
+export function mountMtmApp({ serverUrl }: { serverUrl: string }) {
+  let rootElement = document.getElementById(rootElementId) as HTMLElement;
+  if (!rootElement) {
+    rootElement = document.createElement("div");
+    rootElement.id = rootElementId;
+    document.body.appendChild(rootElement);
+  }
+  const root = createRoot(rootElement);
+  root.render(<MtmClientApp serverUrl={serverUrl} />);
+}
+export function unmountMtmApp() {
+  const container = document.getElementById(rootElementId);
+  if (container) {
+    document.body.removeChild(container);
+  }
+}
+// interface MtmaiFrontAppOptions {
+//   routerType: "memory" | "hash";
+//   mountType?: "normal" | "shadow";
+// }
+// export class MtmaiFrontApp {
+//   // private rootElementId = "mtmaiapp_slug";
+//   // constructor(private options: MtmaiFrontAppOptions) {}
+//   mount = () => {
+//     // console.log("MtmaiFrontApp options:", this.options);
+//     //提示,在 edgeruntime 下, 不支持直接访问 import.meta
+//     // console.log("entry-client loaded \n import.meta:", import.meta);
+
+//     let rootElement = document.getElementById(rootElementId) as HTMLElement;
+//     if (!rootElement) {
+//       rootElement = document.createElement("div");
+//       rootElement.id = rootElementId;
+//       document.body.appendChild(rootElement);
+//     }
+//     if (this.options.mountType === "normal") {
+//       //开发环境
+//       const root = createRoot(rootElement);
+//       root.render(<MtmClientApp serverUrl={getAppConfig().mtmServerUrl} />);
+//       // root.render(<PlaygroundApp />);
+//       // hydrateRoot(
+//       //   rootElement,
+//       //   <StrictMode>
+//       //     <App />
+//       //   </StrictMode>,
+//       // );
+//     } else {
+//       //集成挂载,使用 shadow dom
+//       console.log("mtmai shadow");
+//       // 创建 Shadow DOM
+//       const shadowRoot = rootElement.attachShadow({ mode: "open" });
+//       // 添加样式
+//       const styleLink = document.createElement("link");
+//       styleLink.rel = "stylesheet";
+//       styleLink.href = this.css;
+//       shadowRoot.appendChild(styleLink);
+//       hydrateRoot(
+//         shadowRoot,
+//         <StrictMode>
+//           <MtmClientApp />
+//           {/* <PlaygroundApp /> */}
+//         </StrictMode>,
+//       );
+//     }
+//   };
+//   unmount = () => {
+//     const container = document.getElementById(rootElementId);
+//     if (container) {
+//       document.body.removeChild(container);
+//     }
+//   };
+// }
+
+// const mainApp = mountApp({
+//   routerType: "memory",
+//   mountType: "normal",
+// });
+// mainApp.
+// if (typeof window !== "undefined") {
+//   mountApp({ serverUrl: getAppConfig().mtmServerUrl });
+// }

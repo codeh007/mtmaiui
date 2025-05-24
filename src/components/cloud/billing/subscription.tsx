@@ -1,25 +1,19 @@
 "use client";
 import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
 import { useMutation } from "@tanstack/react-query";
-import { queries } from "mtmaiapi/api";
-import { cloudApi } from "mtmaiapi/api/api";
-import type {
-  Coupon,
-  SubscriptionPlan,
-  TenantSubscription,
-} from "mtmaiapi/api/generated/cloud/data-contracts";
 import { ConfirmDialog } from "mtxuilib/mt/confirm-dialog";
 import { Spinner } from "mtxuilib/mt/mtloading";
 import { Badge } from "mtxuilib/ui/badge";
 import { Button } from "mtxuilib/ui/button";
-import { Card, CardHeader, CardTitle, CardDescription } from "mtxuilib/ui/card";
+import { Card, CardDescription, CardHeader, CardTitle } from "mtxuilib/ui/card";
 import { Label } from "mtxuilib/ui/label";
 
+import type { SubscriptionPlan } from "mtxuilib/types/index";
+import { Alert, AlertDescription, AlertTitle } from "mtxuilib/ui/alert";
+import { Switch } from "mtxuilib/ui/switch";
 import type React from "react";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { useTenant } from "../../../hooks";
-import { useApiError } from "../../../hooks/useApi";
-import { queryClient } from "../../../skyvern/api/QueryClient";
+import { useTenant } from "../../../hooks/useAuth";
 
 interface SubscriptionProps {
   active?: TenantSubscription;
@@ -43,7 +37,6 @@ export const Subscription: React.FC<SubscriptionProps> = ({
   >(undefined);
   const tenant = useTenant();
 
-  const { handleApiError } = useApiError({});
   const [portalLoading, setPortalLoading] = useState(false);
 
   const manageClicked = async () => {
@@ -52,10 +45,10 @@ export const Subscription: React.FC<SubscriptionProps> = ({
         return;
       }
       setPortalLoading(true);
-      const link = await cloudApi.billingPortalLinkGet(tenant.metadata.id);
-      window.open(link.data.url, "_blank");
+      // const link = await cloudApi.billingPortalLinkGet(tenant.metadata.id);
+      // window.open(link.data.url, "_blank");
     } catch (e) {
-      handleApiError(e as any);
+      // handleApiError(e as any);
     } finally {
       setPortalLoading(false);
     }
@@ -66,22 +59,22 @@ export const Subscription: React.FC<SubscriptionProps> = ({
     mutationFn: async ({ plan_code }: { plan_code: string }) => {
       const [plan, period] = plan_code.split(":");
       setLoading(plan_code);
-      await cloudApi.subscriptionUpsert(tenant.metadata.id, { plan, period });
+      // await cloudApi.subscriptionUpsert(tenant.metadata.id, { plan, period });
     },
     onSuccess: async () => {
-      await Promise.all([
-        queryClient.invalidateQueries({
-          queryKey: queries.tenantResourcePolicy.get(tenant.metadata.id)
-            .queryKey,
-        }),
-        queryClient.invalidateQueries({
-          queryKey: queries.cloud.billing(tenant.metadata.id).queryKey,
-        }),
-      ]);
+      // await Promise.all([
+      //   queryClient.invalidateQueries({
+      //     queryKey: queries.tenantResourcePolicy.get(tenant.metadata.id)
+      //       .queryKey,
+      //   }),
+      //   queryClient.invalidateQueries({
+      //     queryKey: queries.cloud.billing(tenant.metadata.id).queryKey,
+      //   }),
+      // ]);
 
       setLoading(undefined);
     },
-    onError: handleApiError,
+    // onError: handleApiError,
   });
 
   const activePlanCode = useMemo(
@@ -203,6 +196,7 @@ export const Subscription: React.FC<SubscriptionProps> = ({
             </AlertTitle>
             <AlertDescription>
               A payment method is required to upgrade your subscription, please{" "}
+              {/* biome-ignore lint/a11y/useValidAnchor: <explanation> */}
               <a onClick={manageClicked} className="underline pointer" href="#">
                 add one
               </a>{" "}

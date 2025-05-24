@@ -1,8 +1,8 @@
 "use client";
 import type { WebContainer, WebContainerProcess } from "@webcontainer/api";
 import { type WritableAtom, atom } from "nanostores";
-import { newShellProcess } from "../lib/utils/shell";
-import { coloredText } from "../lib/utils/terminal";
+import { newShellProcess } from "../lib/shell";
+import { coloredText } from "../lib/terminal";
 import type { ITerminal } from "../types/terminal";
 export class TerminalStore {
   #webcontainer: Promise<WebContainer>;

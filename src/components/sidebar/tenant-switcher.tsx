@@ -1,7 +1,7 @@
 "use client";
 import { BuildingOffice2Icon, CheckIcon } from "@heroicons/react/24/outline";
 import { CaretSortIcon, PlusCircledIcon } from "@radix-ui/react-icons";
-import type { Tenant, TenantMember } from "mtmaiapi/api/index";
+import type { Tenant, TenantMember } from "mtmaiapi";
 import { cn } from "mtxuilib/lib/utils";
 import { Spinner } from "mtxuilib/mt/mtloading";
 import { Button } from "mtxuilib/ui/button";
@@ -16,8 +16,6 @@ import { Popover, PopoverContent, PopoverTrigger } from "mtxuilib/ui/popover";
 import Link from "next/link";
 import React from "react";
 import invariant from "tiny-invariant";
-import { useTenant } from "../../hooks";
-import { useApiMeta } from "../../hooks/useApi";
 
 interface TenantSwitcherProps {
   className?: string;
@@ -29,8 +27,7 @@ export function TenantSwitcher({
   memberships,
   currTenant,
 }: TenantSwitcherProps) {
-  const meta = useApiMeta();
-  const tenant = useTenant();
+  // const meta = useApiMeta();
   const [open, setOpen] = React.useState(false);
 
   if (!currTenant) {

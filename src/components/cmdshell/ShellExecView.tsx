@@ -2,6 +2,10 @@
 
 import { useEffect, useRef, useState } from "react";
 
+import { DebugValue } from "mtxuilib/components/devtools/DebugValue";
+import { cn } from "mtxuilib/lib/utils";
+import { Button } from "mtxuilib/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "mtxuilib/ui/tabs";
 import {
   Terminal,
   type TerminalRef,
@@ -11,15 +15,6 @@ import {
   XtermProvider,
   useXtermStore,
 } from "./xterm.store";
-import { DebugValue } from "mtxuilib/components/devtools/DebugValue";
-import { cn } from "mtxuilib/lib/utils";
-import {
-  MtTabs,
-  MtTabsList,
-  MtTabsTrigger,
-  MtTabsContent,
-} from "mtxuilib/mt/tabs";
-import { Button } from "mtxuilib/ui/button";
 
 interface ShellExecViewProps {
   cmdLine: string;
@@ -90,12 +85,12 @@ const ShellExecViewImpl = (props: MtmaiBotProps) => {
           </Button>
         </div>
 
-        <MtTabs defaultValue="terminal" className="w-full h-full">
-          <MtTabsList className="flex w-full gap-2">
-            <MtTabsTrigger value="terminal">终端</MtTabsTrigger>
-            <MtTabsTrigger value="messages">消息</MtTabsTrigger>
-          </MtTabsList>
-          <MtTabsContent value="terminal">
+        <Tabs defaultValue="terminal" className="w-full h-full">
+          <TabsList className="flex w-full gap-2">
+            <TabsTrigger value="terminal">终端</TabsTrigger>
+            <TabsTrigger value="messages">消息</TabsTrigger>
+          </TabsList>
+          <TabsContent value="terminal">
             <div className="h-full overflow-hidden bg-slate-100 border border-slate-300">
               <Terminal
                 // key={index}
@@ -117,8 +112,8 @@ const ShellExecViewImpl = (props: MtmaiBotProps) => {
                 theme={theme}
               />
             </div>
-          </MtTabsContent>
-          <MtTabsContent value="messages">
+          </TabsContent>
+          <TabsContent value="messages">
             {listItem?.length > 0 ? (
               <div className="flex flex-col overflow-y-auto max-h-[600px] whitespace-pre-wrap break-all font-mono text-sm leading-5 bg-black text-gray-200 p-2">
                 {listItem?.map((item, i) => (
@@ -129,8 +124,8 @@ const ShellExecViewImpl = (props: MtmaiBotProps) => {
                 ))}
               </div>
             ) : null}
-          </MtTabsContent>
-        </MtTabs>
+          </TabsContent>
+        </Tabs>
       </div>
     </>
   );

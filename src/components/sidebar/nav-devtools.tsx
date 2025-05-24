@@ -3,6 +3,11 @@
 import { ChevronRight } from "lucide-react";
 
 import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "mtxuilib/ui/collapsible";
+import {
   SidebarGroup,
   SidebarGroupLabel,
   SidebarMenu,
@@ -12,14 +17,14 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from "mtxuilib/ui/sidebar";
-import { useWorkbrenchStore } from "../../stores/workbrench.store";
+import { useWorkbenchStore } from "../../stores/workbrench.store";
 
 export function NavDevtools() {
-  const openChat = useWorkbrenchStore((x) => x.uiState.openChat);
-  const setOpenChat = useWorkbrenchStore((x) => x.setOpenChat);
+  const openChat = useWorkbenchStore((x) => x.openChat);
+  const setOpenChat = useWorkbenchStore((x) => x.setOpenChat);
 
-  const openWorkbench = useWorkbrenchStore((x) => x.uiState.openWorkbench);
-  const setOpenWorkbench = useWorkbrenchStore((x) => x.setShowWorkbench);
+  const openWorkbench = useWorkbenchStore((x) => x.openWorkbench);
+  const setOpenWorkbench = useWorkbenchStore((x) => x.setOpenWorkbench);
 
   if (process.env.NODE_ENV === "production") {
     return null;

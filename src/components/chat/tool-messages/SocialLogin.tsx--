@@ -1,0 +1,84 @@
+import { DebugValue } from "mtxuilib/components/devtools/DebugValue";
+import { ZForm, ZFormToolbar, useZodFormV2 } from "mtxuilib/mt/form/ZodForm";
+import { Button } from "mtxuilib/ui/button";
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "mtxuilib/ui/form";
+import { Input } from "mtxuilib/ui/input";
+import { useState } from "react";
+import { useWorkbenchStore } from "../../../stores/workbrench.store";
+
+export const SocialLoginView = ({ msg }: { msg: FunctionCall }) => {
+  const [open, setOpen] = useState(false);
+  const handleHumanInput = useWorkbenchStore((x) => x.handleHumanInput);
+  const form = useZodFormV2({
+    schema: zSocialLoginInput,
+    toastValidateError: true,
+    defaultValues: {
+      type: AgentEventType.SOCIAL_LOGIN_INPUT,
+      username: "saibichquyenll2015",
+      password: "qSJPn07c7",
+      otp_key: "MCF3M4XZHTFWKYXUGV4CQX3LFXMKMWFP",
+    },
+    handleSubmit: (values) => {
+      console.log("values", values);
+      handleHumanInput({
+        ...values,
+        type: AgentEventType.SOCIAL_LOGIN_INPUT,
+      });
+    },
+  });
+
+  return (
+    <div className="rounded-md px-2">
+      <h1>social login view</h1>
+      {!open && <Button onClick={() => setOpen(!open)}>登录</Button>}
+      <DebugValue data={msg} />
+      {open && (
+        <>
+          <ZForm {...form} className="space-y-2">
+            <input type="hidden" {...form.form.register("type")} />
+            <FormField
+              control={form.form.control}
+              name="username"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>User name</FormLabel>
+                  <FormControl>
+                    <Input {...field} placeholder="username" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <Input {...field} placeholder="password" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.form.control}
+              name="otp_key"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>otp_key</FormLabel>
+                  <FormControl>
+                    <Input {...field} placeholder="otp_key" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </ZForm>
+          <ZFormToolbar form={form.form} />
+        </>
+      )}
+    </div>
+  );
+};

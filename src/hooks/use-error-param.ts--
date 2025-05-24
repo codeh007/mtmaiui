@@ -1,5 +1,0 @@
-"use client";
-import { useToast } from "mtxuilib";
-import { useSearchParams } from "next/navigation";
-import { useEffect } from "react";
-

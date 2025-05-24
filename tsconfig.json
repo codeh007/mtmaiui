@@ -10,30 +10,24 @@
     // "jsx": "react-jsx",
     "jsx": "preserve", //react-jsx
     "allowImportingTsExtensions": true,
-    "lib": [
-      "DOM",
-      "DOM.iterable",
-      "ES2022",
-      "esnext",
-      "WebWorker"
-    ],
+    "lib": ["DOM", "DOM.iterable", "ES2022", "esnext", "WebWorker"],
     "types": [
       "node",
       "vite/client",
       "jest",
-      "@cloudflare/workers-types",
-      "@cloudflare/workers-types/experimental",
       "bun-types",
-      "jquery"
+      "jquery",
+      "@cloudflare/workers-types",
+      "src/types/worker-configuration.d.ts"
     ],
     "moduleResolution": "bundler",
-    "rootDir": ".",
-    // "baseUrl": "./src",
-    // "paths": {
-    //   "mtxuilib": [
-    //     "../mtxuilib/src/*"
-    //   ]
-    // },
+    // "rootDir": ".",
+    "baseUrl": ".",
+    "paths": {
+      "@mtmaiui/*": ["./src/*"]
+      // mtmaiapi: path.resolve(__dirname, "../../packages/mtmaiapi/src"),
+      // mtxuilib: path.resolve(__dirname, "../../packages/mtxuilib/src"),
+    },
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,
@@ -42,6 +36,7 @@
     "target": "ES2022",
     "allowJs": true,
     "incremental": true,
+    "noImplicitAny": false,
     "resolveJsonModule": true,
     "plugins": [
       {
@@ -50,11 +45,6 @@
     ]
     // "noUncheckedSideEffectImports": true
   },
-  "include": [
-    "src",
-    ".next/types/**/*.ts"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": [".next/types/**/*.ts", "src", ".next.dev/types/**/*.ts", "src/type/index.ts"],
+  "exclude": ["node_modules", "dist"]
 }
